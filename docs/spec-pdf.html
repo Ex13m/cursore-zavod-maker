@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>CURSOR ZAVOD — спецификация проекта</title>
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #1a1d21; --panel: #22262b; --line: #2e343b;
+    --ink: #e8eaed; --dim: #9aa3ad;
+    --run: #2ecc71; --queued: #f39c12; --alarm: #e74c3c; --info: #3498db;
+  }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--ink); }
+  .page { width: 210mm; height: 296mm; page-break-after: always; position: relative; overflow: hidden; padding: 14mm; background: var(--bg); }
+  .page:last-child { page-break-after: avoid; }
+  .mono { font-family: 'Consolas', 'Courier New', monospace; }
+
+  /* header strip on every page */
+  .strip { display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--line); background: var(--panel); padding: 4mm 6mm; margin-bottom: 8mm; }
+  .strip .id { font-size: 9pt; color: var(--dim); letter-spacing: .15em; }
+  .lamp { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+  .lamp.run { background: var(--run); box-shadow: 0 0 6px var(--run); }
+
+  h1 { font-size: 34pt; letter-spacing: .04em; line-height: 1.05; }
+  h2 { font-size: 16pt; letter-spacing: .12em; text-transform: uppercase; border-left: 4mm solid var(--queued); padding-left: 4mm; margin: 8mm 0 4mm; }
+  h3 { font-size: 11pt; color: var(--queued); letter-spacing: .08em; text-transform: uppercase; margin: 5mm 0 2mm; }
+  p, li { font-size: 10pt; line-height: 1.55; color: var(--ink); }
+  .dim { color: var(--dim); }
+  .small { font-size: 8.5pt; }
+
+  img.full { width: 100%; border: 1px solid var(--line); display: block; }
+
+  table { width: 100%; border-collapse: collapse; margin: 3mm 0; }
+  th, td { border: 1px solid var(--line); padding: 2.2mm 3mm; font-size: 9pt; text-align: left; vertical-align: top; }
+  th { background: var(--panel); color: var(--dim); text-transform: uppercase; letter-spacing: .08em; font-size: 8pt; }
+
+  .panel { border: 1px solid var(--line); background: var(--panel); padding: 5mm; margin: 3mm 0; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; }
+  .tag { display: inline-block; border: 1px solid var(--line); background: #191c20; color: var(--dim); padding: 1mm 2.5mm; font-size: 8pt; letter-spacing: .1em; margin: 0 1mm 1mm 0; }
+  .sig { color: var(--run); } .warn { color: var(--queued); } .bad { color: var(--alarm); } .inf { color: var(--info); }
+
+  /* cover */
+  .cover { display: flex; flex-direction: column; }
+  .cover .art { border: 1px solid var(--line); }
+  .cover .art img { width: 100%; display: block; }
+  .owner { display: flex; gap: 6mm; align-items: center; margin-top: 6mm; }
+  .owner img { width: 34mm; height: 34mm; object-fit: cover; object-position: top; border: 1px solid var(--line); filter: grayscale(25%); }
+  .owner .meta { flex: 1; }
+  .stamp { position: absolute; right: 16mm; bottom: 18mm; transform: rotate(-8deg); border: 2.5px solid var(--run); color: var(--run); padding: 2mm 5mm; font-size: 13pt; letter-spacing: .25em; font-weight: 700; opacity: .85; }
+  .footer { position: absolute; bottom: 8mm; left: 14mm; right: 14mm; display: flex; justify-content: space-between; font-size: 8pt; color: var(--dim); border-top: 1px solid var(--line); padding-top: 2mm; }
+
+  pre.tree { font-family: Consolas, monospace; font-size: 8.5pt; line-height: 1.5; background: #14171a; border: 1px solid var(--line); padding: 4mm; color: #b8c4cf; }
+  .flow { display: flex; align-items: stretch; gap: 2mm; margin: 3mm 0; }
+  .flow .step { flex: 1; border: 1px solid var(--line); background: var(--panel); padding: 3mm; font-size: 8.5pt; text-align: center; }
+  .flow .step b { display: block; color: var(--queued); font-size: 9pt; margin-bottom: 1mm; }
+  .flow .arr { align-self: center; color: var(--dim); font-size: 12pt; }
+</style>
+</head>
+<body>
+
+<!-- ============================== PAGE 1: COVER ============================== -->
+<div class="page cover">
+  <div class="strip mono">
+    <span><span class="lamp run"></span><b>CURSOR ZAVOD</b></span>
+    <span class="id">SPEC-2026-001 · REV 1.0 · 2026-07-08</span>
+  </div>
+
+  <div class="art"><img src="assets/cover-hero.png" alt="Cursor Zavod hero"></div>
+
+  <div style="margin-top:8mm">
+    <div class="mono dim" style="letter-spacing:.3em; font-size:9pt">СПЕЦИФИКАЦИЯ ПРОЕКТА · ААА</div>
+    <h1>АВТОНОМНЫЙ ЗАВОД<br>АНИМИРОВАННЫХ КУРСОРОВ</h1>
+    <p class="dim" style="margin-top:3mm; font-size:11pt">
+      Тренды → производство → пульт HMI → одобрение → продажа. Без участия человека,
+      кроме одной галочки.
+    </p>
+  </div>
+
+  <div class="owner">
+    <img src="../me/avatar.jpg" alt="Владелец">
+    <div class="meta">
+      <div class="mono dim small">ВЛАДЕЛЕЦ ПРОЕКТА / OWNER</div>
+      <div style="font-size:14pt; font-weight:700; margin:1mm 0">Ex13m</div>
+      <div class="mono small dim">github.com/Ex13m/cursore-zavod-maker</div>
+      <div style="margin-top:2mm">
+        <span class="tag">FACTORY HMI</span><span class="tag">МОНОРЕПО</span>
+        <span class="tag">GITHUB ACTIONS</span><span class="tag">NETLIFY</span>
+        <span class="tag">REPLICATE</span><span class="tag">ANTHROPIC</span><span class="tag">GUMROAD</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="stamp mono">ОДОБРЕНО</div>
+  <div class="footer mono"><span>CURSOR ZAVOD · SPEC v1.0</span><span>стр. 1 / 4</span></div>
+</div>
+
+<!-- ============================== PAGE 2: VISION + PIPELINE ============================== -->
+<div class="page">
+  <div class="strip mono">
+    <span><span class="lamp run"></span>РАЗДЕЛ 1 · ВИДЕНИЕ И КОНВЕЙЕР</span>
+    <span class="id">SPEC-2026-001</span>
+  </div>
+
+  <h2>Видение</h2>
+  <p>
+    <b>Cursor Zavod</b> — производственный портал на автопилоте. Каждое утро в 07:00 UTC
+    завод сам анализирует дизайн-тренды, выпускает партию из 10 анимированных веб-курсоров
+    и присылает владельцу письмо со ссылкой на пульт. Владелец тестирует курсоры вживую,
+    ставит галочки — одобренное автоматически пакуется и публикуется на Gumroad.
+    Ручной режим: чат «Цех», где курсор создаётся текстовым промптом.
+  </p>
+
+  <h2>Суточный цикл завода</h2>
+  <div class="flow mono">
+    <div class="step"><b>07:00 ТРЕНДЫ</b>trend-scout собирает сигналы → trends.json</div>
+    <div class="arr">▶</div>
+    <div class="step"><b>07:02 ЦЕХ</b>producer выпускает дроп: 10 курсоров (сид = дата)</div>
+    <div class="arr">▶</div>
+    <div class="step"><b>07:04 ОТК</b>qa-inspector: схемы, лимиты, контраст</div>
+    <div class="arr">▶</div>
+    <div class="step"><b>07:05 ДЕПЛОЙ</b>commit → Netlify пересобирает пульт</div>
+    <div class="arr">▶</div>
+    <div class="step"><b>07:06 ПИСЬМО</b>notifier шлёт ссылку владельцу</div>
+  </div>
+  <div class="flow mono">
+    <div class="step" style="border-color:#3a4550"><b class="inf">ДНЁМ · ВЛАДЕЛЕЦ</b>тест на пульте → галочки одобрения ≤ 10 минут</div>
+    <div class="arr">▶</div>
+    <div class="step" style="border-color:#3a4550"><b class="sig">ПУБЛИКАЦИЯ</b>publisher: zip + обложка → Gumroad draft → enable</div>
+    <div class="arr">▶</div>
+    <div class="step" style="border-color:#3a4550"><b class="sig">ПРОДАЖИ</b>каталог растёт на ~300 позиций/мес</div>
+  </div>
+
+  <img class="full" src="assets/factory-line.png" alt="Производственная линия" style="margin-top:4mm">
+
+  <h2>Монетизация</h2>
+  <table>
+    <tr><th>Канал</th><th>Продукт</th><th>Цена</th></tr>
+    <tr><td>Gumroad (авто)</td><td>Пак-пресет: cursor.config.json + README + обложка</td><td class="mono">$4–14</td></tr>
+    <tr><td>npm (бесплатно)</td><td>Библиотека cursorfx — воронка и охват (open-core)</td><td class="mono">$0</td></tr>
+    <tr><td>M3: своя витрина</td><td>Бандлы, подписка на все дропы</td><td class="mono">TBD</td></tr>
+  </table>
+
+  <div class="footer mono"><span>CURSOR ZAVOD · SPEC v1.0</span><span>стр. 2 / 4</span></div>
+</div>
+
+<!-- ============================== PAGE 3: ARCHITECTURE ============================== -->
+<div class="page">
+  <div class="strip mono">
+    <span><span class="lamp run"></span>РАЗДЕЛ 2 · АРХИТЕКТУРА</span>
+    <span class="id">SPEC-2026-001</span>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <h2 style="margin-top:0">Монорепо</h2>
+      <pre class="tree">cursore-zavod-maker/
+├─ CLAUDE.md          правила (&lt;200 строк)
+├─ AGENTS.md          реестр агентов
+├─ .claude/
+│   ├─ rules/         path-gated правила
+│   ├─ skills/        produce-drop, publish
+│   ├─ agents/        trend-scout, producer,
+│   │                 qa-inspector, publisher
+│   ├─ workflows/     release-drop.js
+│   └─ hooks/         guard-secrets
+├─ docs/              SPEC, PDF, ADR
+├─ packages/cursorfx/ библиотека эффектов
+├─ factory/           автономное производство
+│   ├─ trends.js      тренд-агент
+│   ├─ produce.js     генератор дропа
+│   ├─ chat.js        промпт → EffectSpec
+│   ├─ imagegen.js    Replicate FLUX
+│   ├─ publish.js     Gumroad / бандл
+│   ├─ notify.js      Resend email
+│   └─ data/          trends.json, drops/,
+│                     queue.json  (git = БД)
+├─ portal/            HMI-пульт (Vite)
+└─ .github/workflows/ ci + daily-factory</pre>
+    </div>
+    <div>
+      <h2 style="margin-top:0">Принципы</h2>
+      <div class="panel">
+        <h3 style="margin-top:0">Spec-driven</h3>
+        <p class="small">Эта спека — источник истины. Агенты строят от неё; изменения — сначала в спеку (ADR), потом в код.</p>
+      </div>
+      <div class="panel">
+        <h3 style="margin-top:0">Git как база данных</h3>
+        <p class="small">Каждый дроп и публикация — commit. Полный аудит производства бесплатно: история, откат, blame.</p>
+      </div>
+      <div class="panel">
+        <h3 style="margin-top:0">Graceful degradation</h3>
+        <p class="small">Все ключи опциональны: без Anthropic — эвристический парсер чата; без Replicate — SVG/эмодзи; без Resend — лог; без Gumroad — локальный бандл.</p>
+      </div>
+      <div class="panel">
+        <h3 style="margin-top:0">Exception-based review</h3>
+        <p class="small">Завод не ждёт человека. Владелец видит только отклонения (тревоги ОТК) и очередь на одобрение.</p>
+      </div>
+    </div>
+  </div>
+
+  <h2>Агенты завода</h2>
+  <table class="mono">
+    <tr><th>Агент</th><th>Роль</th><th>Запуск</th><th>Выход</th></tr>
+    <tr><td class="warn">trend-scout</td><td>сигналы трендов, веса палитр/стилей</td><td>cron 07:00</td><td>trends.json</td></tr>
+    <tr><td class="warn">producer</td><td>дроп дня: архетипы × тренды, сид = дата</td><td>после scout</td><td>drops/YYYY-MM-DD.json</td></tr>
+    <tr><td class="warn">qa-inspector</td><td>валидация схем, лимиты, читаемость</td><td>в конвейере</td><td>alarms[] в дропе</td></tr>
+    <tr><td class="warn">publisher</td><td>zip + cover → Gumroad draft → enable</td><td>по одобрению</td><td>queue.json + журнал</td></tr>
+    <tr><td class="warn">notifier</td><td>письмо со ссылкой на пульт</td><td>после produce</td><td>email (Resend)</td></tr>
+  </table>
+
+  <h2>Ключи и деградация</h2>
+  <table>
+    <tr><th>Секрет</th><th>Даёт</th><th>Без него</th></tr>
+    <tr><td class="mono">ANTHROPIC_API_KEY</td><td>умный чат промпт→курсор</td><td>эвристический парсер</td></tr>
+    <tr><td class="mono">REPLICATE_API_TOKEN</td><td>FLUX-спрайты для image-курсоров</td><td>эмодзи/SVG-курсоры</td></tr>
+    <tr><td class="mono">RESEND_API_KEY</td><td>утреннее письмо</td><td>ссылка в лог Actions</td></tr>
+    <tr><td class="mono">GUMROAD_ACCESS_TOKEN</td><td>автопубликация в draft-товары</td><td>готовый бандл в /published</td></tr>
+  </table>
+
+  <div class="footer mono"><span>CURSOR ZAVOD · SPEC v1.0</span><span>стр. 3 / 4</span></div>
+</div>
+
+<!-- ============================== PAGE 4: HMI + ROADMAP ============================== -->
+<div class="page">
+  <div class="strip mono">
+    <span><span class="lamp run"></span>РАЗДЕЛ 3 · ПУЛЬТ HMI · ДОРОЖНАЯ КАРТА</span>
+    <span class="id">SPEC-2026-001</span>
+  </div>
+
+  <h2>Дизайн-система «Factory HMI»</h2>
+  <div class="grid2">
+    <div class="panel">
+      <h3 style="margin-top:0">Палитра пульта</h3>
+      <p class="mono small">
+        фон <span class="dim">#1a1d21</span> · панель <span class="dim">#22262b</span> · линия <span class="dim">#2e343b</span><br>
+        <span class="sig">■ RUN #2ecc71</span> · <span class="warn">■ QUEUED #f39c12</span><br>
+        <span class="bad">■ ALARM #e74c3c</span> · <span class="inf">■ INFO #3498db</span>
+      </p>
+      <p class="small dim" style="margin-top:2mm">Правило high-performance HMI: цвет — только у статусов. Внимание оператора — только на отклонения.</p>
+    </div>
+    <div class="panel">
+      <h3 style="margin-top:0">Экраны пульта</h3>
+      <p class="small">
+        <b class="warn">ПУЛЬТ</b> — статус линии, датчики трендов, тревоги<br>
+        <b class="warn">КОНВЕЙЕР</b> — дроп дня, live-тест, галочки одобрения<br>
+        <b class="warn">ЦЕХ-ЧАТ</b> — курсор по текстовому промпту<br>
+        <b class="warn">СКЛАД</b> — все дропы, фильтры, статусы<br>
+        <b class="warn">ПРОДАЖИ</b> — опубликованное, ссылки Gumroad
+      </p>
+    </div>
+  </div>
+
+  <h2>Дорожная карта</h2>
+  <table>
+    <tr><th>Веха</th><th>Состав</th><th>Критерий готовности</th></tr>
+    <tr><td class="mono sig">M1 · сейчас</td><td>монорепо, cursorfx, фабрика, HMI-пульт, cron, письмо</td><td>дроп приходит письмом, одобрение работает</td></tr>
+    <tr><td class="mono warn">M2</td><td>Replicate-спрайты, Anthropic-чат, Netlify Functions</td><td>курсор из чата с картинкой ≤ 60 сек</td></tr>
+    <tr><td class="mono inf">M3</td><td>своя витрина, A/B цен, аналитика продаж</td><td>первый $100 MRR</td></tr>
+  </table>
+
+  <h2>Риски и KPI</h2>
+  <div class="grid2">
+    <table>
+      <tr><th>Риск</th><th>Митигация</th></tr>
+      <tr><td>Gumroad API не создаёт товары</td><td>пул черновиков + фолбэк-бандл</td></tr>
+      <tr><td>AI-слоп в дропах</td><td>ОТК + exception review</td></tr>
+      <tr><td>Утечка ключей (репо публичный)</td><td>только GitHub Secrets, hook-страж</td></tr>
+      <tr><td>Дрейф cron</td><td>идемпотентный produce (сид = дата)</td></tr>
+    </table>
+    <table>
+      <tr><th>KPI</th><th>Цель</th></tr>
+      <tr><td>Курсоров в день</td><td class="mono sig">≥ 10, 0 действий</td></tr>
+      <tr><td>Письмо владельцу</td><td class="mono sig">≤ 07:10 UTC</td></tr>
+      <tr><td>Время владельца</td><td class="mono sig">≤ 10 мин/день</td></tr>
+      <tr><td>Дропы без тревог ОТК</td><td class="mono sig">≥ 95 %</td></tr>
+    </table>
+  </div>
+
+  <div class="panel" style="margin-top:5mm">
+    <h3 style="margin-top:0">Утверждение</h3>
+    <p class="small">Спецификация утверждена владельцем 2026-07-08 по результатам опроса:
+    дизайн — Factory HMI · архитектура — монорепо · автопилот — GitHub Actions + Netlify ·
+    ключи — Replicate, Anthropic, Resend. Документ инициирует проект в репозитории
+    <span class="mono">github.com/Ex13m/cursore-zavod-maker</span>.</p>
+  </div>
+
+  <div class="stamp mono" style="bottom:24mm">В ПРОИЗВОДСТВО</div>
+  <div class="footer mono"><span>CURSOR ZAVOD · SPEC v1.0</span><span>стр. 4 / 4</span></div>
+</div>
+
+</body>
+</html>

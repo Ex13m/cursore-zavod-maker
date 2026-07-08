@@ -1,0 +1,28 @@
+# deps
+node_modules/
+
+# build
+dist/
+dist-portal/
+*.tsbuildinfo
+.vite/
+
+# runtime local artifacts
+published/
+factory/data/tmp/
+
+# env — репозиторий публичный, секреты только локально/в CI
+.env
+.env.local
+.env.*.local
+
+# editor / OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# logs
+*.log
+logs/
