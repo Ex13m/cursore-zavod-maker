@@ -149,6 +149,120 @@ export function drawPreview(canvas: HTMLCanvasElement, item: DropItem): void {
         ctx.beginPath(); ctx.ellipse(cx + 23, cy - 2, 4, 5, 0.2, 0, Math.PI * 2); ctx.fill()
         break
       }
+      case 'vortex': {
+        const gc = String(o.glowColor ?? '#3bdcff')
+        for (let i = 0; i < 22; i++) {
+          const a = i * 0.9
+          const r = 8 + i * 2.6
+          ctx.strokeStyle = i % 2 ? color : gc
+          ctx.globalAlpha = 1 - i / 26
+          ctx.beginPath()
+          ctx.arc(cx, cy, r, a, a + 0.8)
+          ctx.stroke()
+        }
+        ctx.globalAlpha = 1
+        ctx.fillStyle = '#000'
+        ctx.beginPath(); ctx.arc(cx, cy, 7, 0, Math.PI * 2); ctx.fill()
+        ctx.strokeStyle = gc
+        ctx.beginPath(); ctx.arc(cx, cy, 9, 0, Math.PI * 2); ctx.stroke()
+        break
+      }
+      case 'warp': {
+        const ac = String(o.accent ?? '#3bdcff')
+        for (let i = 0; i < 26; i++) {
+          const a = (i / 26) * Math.PI * 2
+          const r1 = 10 + (i % 5) * 7
+          const r2 = r1 + 14 + (i % 3) * 10
+          ctx.strokeStyle = i % 4 === 0 ? ac : ink
+          ctx.globalAlpha = 0.35 + (i % 3) * 0.2
+          ctx.beginPath()
+          ctx.moveTo(cx + Math.cos(a) * r1, cy + Math.sin(a) * r1 * 0.6)
+          ctx.lineTo(cx + Math.cos(a) * r2, cy + Math.sin(a) * r2 * 0.6)
+          ctx.stroke()
+        }
+        ctx.globalAlpha = 1
+        break
+      }
+      case 'lightning': {
+        ctx.strokeStyle = color
+        ctx.lineWidth = 2
+        for (const dir of [-1, 1]) {
+          ctx.beginPath()
+          let x = cx; let y = cy
+          ctx.moveTo(x, y)
+          for (let s = 0; s < 5; s++) {
+            x += dir * (10 + Math.sin(s * 7) * 6)
+            y += (s % 2 ? -10 : 12)
+            ctx.lineTo(x, y)
+          }
+          ctx.stroke()
+        }
+        ctx.fillStyle = '#fff'
+        ctx.beginPath(); ctx.arc(cx, cy, 4, 0, Math.PI * 2); ctx.fill()
+        break
+      }
+      case 'ripple': {
+        const crest = String(o.crestColor ?? '#3bdcff')
+        ctx.strokeStyle = 'rgba(120,140,160,0.35)'
+        for (let gy = 10; gy < H; gy += 16) {
+          ctx.beginPath()
+          for (let gx = 0; gx <= W; gx += 6) {
+            const d = Math.hypot(gx - cx, gy - cy)
+            const off = Math.exp(-Math.pow(d - 34, 2) / 220) * 9
+            const y = gy - off
+            gx === 0 ? ctx.moveTo(gx, y) : ctx.lineTo(gx, y)
+          }
+          ctx.stroke()
+        }
+        ctx.strokeStyle = crest
+        ctx.beginPath(); ctx.arc(cx, cy, 34, 0, Math.PI * 2); ctx.stroke()
+        break
+      }
+      case 'ribbon': {
+        ctx.lineCap = 'round'
+        for (let i = 0; i < 14; i++) {
+          const t = i / 14
+          ctx.strokeStyle = `hsl(${(t * 140 + 180) % 360} 95% 60%)`
+          ctx.lineWidth = 14 * (1 - t)
+          ctx.globalAlpha = 1 - t * 0.7
+          ctx.beginPath()
+          ctx.moveTo(cx + 40 - i * 8, cy + Math.sin(i * 0.9) * 14)
+          ctx.lineTo(cx + 40 - (i + 1) * 8, cy + Math.sin((i + 1) * 0.9) * 14)
+          ctx.stroke()
+        }
+        ctx.globalAlpha = 1
+        break
+      }
+      case 'firefly': {
+        for (let i = 0; i < 9; i++) {
+          const fx = cx + Math.cos(i * 2.4) * (18 + i * 6)
+          const fy = cy + Math.sin(i * 1.7) * (10 + i * 3)
+          const g = ctx.createRadialGradient(fx, fy, 0.5, fx, fy, 8)
+          g.addColorStop(0, color)
+          g.addColorStop(1, 'transparent')
+          ctx.fillStyle = g
+          ctx.beginPath(); ctx.arc(fx, fy, 8, 0, Math.PI * 2); ctx.fill()
+        }
+        break
+      }
+      case 'dogfight': {
+        const hc = String(o.hunterColor ?? '#ff4d6d')
+        const sc = String(o.shipColor ?? '#3bdcff')
+        const shipAt = (x: number, y: number, a: number, c: string) => {
+          ctx.save(); ctx.translate(x, y); ctx.rotate(a)
+          ctx.fillStyle = c
+          ctx.beginPath(); ctx.moveTo(10, 0); ctx.lineTo(-7, 6); ctx.lineTo(-3, 0); ctx.lineTo(-7, -6); ctx.closePath(); ctx.fill()
+          ctx.restore()
+        }
+        shipAt(cx + 34, cy - 10, -0.2, sc)
+        shipAt(cx - 30, cy + 12, -0.25, hc)
+        shipAt(cx - 52, cy - 4, -0.15, hc)
+        ctx.strokeStyle = String(o.boltColor ?? '#ffd400')
+        ctx.lineWidth = 2
+        ctx.beginPath(); ctx.moveTo(cx - 18, cy + 8); ctx.lineTo(cx + 6, cy + 1); ctx.stroke()
+        ctx.beginPath(); ctx.moveTo(cx - 40, cy - 5); ctx.lineTo(cx - 16, cy - 8); ctx.stroke()
+        break
+      }
       case 'noiseblob': {
         // рваный пульсирующий контур
         ctx.fillStyle = color === item.accent ? `hsl(280 90% 65%)` : color

@@ -9,6 +9,13 @@ import { TurretCursor } from './TurretCursor'
 import { RocketCursor } from './RocketCursor'
 import { LureCursor } from './LureCursor'
 import { NoiseBlobCursor } from './NoiseBlobCursor'
+import { VortexCursor } from './VortexCursor'
+import { WarpCursor } from './WarpCursor'
+import { LightningCursor } from './LightningCursor'
+import { RippleCursor } from './RippleCursor'
+import { RibbonCursor } from './RibbonCursor'
+import { FireflyCursor } from './FireflyCursor'
+import { DogfightCursor } from './DogfightCursor'
 
 export { DotCursor } from './DotCursor'
 export { RingCursor } from './RingCursor'
@@ -20,6 +27,13 @@ export { TurretCursor } from './TurretCursor'
 export { RocketCursor } from './RocketCursor'
 export { LureCursor } from './LureCursor'
 export { NoiseBlobCursor } from './NoiseBlobCursor'
+export { VortexCursor } from './VortexCursor'
+export { WarpCursor } from './WarpCursor'
+export { LightningCursor } from './LightningCursor'
+export { RippleCursor } from './RippleCursor'
+export { RibbonCursor } from './RibbonCursor'
+export { FireflyCursor } from './FireflyCursor'
+export { DogfightCursor } from './DogfightCursor'
 export { CanvasEffect } from './CanvasEffect'
 
 export type { DotCursorOptions } from './DotCursor'
@@ -32,11 +46,19 @@ export type { TurretCursorOptions } from './TurretCursor'
 export type { RocketCursorOptions } from './RocketCursor'
 export type { LureCursorOptions } from './LureCursor'
 export type { NoiseBlobCursorOptions } from './NoiseBlobCursor'
+export type { VortexCursorOptions } from './VortexCursor'
+export type { WarpCursorOptions } from './WarpCursor'
+export type { LightningCursorOptions } from './LightningCursor'
+export type { RippleCursorOptions } from './RippleCursor'
+export type { RibbonCursorOptions } from './RibbonCursor'
+export type { FireflyCursorOptions } from './FireflyCursor'
+export type { DogfightCursorOptions } from './DogfightCursor'
 
 /** The string keys used to refer to an effect in a serializable {@link EffectSpec}. */
 export type EffectType =
   | 'dot' | 'ring' | 'glow' | 'trail' | 'blob' | 'image'
   | 'turret' | 'rocket' | 'lure' | 'noiseblob'
+  | 'vortex' | 'warp' | 'lightning' | 'ripple' | 'ribbon' | 'firefly' | 'dogfight'
 
 /**
  * A serializable description of a single effect: its type plus constructor
@@ -60,6 +82,13 @@ const REGISTRY: Record<EffectType, EffectConstructor> = {
   rocket: RocketCursor as unknown as EffectConstructor,
   lure: LureCursor as unknown as EffectConstructor,
   noiseblob: NoiseBlobCursor as unknown as EffectConstructor,
+  vortex: VortexCursor as unknown as EffectConstructor,
+  warp: WarpCursor as unknown as EffectConstructor,
+  lightning: LightningCursor as unknown as EffectConstructor,
+  ripple: RippleCursor as unknown as EffectConstructor,
+  ribbon: RibbonCursor as unknown as EffectConstructor,
+  firefly: FireflyCursor as unknown as EffectConstructor,
+  dogfight: DogfightCursor as unknown as EffectConstructor,
 }
 
 /** Instantiate a single effect from its serializable spec. */

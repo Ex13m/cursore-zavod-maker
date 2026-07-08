@@ -20,21 +20,28 @@ export const PALETTES = [
 
 /** Style tags: bias which archetypes get produced. */
 export const STYLES = [
-  { tag: 'minimal',   weight: 6 },
-  { tag: 'magnetic',  weight: 7 },
-  { tag: 'glow',      weight: 7 },
-  { tag: 'particles', weight: 6 },
-  { tag: 'gooey',     weight: 5 },
-  { tag: 'image',     weight: 5 },
+  { tag: 'minimal',   weight: 5 },
+  { tag: 'magnetic',  weight: 6 },
+  { tag: 'glow',      weight: 6 },
+  { tag: 'particles', weight: 5 },
+  { tag: 'gooey',     weight: 4 },
+  { tag: 'image',     weight: 2 }, // статичные иконки не в чести у владельца
   { tag: 'maximal',   weight: 4 },
-  { tag: 'brutal',    weight: 5 },
+  { tag: 'brutal',    weight: 4 },
   // «живые» сценарии — премиум-сегмент дропа
   { tag: 'gunner',    weight: 6 },
   { tag: 'rocket',    weight: 6 },
-  { tag: 'fishing',   weight: 5 },
+  { tag: 'fishing',   weight: 7 }, // владельцу зашли рыбки
   { tag: 'organism',  weight: 6 },
-  // курируемый арт-пак (Higgsfield-спрайты)
-  { tag: 'sprite',    weight: 7 },
+  // v1.3: сцены, меняющие пространство (по бестселлерам маркетплейсов:
+  // trails/neon/particles — codecanyon top; + фирменные идеи завода)
+  { tag: 'blackhole',  weight: 8 },
+  { tag: 'hyperspace', weight: 7 },
+  { tag: 'storm',      weight: 8 },
+  { tag: 'spacetime',  weight: 8 },
+  { tag: 'ribbon',     weight: 7 },
+  { tag: 'fireflies',  weight: 7 },
+  { tag: 'dogfight',   weight: 8 },
 ]
 
 export const NAME_ADJ = ['Neon', 'Hyper', 'Soft', 'Lunar', 'Atomic', 'Velvet', 'Chrome', 'Pixel', 'Cosmic', 'Retro', 'Brutal', 'Liquid', 'Solar', 'Frost', 'Turbo', 'Ghost', 'Plasma', 'Mono', 'Vivid', 'Hollow']

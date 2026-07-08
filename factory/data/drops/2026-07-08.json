@@ -1,6 +1,6 @@
 {
   "date": "2026-07-08",
-  "generatedAt": "2026-07-08T21:01:00.702Z",
+  "generatedAt": "2026-07-08T21:17:39.132Z",
   "seed": "2026-07-08",
   "trendsNotes": [
     "no live signals — built-in bank with daily rotation",
@@ -35,26 +35,40 @@
     },
     {
       "id": "drop-2026-07-08-1",
-      "name": "Retro Vortex",
-      "description": "A spinning ✸ cursor with a lively pulse.",
+      "name": "Velvet Nova",
+      "description": "Glow plus particles plus a bright core. The maximalist showpiece.",
       "tags": [
-        "image",
-        "animated",
-        "emoji",
+        "glow",
+        "trail",
+        "maximal",
         "hmi-signal"
       ],
       "accent": "#2ecc71",
       "background": "#1a1d21",
       "dark": true,
-      "suggestedPrice": 8,
+      "suggestedPrice": 10,
       "effects": [
         {
-          "type": "image",
+          "type": "glow",
           "options": {
-            "src": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%3E%3Ctext%20x%3D%2232%22%20y%3D%2250%22%20font-size%3D%2252%22%20text-anchor%3D%22middle%22%3E%E2%9C%B8%3C%2Ftext%3E%3C%2Fsvg%3E",
-            "size": 42,
-            "spin": 80,
-            "pulse": 0.1
+            "size": 290,
+            "color": "#f39c12",
+            "opacity": 0.4
+          }
+        },
+        {
+          "type": "trail",
+          "options": {
+            "color": "#2ecc71",
+            "size": 8,
+            "life": 0.6
+          }
+        },
+        {
+          "type": "dot",
+          "options": {
+            "size": 7,
+            "color": "#ffffff"
           }
         }
       ],
@@ -62,35 +76,27 @@
     },
     {
       "id": "drop-2026-07-08-2",
-      "name": "Abduction UFO",
-      "description": "A retro flying saucer hovers under the pointer, tractor beam warmed up.",
+      "name": "Retro Prism",
+      "description": "You fly the fugitive fighter; a squadron hunts you, lasers flying off-screen. Freeze — you are shot down; move — respawn and run.",
       "tags": [
-        "sprite",
-        "art",
-        "premium",
-        "ufo"
+        "scene",
+        "dogfight",
+        "space",
+        "game",
+        "aurora"
       ],
-      "accent": "#3bdcff",
-      "background": "#0a0b14",
+      "accent": "#5b8cff",
+      "background": "#05060a",
       "dark": true,
-      "suggestedPrice": 12,
+      "suggestedPrice": 14,
       "effects": [
         {
-          "type": "glow",
+          "type": "dogfight",
           "options": {
-            "size": 230,
-            "color": "#ffd400",
-            "opacity": 0.35
-          }
-        },
-        {
-          "type": "image",
-          "options": {
-            "src": "https://cursorezavodmaker.netlify.app/sprites/ufo.png",
-            "size": 54,
-            "spin": 0,
-            "pulse": 0.07,
-            "halfLife": 0.04
+            "shipColor": "#5b8cff",
+            "hunterColor": "#9b5bff",
+            "hunters": 3,
+            "sound": false
           }
         }
       ],
@@ -155,35 +161,25 @@
     },
     {
       "id": "drop-2026-07-08-5",
-      "name": "Solar Orbit",
-      "description": "A fat hard dot inside a thick square ring. Raw and loud.",
+      "name": "Hyper Trace",
+      "description": "A rocket chases your pointer — and lands beside it when you stop.",
       "tags": [
-        "brutalism",
-        "bold",
-        "agency",
+        "scene",
+        "rocket",
+        "chase",
         "mono-ink"
       ],
       "accent": "#111111",
       "background": "#ededea",
       "dark": false,
-      "suggestedPrice": 10,
+      "suggestedPrice": 6,
       "effects": [
         {
-          "type": "ring",
+          "type": "rocket",
           "options": {
-            "size": 49,
-            "thickness": 4,
-            "hoverRadius": 0,
-            "color": "#111111"
-          }
-        },
-        {
-          "type": "dot",
-          "options": {
-            "size": 12,
-            "blendMode": "difference",
-            "radius": "0%",
-            "color": "#444444"
+            "flameColor": "#111111",
+            "accel": 3300,
+            "sound": false
           }
         }
       ],
@@ -191,35 +187,25 @@
     },
     {
       "id": "drop-2026-07-08-6",
-      "name": "Dragon Breath",
-      "description": "A fierce neon dragon rides your pointer, magenta sparks streaming behind.",
+      "name": "Atomic Orbit",
+      "description": "Starfield warp: your pointer is the vanishing point — move fast to jump to light speed.",
       "tags": [
-        "sprite",
-        "art",
-        "premium",
-        "dragon"
+        "scene",
+        "hyperspace",
+        "space",
+        "warp",
+        "dopamine"
       ],
-      "accent": "#00e5ff",
-      "background": "#0a0b14",
+      "accent": "#ff4d6d",
+      "background": "#05060a",
       "dark": true,
       "suggestedPrice": 12,
       "effects": [
         {
-          "type": "trail",
+          "type": "warp",
           "options": {
-            "color": "#ff2bd0",
-            "size": 6,
-            "life": 0.6000000000000001
-          }
-        },
-        {
-          "type": "image",
-          "options": {
-            "src": "https://cursorezavodmaker.netlify.app/sprites/dragon.png",
-            "size": 52,
-            "spin": 0,
-            "pulse": 0.06,
-            "halfLife": 0.04
+            "accent": "#ff4d6d",
+            "starCount": 190
           }
         }
       ],
@@ -260,35 +246,26 @@
     },
     {
       "id": "drop-2026-07-08-8",
-      "name": "Phoenix Dive",
-      "description": "A blazing phoenix dives with your cursor, shedding golden embers.",
+      "name": "Soft Beam",
+      "description": "A storm lives in the pointer: branching bolts crackle as you move, a click discharges a full strike.",
       "tags": [
-        "sprite",
-        "art",
-        "premium",
-        "phoenix"
+        "scene",
+        "storm",
+        "electric",
+        "neon",
+        "chrome"
       ],
-      "accent": "#ff9e00",
+      "accent": "#c0c0c0",
       "background": "#0a0b14",
       "dark": true,
       "suggestedPrice": 12,
       "effects": [
         {
-          "type": "trail",
+          "type": "lightning",
           "options": {
-            "color": "#ffd400",
-            "size": 6,
-            "life": 0.45
-          }
-        },
-        {
-          "type": "image",
-          "options": {
-            "src": "https://cursorezavodmaker.netlify.app/sprites/phoenix.png",
-            "size": 52,
-            "spin": 0,
-            "pulse": 0.08,
-            "halfLife": 0.04
+            "color": "#c0c0c0",
+            "rate": 4,
+            "sound": false
           }
         }
       ],
@@ -296,35 +273,25 @@
     },
     {
       "id": "drop-2026-07-08-9",
-      "name": "Voltage Skull",
-      "description": "An electric skull with acid-green eyes pulsing over a toxic glow.",
+      "name": "Chrome Pulse",
+      "description": "A luminous silk ribbon flows behind the pointer and settles like fabric when you stop.",
       "tags": [
-        "sprite",
-        "art",
-        "premium",
-        "skull"
+        "scene",
+        "ribbon",
+        "trail",
+        "silk",
+        "y2k-neon"
       ],
-      "accent": "#39ff14",
+      "accent": "#ff3b81",
       "background": "#0a0b14",
       "dark": true,
-      "suggestedPrice": 12,
+      "suggestedPrice": 9,
       "effects": [
         {
-          "type": "glow",
+          "type": "ribbon",
           "options": {
-            "size": 200,
-            "color": "#39ff14",
-            "opacity": 0.35
-          }
-        },
-        {
-          "type": "image",
-          "options": {
-            "src": "https://cursorezavodmaker.netlify.app/sprites/skull.png",
-            "size": 48,
-            "spin": 0,
-            "pulse": 0.1,
-            "halfLife": 0.04
+            "hue": 251,
+            "width": 15
           }
         }
       ],
@@ -332,12 +299,13 @@
     },
     {
       "id": "drop-2026-07-08-10",
-      "name": "Vivid Orbit",
-      "description": "Your pointer is a wobbler lure — a school of fish hunts it.",
+      "name": "Atomic Prism",
+      "description": "A pulsating abstract organism that convulses in noisy 3D bursts, cycling colours.",
       "tags": [
         "scene",
-        "fishing",
-        "fun",
+        "organism",
+        "abstract",
+        "3d",
         "aurora"
       ],
       "accent": "#5b8cff",
@@ -346,11 +314,11 @@
       "suggestedPrice": 6,
       "effects": [
         {
-          "type": "lure",
+          "type": "noiseblob",
           "options": {
-            "fishColor": "#5b8cff",
-            "lureColor": "#9b5bff",
-            "fishCount": 4,
+            "size": 30,
+            "colorPeriod": 3.7,
+            "burstEvery": 3,
             "sound": false
           }
         }
@@ -419,25 +387,35 @@
     },
     {
       "id": "drop-2026-07-08-13",
-      "name": "Hollow Bloom",
-      "description": "A rocket chases your pointer — and lands beside it when you stop.",
+      "name": "Chrome Glitch",
+      "description": "A fat hard dot inside a thick square ring. Raw and loud.",
       "tags": [
-        "scene",
-        "rocket",
-        "chase",
+        "brutalism",
+        "bold",
+        "agency",
         "aurora"
       ],
       "accent": "#5b8cff",
       "background": "#0a0b14",
       "dark": true,
-      "suggestedPrice": 7,
+      "suggestedPrice": 10,
       "effects": [
         {
-          "type": "rocket",
+          "type": "ring",
           "options": {
-            "flameColor": "#5b8cff",
-            "accel": 3300,
-            "sound": false
+            "size": 49,
+            "thickness": 4,
+            "hoverRadius": 0,
+            "color": "#5b8cff"
+          }
+        },
+        {
+          "type": "dot",
+          "options": {
+            "size": 16,
+            "blendMode": "difference",
+            "radius": "0%",
+            "color": "#9b5bff"
           }
         }
       ],
@@ -445,40 +423,34 @@
     },
     {
       "id": "drop-2026-07-08-14",
-      "name": "Lunar Quartz",
-      "description": "Glow plus particles plus a bright core. The maximalist showpiece.",
+      "name": "Soft Flux",
+      "description": "A spinning ★ cursor with a lively pulse.",
       "tags": [
-        "glow",
-        "trail",
-        "maximal",
+        "image",
+        "animated",
+        "emoji",
         "acid-forest"
       ],
       "accent": "#39ff14",
       "background": "#0b130d",
       "dark": true,
-      "suggestedPrice": 11,
+      "suggestedPrice": 10,
       "effects": [
-        {
-          "type": "glow",
-          "options": {
-            "size": 240,
-            "color": "#00ffa3",
-            "opacity": 0.4
-          }
-        },
         {
           "type": "trail",
           "options": {
             "color": "#39ff14",
-            "size": 7,
-            "life": 0.6
+            "size": 5,
+            "life": 0.5
           }
         },
         {
-          "type": "dot",
+          "type": "image",
           "options": {
-            "size": 7,
-            "color": "#ffffff"
+            "src": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%3E%3Ctext%20x%3D%2232%22%20y%3D%2250%22%20font-size%3D%2252%22%20text-anchor%3D%22middle%22%3E%E2%98%85%3C%2Ftext%3E%3C%2Fsvg%3E",
+            "size": 39,
+            "spin": 70,
+            "pulse": 0.16
           }
         }
       ],
@@ -486,26 +458,25 @@
     },
     {
       "id": "drop-2026-07-08-15",
-      "name": "Hyper Wisp",
-      "description": "A pulsating abstract organism that convulses in noisy 3D bursts, cycling colours.",
+      "name": "Pixel Prism",
+      "description": "Your pointer is a wobbler lure — a school of fish hunts it.",
       "tags": [
         "scene",
-        "organism",
-        "abstract",
-        "3d",
+        "fishing",
+        "fun",
         "aurora"
       ],
       "accent": "#5b8cff",
       "background": "#0a0b14",
       "dark": true,
-      "suggestedPrice": 7,
+      "suggestedPrice": 6,
       "effects": [
         {
-          "type": "noiseblob",
+          "type": "lure",
           "options": {
-            "size": 33,
-            "colorPeriod": 2.5,
-            "burstEvery": 4.1000000000000005,
+            "fishColor": "#5b8cff",
+            "lureColor": "#9b5bff",
+            "fishCount": 4,
             "sound": false
           }
         }
@@ -514,35 +485,26 @@
     },
     {
       "id": "drop-2026-07-08-16",
-      "name": "Iris Butterfly",
-      "description": "An iridescent butterfly flutters at your fingertip inside a violet halo.",
+      "name": "Velvet Orbit",
+      "description": "The page becomes fabric: the grid bends in waves around your movement, a click drops a stone.",
       "tags": [
-        "sprite",
-        "art",
-        "premium",
-        "butterfly"
+        "scene",
+        "spacetime",
+        "grid",
+        "physics",
+        "aurora"
       ],
-      "accent": "#ff9ff3",
-      "background": "#0a0b14",
+      "accent": "#5b8cff",
+      "background": "#05060a",
       "dark": true,
-      "suggestedPrice": 12,
+      "suggestedPrice": 13,
       "effects": [
         {
-          "type": "glow",
+          "type": "ripple",
           "options": {
-            "size": 230,
-            "color": "#9b5bff",
-            "opacity": 0.35
-          }
-        },
-        {
-          "type": "image",
-          "options": {
-            "src": "https://cursorezavodmaker.netlify.app/sprites/butterfly.png",
-            "size": 50,
-            "spin": 0,
-            "pulse": 0.12,
-            "halfLife": 0.04
+            "crestColor": "#5b8cff",
+            "spacing": 48,
+            "amplitude": 18
           }
         }
       ],
@@ -551,25 +513,24 @@
     {
       "id": "drop-2026-07-08-17",
       "name": "Plasma Beam",
-      "description": "Your pointer is a wobbler lure — a school of fish hunts it.",
+      "description": "A living swarm of fireflies wanders around the pointer, blinking — dash and they scatter in fright.",
       "tags": [
         "scene",
-        "fishing",
-        "fun",
+        "fireflies",
+        "swarm",
+        "alive",
         "y2k-neon"
       ],
       "accent": "#ff3b81",
-      "background": "#0d0221",
+      "background": "#0b130d",
       "dark": true,
-      "suggestedPrice": 6,
+      "suggestedPrice": 11,
       "effects": [
         {
-          "type": "lure",
+          "type": "firefly",
           "options": {
-            "fishColor": "#ff3b81",
-            "lureColor": "#39ff14",
-            "fishCount": 3,
-            "sound": false
+            "color": "#ff3b81",
+            "count": 15
           }
         }
       ],
@@ -577,34 +538,27 @@
     },
     {
       "id": "drop-2026-07-08-18",
-      "name": "Mono Echo",
-      "description": "A spinning ✷ cursor with a lively pulse.",
+      "name": "Turbo Vortex",
+      "description": "A black hole devours the page: particles spiral from every corner into your pointer.",
       "tags": [
-        "image",
-        "animated",
-        "emoji",
+        "scene",
+        "blackhole",
+        "space",
+        "gravity",
         "aurora"
       ],
       "accent": "#5b8cff",
-      "background": "#0a0b14",
+      "background": "#05060a",
       "dark": true,
-      "suggestedPrice": 10,
+      "suggestedPrice": 13,
       "effects": [
         {
-          "type": "trail",
+          "type": "vortex",
           "options": {
             "color": "#5b8cff",
-            "size": 5,
-            "life": 0.5
-          }
-        },
-        {
-          "type": "image",
-          "options": {
-            "src": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%3E%3Ctext%20x%3D%2232%22%20y%3D%2250%22%20font-size%3D%2252%22%20text-anchor%3D%22middle%22%3E%E2%9C%B7%3C%2Ftext%3E%3C%2Fsvg%3E",
-            "size": 41,
-            "spin": 110,
-            "pulse": 0.04
+            "glowColor": "#9b5bff",
+            "particleCount": 180,
+            "sound": false
           }
         }
       ],
@@ -612,32 +566,25 @@
     },
     {
       "id": "drop-2026-07-08-19",
-      "name": "Soft Bloom",
-      "description": "An additive particle stream that flares behind the pointer.",
+      "name": "Neon Orbit",
+      "description": "A gooey blob that squashes and stretches with your speed.",
       "tags": [
-        "trail",
-        "particles",
-        "neon",
+        "blob",
+        "squash",
+        "fun",
         "chrome"
       ],
       "accent": "#c0c0c0",
       "background": "#08010f",
       "dark": true,
-      "suggestedPrice": 10,
+      "suggestedPrice": 6,
       "effects": [
         {
-          "type": "trail",
+          "type": "blob",
           "options": {
+            "size": 25,
             "color": "#c0c0c0",
-            "size": 10,
-            "life": 0.4
-          }
-        },
-        {
-          "type": "dot",
-          "options": {
-            "size": 7,
-            "color": "#ffffff"
+            "blendMode": "normal"
           }
         }
       ],

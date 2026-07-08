@@ -7,9 +7,13 @@
 const KNOWN_EFFECTS = new Set([
   'dot', 'ring', 'glow', 'trail', 'blob', 'image',
   'turret', 'rocket', 'lure', 'noiseblob',
+  'vortex', 'warp', 'lightning', 'ripple', 'ribbon', 'firefly', 'dogfight',
 ])
 /** Scenario effects draw their own self-luminous scene — contrast check не про них. */
-const SCENE_EFFECTS = new Set(['turret', 'rocket', 'lure', 'noiseblob'])
+const SCENE_EFFECTS = new Set([
+  'turret', 'rocket', 'lure', 'noiseblob',
+  'vortex', 'warp', 'lightning', 'ripple', 'ribbon', 'firefly', 'dogfight',
+])
 const MAX_EFFECTS = 4
 const MAX_TRAIL_SIZE = 20
 

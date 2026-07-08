@@ -27,6 +27,13 @@ export {
   RocketCursor,
   LureCursor,
   NoiseBlobCursor,
+  VortexCursor,
+  WarpCursor,
+  LightningCursor,
+  RippleCursor,
+  RibbonCursor,
+  FireflyCursor,
+  DogfightCursor,
   CanvasEffect,
   buildEffect,
   buildEffects,
@@ -44,6 +51,13 @@ export type {
   RocketCursorOptions,
   LureCursorOptions,
   NoiseBlobCursorOptions,
+  VortexCursorOptions,
+  WarpCursorOptions,
+  LightningCursorOptions,
+  RippleCursorOptions,
+  RibbonCursorOptions,
+  FireflyCursorOptions,
+  DogfightCursorOptions,
 } from './effects'
 
 // Presets (the sellable catalog)
