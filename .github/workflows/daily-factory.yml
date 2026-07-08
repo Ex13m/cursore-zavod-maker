@@ -1,0 +1,57 @@
+name: daily-factory
+
+# Суточный цикл завода: тренды → производство → commit → (Netlify autodeploy) → письмо.
+# Netlify пересобирает портал на каждый push в main — commit дропа и есть деплой.
+
+on:
+  schedule:
+    - cron: '0 7 * * *' # 07:00 UTC ежедневно
+  workflow_dispatch: # ручной запуск смены с кнопки
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-factory
+  cancel-in-progress: false
+
+jobs:
+  shift:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Trend scout + producer (+ OTK)
+        env:
+          TRENDS_SIGNAL_URL: ${{ vars.TRENDS_SIGNAL_URL }}
+        run: |
+          node factory/trends.js
+          node factory/produce.js
+
+      - name: Commit drop (git = журнал производства)
+        run: |
+          git config user.name "zavod-bot"
+          git config user.email "actions@github.com"
+          git add factory/data
+          if git diff --cached --quiet; then
+            echo "drop already exists — idempotent skip"
+          else
+            git commit -m "factory: drop $(date -u +%F)"
+            git push
+          fi
+
+      - name: Notify owner
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          PORTAL_URL: ${{ vars.PORTAL_URL }}
+        run: node factory/notify.js
