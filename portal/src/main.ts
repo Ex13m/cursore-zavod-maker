@@ -1,7 +1,7 @@
 import { createCursor } from 'cursorfx'
 import type { CursorEngine } from 'cursorfx'
 import { api, adminKey } from './api'
-import type { Drop, DropItem, Health, QueueItem, Trends } from './api'
+import type { Drop, DropItem, Health, QueueItem, Trends, TrendPalette } from './api'
 import { renderCover } from './cover'
 import { drawPreview } from './preview'
 import { maybeAnnounce } from './announce'
@@ -221,6 +221,135 @@ function unitCard(item: DropItem): HTMLElement {
   return card
 }
 
+// -------------------------------------------------------- trend modal ---
+function openTrendModal(p: TrendPalette): void {
+  const overlay = el('div', { class: 'modal' })
+  overlay.addEventListener('mousedown', (e) => {
+    if (e.target === overlay) overlay.remove()
+  })
+  const close = el('button', { class: 'btn' }, ['✕'])
+  close.addEventListener('click', () => overlay.remove())
+
+  // образцы цветов
+  const swatches = el('div', { class: 'modal__swatches' })
+  for (const c of p.colors) {
+    const s = el('span', { class: 'modal__swatch', title: c })
+    s.style.background = c
+    swatches.append(s)
+  }
+  const bgSw = el('span', { class: 'modal__swatch modal__swatch--bg', title: `фон ${p.bg}` })
+  bgSw.style.background = p.bg
+  swatches.append(bgSw)
+
+  // примеры из сегодняшнего дропа
+  const examples = state.drop?.items.filter((i) => i.tags.includes(p.name)) ?? []
+  const exHost = el('div', { class: 'modal__examples' })
+  if (examples.length === 0) {
+    exHost.append(el('div', { class: 'empty' }, ['В сегодняшнем дропе примеров нет — тренд ждёт своей смены.']))
+  }
+  for (const item of examples.slice(0, 6)) {
+    const mini = el('canvas', { class: 'modal__mini' })
+    drawPreview(mini, item)
+    const test = el('button', { class: 'btn btn--test', 'data-id': item.id }, ['ТЕСТ'])
+    test.addEventListener('click', () => {
+      overlay.remove()
+      setActive(item.id)
+    })
+    exHost.append(
+      el('div', { class: 'modal__example' }, [
+        mini,
+        el('div', { class: 'modal__exmeta' }, [
+          el('b', {}, [item.name]),
+          el('span', { class: 'faint mono' }, [` $${item.suggestedPrice} · ${item.effects.map((e) => e.type).join('+')}`]),
+        ]),
+        test,
+      ]),
+    )
+  }
+
+  // продажи этого тренда
+  const sold = state.queue.filter(
+    (q) => q.status === 'published' && q.result?.url && (q.tags ?? []).includes(p.name),
+  )
+  const salesHost = el('div', {})
+  salesHost.append(el('h4', { class: 'modal__sub' }, ['В ПРОДАЖЕ']))
+  if (sold.length === 0) {
+    salesHost.append(el('div', { class: 'empty' }, ['Из этого тренда пока ничего не отгружено — одобри примеры выше.']))
+  }
+  for (const q of sold) {
+    salesHost.append(
+      el('div', { class: 'qrow' }, [
+        el('span', {}, [q.name]),
+        el('a', { class: 'linklike', href: q.result!.url!, target: '_blank' }, ['→ купить']),
+      ]),
+    )
+  }
+
+  overlay.append(
+    el('div', { class: 'modal__panel' }, [
+      el('div', { class: 'modal__head' }, [
+        el('h3', {}, [`ТРЕНД · ${p.name.toUpperCase()}`]),
+        el('span', { class: 'mono dim' }, [`вес ${p.weight}`]),
+        close,
+      ]),
+      swatches,
+      el('p', { class: 'modal__desc' }, [p.desc ?? 'Описание появится со следующим обновлением трендов.']),
+      el('h4', { class: 'modal__sub' }, [`ПРИМЕРЫ В ДРОПЕ (${examples.length})`]),
+      exHost,
+      salesHost,
+    ]),
+  )
+  document.body.append(overlay)
+}
+
+// ---------------------------------------------------- factory controls ---
+function factoryControls(): HTMLElement {
+  const status = el('span', { class: 'mono dim', style: 'font-size:11px' }, [''])
+  const run = (label: string, payload: Parameters<typeof api.factory>[0]) => {
+    const b = el('button', { class: 'btn btn--warn' }, [label]) as HTMLButtonElement
+    b.addEventListener('click', async () => {
+      b.disabled = true
+      status.textContent = '… запуск'
+      try {
+        const res = await api.factory(payload)
+        status.textContent = res.message
+      } catch (err) {
+        status.textContent = err instanceof Error ? err.message : String(err)
+      }
+      b.disabled = false
+    })
+    return b
+  }
+
+  // настройка времени смены (UTC)
+  const time = el('input', { type: 'time', value: '07:00', class: 'pid', style: 'width:auto' }) as HTMLInputElement
+  const saveTime = el('button', { class: 'btn' }, ['СОХРАНИТЬ ВРЕМЯ']) as HTMLButtonElement
+  saveTime.addEventListener('click', async () => {
+    const [h, m] = time.value.split(':').map(Number)
+    saveTime.disabled = true
+    status.textContent = '… сохраняю расписание'
+    try {
+      const res = await api.factory({ action: 'schedule', hour: h, minute: m })
+      status.textContent = res.message
+    } catch (err) {
+      status.textContent = err instanceof Error ? err.message : String(err)
+    }
+    saveTime.disabled = false
+  })
+
+  return el('div', { class: 'panel span12' }, [
+    el('h3', { class: 'panel__title' }, ['РУЧНОЕ УПРАВЛЕНИЕ ЗАВОДОМ']),
+    el('div', { class: 'unit__row' }, [
+      run('⟳ ПРОВЕРИТЬ ТРЕНДЫ', { action: 'trends' }),
+      run('⚙ ПЕРЕГЕНЕРИРОВАТЬ ВСЁ', { action: 'regenerate' }),
+      el('span', { class: 'mono dim', style: 'font-size:11px' }, ['время смены (UTC):']),
+      time,
+      saveTime,
+    ]),
+    status,
+  ])
+}
+
 // ------------------------------------------------------------ view: board ---
 function viewBoard(): HTMLElement {
   const root = el('div', { class: 'grid grid--board' })
@@ -248,7 +377,7 @@ function viewBoard(): HTMLElement {
   const palettes = [...(state.trends?.palettes ?? [])].sort((a, b) => b.weight - a.weight)
   const max = palettes[0]?.weight ?? 1
   for (const p of palettes.slice(0, 8)) {
-    const g = el('div', { class: `gauge${p.weight / max > 0.75 ? ' gauge--hot' : ''}` }, [
+    const g = el('div', { class: `gauge gauge--click${p.weight / max > 0.75 ? ' gauge--hot' : ''}`, title: 'Открыть карту тренда' }, [
       el('div', { class: 'gauge__label' }, [el('span', {}, [p.name]), el('span', {}, [String(p.weight)])]),
     ])
     const bar = el('div', { class: 'gauge__bar' })
@@ -256,6 +385,7 @@ function viewBoard(): HTMLElement {
     fill.style.width = `${Math.round((p.weight / max) * 100)}%`
     bar.append(fill)
     g.append(bar)
+    g.addEventListener('click', () => openTrendModal(p))
     gauges.append(g)
   }
   root.append(gauges)
@@ -273,6 +403,8 @@ function viewBoard(): HTMLElement {
   }
   alarms.append(el('div', { class: 'alarms' }, [list]))
   root.append(alarms)
+
+  root.append(factoryControls())
 
   return root
 }

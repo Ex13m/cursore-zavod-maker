@@ -6,7 +6,12 @@ name: daily-factory
 on:
   schedule:
     - cron: '0 7 * * *' # 07:00 UTC ежедневно
-  workflow_dispatch: # ручной запуск смены с кнопки
+  workflow_dispatch: # ручной запуск смены (с кнопки Actions или с пульта)
+    inputs:
+      mode:
+        description: 'daily | trends | regenerate'
+        required: false
+        default: 'daily'
 
 permissions:
   contents: write
@@ -32,9 +37,16 @@ jobs:
       - name: Trend scout + producer (+ OTK)
         env:
           TRENDS_SIGNAL_URL: ${{ vars.TRENDS_SIGNAL_URL }}
+          REPLICATE_API_TOKEN: ${{ secrets.REPLICATE_API_TOKEN }}
         run: |
           node factory/trends.js
-          node factory/produce.js
+          if [ "${{ inputs.mode }}" = "trends" ]; then
+            echo "режим trends: только обновление трендов"
+          elif [ "${{ inputs.mode }}" = "regenerate" ]; then
+            node factory/produce.js --force
+          else
+            node factory/produce.js
+          fi
 
       - name: Commit drop (git = журнал производства)
         run: |
@@ -50,6 +62,7 @@ jobs:
           fi
 
       - name: Notify owner
+        if: ${{ inputs.mode != 'trends' }} # для проверки трендов письмо не шлём
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           EMAIL_TO: ${{ secrets.EMAIL_TO }}

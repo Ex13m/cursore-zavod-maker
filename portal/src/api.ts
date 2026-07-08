@@ -21,9 +21,18 @@ export interface Drop {
   alarms: string[]
 }
 
+export interface TrendPalette {
+  name: string
+  weight: number
+  colors: string[]
+  bg: string
+  dark: boolean
+  desc?: string
+}
+
 export interface Trends {
   date: string
-  palettes: Array<{ name: string; weight: number; colors: string[]; bg: string; dark: boolean }>
+  palettes: TrendPalette[]
   styles: Array<{ tag: string; weight: number }>
   notes: string[]
 }
@@ -100,4 +109,10 @@ export const api = {
       headers: authHeaders({ 'Content-Type': 'application/json' }),
       body: JSON.stringify({ prompt }),
     }).then(json<ChatResult>),
+  factory: (payload: { action: 'trends' | 'regenerate' | 'schedule'; hour?: number; minute?: number }) =>
+    fetch('/api/factory', {
+      method: 'POST',
+      headers: authHeaders({ 'Content-Type': 'application/json' }),
+      body: JSON.stringify(payload),
+    }).then(json<{ ok: boolean; message: string }>),
 }

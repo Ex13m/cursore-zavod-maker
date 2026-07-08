@@ -78,6 +78,34 @@ const server = createServer(async (req, res) => {
       return json(res, 200, await publishQueue())
     }
 
+    // ручное управление заводом: локально выполняем фабрику прямо в процессе
+    if (path === '/api/factory' && req.method === 'POST') {
+      const { action, hour, minute } = await readBody(req)
+      if (action === 'trends') {
+        const { runTrendScout } = await import('./trends.js')
+        const t = await runTrendScout()
+        return json(res, 200, { ok: true, message: `тренды обновлены: ${t.notes.join(' · ')}` })
+      }
+      if (action === 'regenerate') {
+        const { runTrendScout } = await import('./trends.js')
+        const { produceDrop } = await import('./produce.js')
+        await runTrendScout()
+        const drop = await produceDrop(undefined, { force: true })
+        return json(res, 200, { ok: true, message: `дроп ${drop.date} перегенерирован: ${drop.items.length} шт, тревог ${drop.alarms.length}. Обнови страницу.` })
+      }
+      if (action === 'schedule') {
+        const { readFileSync, writeFileSync } = await import('node:fs')
+        const { join } = await import('node:path')
+        const { ROOT_DIR } = await import('./lib/paths.js')
+        const file = join(ROOT_DIR, '.github', 'workflows', 'daily-factory.yml')
+        const yml = readFileSync(file, 'utf8')
+        const next = yml.replace(/- cron: '\d+ \d+ \* \* \*'/, `- cron: '${minute ?? 0} ${hour ?? 7} * * *'`)
+        writeFileSync(file, next, 'utf8')
+        return json(res, 200, { ok: true, message: `расписание в workflow-файле: ${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')} UTC — закоммить и запушь.` })
+      }
+      return json(res, 400, { error: 'unknown action' })
+    }
+
     if (path === '/api/chat' && req.method === 'POST') {
       const { prompt } = await readBody(req)
       if (!prompt) return json(res, 400, { error: 'prompt required' })
