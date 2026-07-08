@@ -1,0 +1,32 @@
+{
+  "name": "cursor-zavod",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Autonomous animated-cursor factory: trends → production → HMI portal → approval → marketplace.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Ex13m",
+  "workspaces": [
+    "packages/cursorfx",
+    "portal"
+  ],
+  "scripts": {
+    "dev": "concurrently -n portal,api -c yellow,cyan \"npm:dev:portal\" \"npm:dev:api\"",
+    "dev:portal": "npm run dev -w portal",
+    "dev:api": "node factory/devserver.js",
+    "build": "npm run build -w packages/cursorfx && npm run build -w portal",
+    "build:site": "npm run build -w portal && node factory/lib/copydata.js",
+    "typecheck": "npm run typecheck -w packages/cursorfx && npm run typecheck -w portal",
+    "factory:trends": "node factory/trends.js",
+    "factory:produce": "node factory/produce.js",
+    "factory:notify": "node factory/notify.js",
+    "factory:daily": "node factory/trends.js && node factory/produce.js && node factory/notify.js"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^10.7.9",
+    "archiver": "^7.0.1"
+  }
+}

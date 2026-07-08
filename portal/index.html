@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CURSOR ZAVOD · пульт</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <header class="hmi-strip">
+      <div class="hmi-strip__brand mono">
+        <span class="lamp lamp--run" id="line-lamp"></span>
+        <b>CURSOR ZAVOD</b><span class="dim">· ПУЛЬТ УПРАВЛЕНИЯ</span>
+      </div>
+      <nav class="hmi-nav mono" id="nav">
+        <button data-view="board" class="is-on">ПУЛЬТ</button>
+        <button data-view="conveyor">КОНВЕЙЕР</button>
+        <button data-view="chat">ЦЕХ-ЧАТ</button>
+        <button data-view="warehouse">СКЛАД</button>
+        <button data-view="sales">ПРОДАЖИ</button>
+      </nav>
+      <div class="hmi-strip__right mono">
+        <span id="shift-date" class="dim">—</span>
+        <button id="kill-switch" class="kill mono" title="Выключить кастомный курсор">CURSOR: ON</button>
+      </div>
+    </header>
+
+    <main id="view" class="view"><!-- screens injected --></main>
+
+    <footer class="hmi-foot mono">
+      <span id="keys-status" class="dim">keys: …</span>
+      <span class="dim">git = журнал производства · exception-based review</span>
+    </footer>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
