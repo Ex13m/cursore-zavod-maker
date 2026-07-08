@@ -12,6 +12,9 @@ export type {
 // Math helpers (handy when authoring custom effects)
 export { lerp, clamp, distance, expSmooth } from './core/math'
 
+// Generated sound (scenario cursors)
+export { FxAudio } from './core/sound'
+
 // Built-in effects + the serializable spec/registry
 export {
   DotCursor,
@@ -20,6 +23,11 @@ export {
   TrailCursor,
   BlobCursor,
   ImageCursor,
+  TurretCursor,
+  RocketCursor,
+  LureCursor,
+  NoiseBlobCursor,
+  CanvasEffect,
   buildEffect,
   buildEffects,
 } from './effects'
@@ -32,6 +40,10 @@ export type {
   TrailCursorOptions,
   BlobCursorOptions,
   ImageCursorOptions,
+  TurretCursorOptions,
+  RocketCursorOptions,
+  LureCursorOptions,
+  NoiseBlobCursorOptions,
 } from './effects'
 
 // Presets (the sellable catalog)

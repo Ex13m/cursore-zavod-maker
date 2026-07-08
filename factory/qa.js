@@ -4,7 +4,12 @@
  * review — the owner sees alarms on the HMI, the factory doesn't stop).
  */
 
-const KNOWN_EFFECTS = new Set(['dot', 'ring', 'glow', 'trail', 'blob', 'image'])
+const KNOWN_EFFECTS = new Set([
+  'dot', 'ring', 'glow', 'trail', 'blob', 'image',
+  'turret', 'rocket', 'lure', 'noiseblob',
+])
+/** Scenario effects draw their own self-luminous scene — contrast check не про них. */
+const SCENE_EFFECTS = new Set(['turret', 'rocket', 'lure', 'noiseblob'])
 const MAX_EFFECTS = 4
 const MAX_TRAIL_SIZE = 20
 
@@ -43,7 +48,7 @@ export function inspect(item) {
   const first = item.effects[item.effects.length - 1] // topmost layer
   const fxLuma = hexLuma(first?.options?.color)
   const blend = first?.options?.blendMode
-  if (bgLuma !== null && fxLuma !== null && blend !== 'difference' && blend !== 'exclusion') {
+  if (bgLuma !== null && fxLuma !== null && !SCENE_EFFECTS.has(first?.type) && blend !== 'difference' && blend !== 'exclusion') {
     if (Math.abs(bgLuma - fxLuma) < 0.12) alarms.push(`contrast: top layer luma ${fxLuma.toFixed(2)} ≈ bg ${bgLuma.toFixed(2)}`)
   }
 

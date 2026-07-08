@@ -27,6 +27,12 @@ const readBody = (req) =>
     })
   })
 
+/** Мутации и чат — только с ключом владельца (если ZAVOD_ADMIN_KEY задан). */
+const authorized = (req) => {
+  const key = process.env.ZAVOD_ADMIN_KEY
+  return !key || req.headers['x-zavod-key'] === key
+}
+
 const server = createServer(async (req, res) => {
   const url = new URL(req.url, `http://localhost:${PORT}`)
   const path = url.pathname
@@ -51,6 +57,12 @@ const server = createServer(async (req, res) => {
     }
 
     if (path === '/api/queue' && req.method === 'GET') return json(res, 200, readQueue())
+
+    // Всё ниже — мутации или расход токенов: под ключ.
+    if (!authorized(req) && path.startsWith('/api/')) {
+      return json(res, 401, { error: 'нужен ключ владельца (X-Zavod-Key)' })
+    }
+
     if (path === '/api/queue' && req.method === 'POST') {
       const body = await readBody(req)
       if (!body.id || !body.name || !Array.isArray(body.effects)) {

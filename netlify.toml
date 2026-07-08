@@ -6,5 +6,6 @@
   node_bundler = "esbuild"
 
 # Secrets live in Netlify env vars (Site settings → Environment variables):
+# ZAVOD_ADMIN_KEY (обязателен на проде — защита одобрения/отгрузки/чата),
 # GUMROAD_ACCESS_TOKEN, ANTHROPIC_API_KEY, REPLICATE_API_TOKEN,
 # RESEND_API_KEY, EMAIL_TO, EMAIL_FROM, PORTAL_URL

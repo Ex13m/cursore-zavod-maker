@@ -1,8 +1,32 @@
 import { createCursor } from 'cursorfx'
 import type { CursorEngine } from 'cursorfx'
-import { api } from './api'
+import { api, adminKey } from './api'
 import type { Drop, DropItem, Health, QueueItem, Trends } from './api'
 import { renderCover } from './cover'
+import { drawPreview } from './preview'
+import { maybeAnnounce } from './announce'
+import { VERSION } from './version'
+
+// ----------------------------------------------------------- rejects (БРАК) ---
+const REJ_KEY = 'zavod.rejected'
+const rejected = new Set<string>(JSON.parse(localStorage.getItem(REJ_KEY) ?? '[]') as string[])
+function toggleRejected(id: string): void {
+  if (rejected.has(id)) rejected.delete(id)
+  else rejected.add(id)
+  localStorage.setItem(REJ_KEY, JSON.stringify([...rejected]))
+}
+
+const SCENE_TYPES = new Set(['turret', 'rocket', 'lure', 'noiseblob'])
+const hasSound = (item: DropItem) => item.effects.some((e) => SCENE_TYPES.has(e.type))
+const soundOn = (item: DropItem) =>
+  item.effects.some((e) => SCENE_TYPES.has(e.type) && Boolean((e.options as { sound?: boolean } | undefined)?.sound))
+function toggleSound(item: DropItem): void {
+  const next = !soundOn(item)
+  for (const e of item.effects) {
+    if (!SCENE_TYPES.has(e.type)) continue
+    e.options = { ...(e.options ?? {}), sound: next }
+  }
+}
 
 // ----------------------------------------------------------------- state ---
 type View = 'board' | 'conveyor' | 'chat' | 'warehouse' | 'sales'
@@ -96,9 +120,11 @@ async function unapprove(id: string): Promise<void> {
 // -------------------------------------------------------------- unit card ---
 function unitCard(item: DropItem): HTMLElement {
   const queued = state.queue.find((q) => q.id === item.id)
-  const preview = el('div', { class: 'unit__preview' }, [item.effects.map((e) => e.type).join(' + ')])
-  preview.style.background = item.background
-  preview.style.color = item.dark ? '#e8eaed' : '#111'
+  const isRejected = rejected.has(item.id)
+  const preview = el('div', { class: 'unit__preview' })
+  const pcanvas = el('canvas', { class: 'unit__canvas' })
+  drawPreview(pcanvas, item)
+  preview.append(pcanvas)
 
   const price = el('input', { class: 'price-in', type: 'number', min: '1', value: String(queued?.price ?? item.suggestedPrice) }) as HTMLInputElement
   const pid = el('input', { class: 'pid', placeholder: 'gumroad product id (черновик)', value: queued?.productId ?? '' }) as HTMLInputElement
@@ -115,6 +141,27 @@ function unitCard(item: DropItem): HTMLElement {
   const test = el('button', { class: 'btn btn--test', 'data-id': item.id }, ['ТЕСТ'])
   test.addEventListener('click', () => setActive(item.id))
 
+  // БРАК: забраковать/вернуть изделие
+  const rej = el('button', { class: `btn${isRejected ? '' : ' btn--warn'}` }, [isRejected ? 'ВЕРНУТЬ' : 'БРАК'])
+  rej.addEventListener('click', async () => {
+    toggleRejected(item.id)
+    if (rejected.has(item.id) && queued) await unapprove(item.id)
+    else render()
+  })
+
+  const controls: HTMLElement[] = [test]
+  // звук — только у сценарных курсоров, выключен по умолчанию
+  if (hasSound(item)) {
+    const snd = el('button', { class: 'btn', title: 'Звук курсора (WebAudio, генерируется)' }, [soundOn(item) ? '🔊' : '🔇'])
+    snd.addEventListener('click', () => {
+      toggleSound(item)
+      snd.textContent = soundOn(item) ? '🔊' : '🔇'
+      if (state.activeId === item.id) applyCursor() // перезапустить с новым звуком
+    })
+    controls.push(snd)
+  }
+  controls.push(rej)
+
   const body = el('div', { class: 'unit__body' }, [
     el('div', { class: 'unit__head' }, [
       el('span', { class: 'unit__name' }, [item.name]),
@@ -123,13 +170,17 @@ function unitCard(item: DropItem): HTMLElement {
     el('p', { class: 'unit__desc' }, [item.description]),
     el('div', { class: 'unit__tags' }, item.tags.map((t) => el('span', { class: 'tag' }, [t]))),
     ...(item.alarms.length ? [el('div', { class: 'unit__alarm' }, [`⚠ ${item.alarms.join('; ')}`])] : []),
-    el('div', { class: 'unit__row' }, [test, price, el('label', { class: 'approve' }, [check, el('span', {}, ['ОДОБРИТЬ'])])]),
+    el('div', { class: 'unit__row' }, [...controls, price, el('label', { class: 'approve' }, [check, el('span', {}, ['ОДОБРИТЬ'])])]),
     pid,
   ])
 
   const card = el('article', { class: 'unit', 'data-id': item.id }, [preview, body])
   if (item.id === state.activeId) card.classList.add('is-active')
-  if (queued?.status === 'published') card.append(el('span', { class: 'stamp' }, ['ОТГРУЖЕНО']))
+  if (isRejected) {
+    card.classList.add('is-rejected')
+    check.disabled = true
+    card.append(el('span', { class: 'stamp stamp--alarm' }, ['БРАК']))
+  } else if (queued?.status === 'published') card.append(el('span', { class: 'stamp' }, ['ОТГРУЖЕНО']))
   else if (queued) card.append(el('span', { class: 'stamp stamp--queued' }, ['В ОЧЕРЕДИ']))
   else if (item.alarms.length) card.append(el('span', { class: 'stamp stamp--alarm' }, ['ОТК']))
   return card
@@ -393,6 +444,18 @@ async function boot(): Promise<void> {
     render()
   })
 
+  const keyBtn = $('#admin-key')
+  const syncKeyBtn = () => {
+    keyBtn.textContent = adminKey.get() ? 'КЛЮЧ ✓' : 'КЛЮЧ'
+    keyBtn.classList.toggle('is-off', !adminKey.get())
+  }
+  keyBtn.addEventListener('click', () => {
+    const v = prompt('Ключ владельца (ZAVOD_ADMIN_KEY). Пусто — убрать ключ.', adminKey.get())
+    if (v !== null) adminKey.set(v.trim())
+    syncKeyBtn()
+  })
+  syncKeyBtn()
+
   const kill = $('#kill-switch')
   kill.addEventListener('click', () => {
     state.cursorOn = !state.cursorOn
@@ -423,7 +486,11 @@ async function boot(): Promise<void> {
   try { state.trends = await api.trends() } catch { /* optional */ }
   try { state.queue = await api.queue() } catch { /* api offline */ }
 
+  const ver = document.querySelector('#version')
+  if (ver) ver.textContent = `v${VERSION}`
+
   render()
+  maybeAnnounce()
 }
 
 boot()

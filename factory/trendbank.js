@@ -20,14 +20,19 @@ export const PALETTES = [
 
 /** Style tags: bias which archetypes get produced. */
 export const STYLES = [
-  { tag: 'minimal',   weight: 7 },
-  { tag: 'magnetic',  weight: 8 },
-  { tag: 'glow',      weight: 8 },
-  { tag: 'particles', weight: 7 },
-  { tag: 'gooey',     weight: 6 },
-  { tag: 'image',     weight: 6 },
-  { tag: 'maximal',   weight: 5 },
-  { tag: 'brutal',    weight: 6 },
+  { tag: 'minimal',   weight: 6 },
+  { tag: 'magnetic',  weight: 7 },
+  { tag: 'glow',      weight: 7 },
+  { tag: 'particles', weight: 6 },
+  { tag: 'gooey',     weight: 5 },
+  { tag: 'image',     weight: 5 },
+  { tag: 'maximal',   weight: 4 },
+  { tag: 'brutal',    weight: 5 },
+  // «живые» сценарии — премиум-сегмент дропа
+  { tag: 'gunner',    weight: 6 },
+  { tag: 'rocket',    weight: 6 },
+  { tag: 'fishing',   weight: 5 },
+  { tag: 'organism',  weight: 6 },
 ]
 
 export const NAME_ADJ = ['Neon', 'Hyper', 'Soft', 'Lunar', 'Atomic', 'Velvet', 'Chrome', 'Pixel', 'Cosmic', 'Retro', 'Brutal', 'Liquid', 'Solar', 'Frost', 'Turbo', 'Ghost', 'Plasma', 'Mono', 'Vivid', 'Hollow']

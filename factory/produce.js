@@ -13,7 +13,7 @@ import { inspectDrop } from './qa.js'
  * (rerun with --force to regenerate).
  */
 
-const BATCH_SIZE = Number(process.env.DROP_SIZE) || 10
+const BATCH_SIZE = Number(process.env.DROP_SIZE) || 20
 const INDEX_FILE = join(DATA_DIR, 'index.json')
 
 function generateItem(date, index, trends) {

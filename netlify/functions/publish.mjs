@@ -5,8 +5,17 @@ import { publishItem } from '../../factory/publish.js'
 
 const store = () => getStore('zavod-queue')
 
+/** Публикация только с ключом владельца — иначе аноним может жечь Gumroad-токен. */
+const authorized = (req) => {
+  const key = process.env.ZAVOD_ADMIN_KEY
+  return !key || req.headers.get('x-zavod-key') === key
+}
+
 export default async (req) => {
   if (req.method !== 'POST') return Response.json({ error: 'method not allowed' }, { status: 405 })
+  if (!authorized(req)) {
+    return Response.json({ error: 'нужен ключ владельца (X-Zavod-Key)' }, { status: 401 })
+  }
 
   const s = store()
   const queue = (await s.get('queue', { type: 'json' })) ?? []

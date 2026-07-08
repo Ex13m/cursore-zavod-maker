@@ -45,6 +45,7 @@ jobs:
             echo "drop already exists — idempotent skip"
           else
             git commit -m "factory: drop $(date -u +%F)"
+            git pull --rebase origin main
             git push
           fi
 

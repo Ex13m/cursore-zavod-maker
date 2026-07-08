@@ -16,7 +16,7 @@ import { PALETTES, STYLES } from './trendbank.js'
 
 const TRENDS_FILE = join(DATA_DIR, 'trends.json')
 
-function wobble(items, rng, key) {
+function wobble(items, rng) {
   return items.map((item) => {
     // ±40% deterministic daily variation, never below 1.
     const factor = 0.6 + rng() * 0.8
@@ -36,7 +36,7 @@ async function fetchLiveSignals() {
   }
 }
 
-function mergeSignals(base, signals, key) {
+function mergeSignals(base, signals) {
   if (!Array.isArray(signals)) return base
   const out = [...base]
   for (const sig of signals) {
@@ -49,14 +49,14 @@ function mergeSignals(base, signals, key) {
 
 export async function buildTrends(date = todayKey()) {
   const rng = rngFor(`trends:${date}`)
-  let palettes = wobble(PALETTES, rng, 'palettes')
-  let styles = wobble(STYLES, rng, 'styles')
+  let palettes = wobble(PALETTES, rng)
+  let styles = wobble(STYLES, rng)
 
   const live = await fetchLiveSignals()
   const notes = []
   if (live) {
-    palettes = mergeSignals(palettes, live.palettes, 'name')
-    styles = mergeSignals(styles, live.styles, 'tag')
+    palettes = mergeSignals(palettes, live.palettes)
+    styles = mergeSignals(styles, live.styles)
     notes.push(`live signals merged from TRENDS_SIGNAL_URL`)
   } else {
     notes.push('no live signals — built-in bank with daily rotation')

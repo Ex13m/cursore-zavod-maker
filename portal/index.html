@@ -27,6 +27,7 @@
       </nav>
       <div class="hmi-strip__right mono">
         <span id="shift-date" class="dim">—</span>
+        <button id="admin-key" class="kill mono" title="Ключ владельца для одобрения/отгрузки/чата">КЛЮЧ</button>
         <button id="kill-switch" class="kill mono" title="Выключить кастомный курсор">CURSOR: ON</button>
       </div>
     </header>
@@ -35,7 +36,7 @@
 
     <footer class="hmi-foot mono">
       <span id="keys-status" class="dim">keys: …</span>
-      <span class="dim">git = журнал производства · exception-based review</span>
+      <span class="dim">git = журнал производства · exception-based review · <b id="version"></b></span>
     </footer>
 
     <script type="module" src="/src/main.ts"></script>

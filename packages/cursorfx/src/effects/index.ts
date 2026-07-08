@@ -5,6 +5,10 @@ import { GlowCursor } from './GlowCursor'
 import { TrailCursor } from './TrailCursor'
 import { BlobCursor } from './BlobCursor'
 import { ImageCursor } from './ImageCursor'
+import { TurretCursor } from './TurretCursor'
+import { RocketCursor } from './RocketCursor'
+import { LureCursor } from './LureCursor'
+import { NoiseBlobCursor } from './NoiseBlobCursor'
 
 export { DotCursor } from './DotCursor'
 export { RingCursor } from './RingCursor'
@@ -12,6 +16,11 @@ export { GlowCursor } from './GlowCursor'
 export { TrailCursor } from './TrailCursor'
 export { BlobCursor } from './BlobCursor'
 export { ImageCursor } from './ImageCursor'
+export { TurretCursor } from './TurretCursor'
+export { RocketCursor } from './RocketCursor'
+export { LureCursor } from './LureCursor'
+export { NoiseBlobCursor } from './NoiseBlobCursor'
+export { CanvasEffect } from './CanvasEffect'
 
 export type { DotCursorOptions } from './DotCursor'
 export type { RingCursorOptions } from './RingCursor'
@@ -19,9 +28,15 @@ export type { GlowCursorOptions } from './GlowCursor'
 export type { TrailCursorOptions } from './TrailCursor'
 export type { BlobCursorOptions } from './BlobCursor'
 export type { ImageCursorOptions } from './ImageCursor'
+export type { TurretCursorOptions } from './TurretCursor'
+export type { RocketCursorOptions } from './RocketCursor'
+export type { LureCursorOptions } from './LureCursor'
+export type { NoiseBlobCursorOptions } from './NoiseBlobCursor'
 
 /** The string keys used to refer to an effect in a serializable {@link EffectSpec}. */
-export type EffectType = 'dot' | 'ring' | 'glow' | 'trail' | 'blob' | 'image'
+export type EffectType =
+  | 'dot' | 'ring' | 'glow' | 'trail' | 'blob' | 'image'
+  | 'turret' | 'rocket' | 'lure' | 'noiseblob'
 
 /**
  * A serializable description of a single effect: its type plus constructor
@@ -41,6 +56,10 @@ const REGISTRY: Record<EffectType, EffectConstructor> = {
   trail: TrailCursor as unknown as EffectConstructor,
   blob: BlobCursor as unknown as EffectConstructor,
   image: ImageCursor as unknown as EffectConstructor,
+  turret: TurretCursor as unknown as EffectConstructor,
+  rocket: RocketCursor as unknown as EffectConstructor,
+  lure: LureCursor as unknown as EffectConstructor,
+  noiseblob: NoiseBlobCursor as unknown as EffectConstructor,
 }
 
 /** Instantiate a single effect from its serializable spec. */

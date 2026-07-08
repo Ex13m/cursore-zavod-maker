@@ -95,4 +95,45 @@ export const ARCHETYPES = [
       desc: 'A fat hard dot inside a thick square ring. Raw and loud.',
     }),
   },
+  // ---- живые сценарии (звук по умолчанию выключен — тумблер в карточке) ----
+  {
+    style: 'gunner',
+    build: (rng, p) => ({
+      effects: [
+        { type: 'turret', options: { color: p.colors[0], fireRate: round(5 + rng() * 5, 1), sound: false } },
+      ],
+      tags: ['scene', 'gunner', 'game', p.name],
+      desc: 'You are the gunner: turrets fire from off-screen at your crosshair.',
+    }),
+  },
+  {
+    style: 'rocket',
+    build: (rng, p) => ({
+      effects: [
+        { type: 'rocket', options: { flameColor: p.colors[0], accel: round(2200 + rng() * 1200, 100), sound: false } },
+      ],
+      tags: ['scene', 'rocket', 'chase', p.name],
+      desc: 'A rocket chases your pointer — and lands beside it when you stop.',
+    }),
+  },
+  {
+    style: 'fishing',
+    build: (rng, p) => ({
+      effects: [
+        { type: 'lure', options: { fishColor: p.colors[0], lureColor: p.colors[1] ?? '#ff4d6d', fishCount: 2 + Math.floor(rng() * 3), sound: false } },
+      ],
+      tags: ['scene', 'fishing', 'fun', p.name],
+      desc: 'Your pointer is a wobbler lure — a school of fish hunts it.',
+    }),
+  },
+  {
+    style: 'organism',
+    build: (rng, p) => ({
+      effects: [
+        { type: 'noiseblob', options: { size: round(20 + rng() * 14, 1), colorPeriod: round(1.8 + rng() * 2, 0.1), burstEvery: round(2.5 + rng() * 2, 0.1), sound: false } },
+      ],
+      tags: ['scene', 'organism', 'abstract', '3d', p.name],
+      desc: 'A pulsating abstract organism that convulses in noisy 3D bursts, cycling colours.',
+    }),
+  },
 ]

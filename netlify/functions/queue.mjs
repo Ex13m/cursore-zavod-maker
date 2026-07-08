@@ -14,10 +14,20 @@ async function readQueue() {
 }
 const writeQueue = (q) => store().setJSON('queue', q)
 
+/** Мутации только с ключом владельца. Ключ не задан → открытый режим (до настройки). */
+const authorized = (req) => {
+  const key = process.env.ZAVOD_ADMIN_KEY
+  return !key || req.headers.get('x-zavod-key') === key
+}
+
 export default async (req) => {
   const url = new URL(req.url)
 
   if (req.method === 'GET') return Response.json(await readQueue())
+
+  if (!authorized(req)) {
+    return Response.json({ error: 'нужен ключ владельца (X-Zavod-Key)' }, { status: 401 })
+  }
 
   if (req.method === 'POST') {
     const body = await req.json().catch(() => ({}))

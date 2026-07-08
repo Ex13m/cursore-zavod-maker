@@ -54,7 +54,24 @@ export interface ChatResult {
   sprite?: { url: string; model: string }
 }
 
+const KEY_STORAGE = 'zavod.adminKey'
+
+export const adminKey = {
+  get: (): string => localStorage.getItem(KEY_STORAGE) ?? '',
+  set: (v: string): void => {
+    if (v) localStorage.setItem(KEY_STORAGE, v)
+    else localStorage.removeItem(KEY_STORAGE)
+  },
+}
+
+/** Заголовки для мутаций: ключ владельца, если задан. */
+function authHeaders(extra: Record<string, string> = {}): Record<string, string> {
+  const key = adminKey.get()
+  return key ? { ...extra, 'X-Zavod-Key': key } : extra
+}
+
 async function json<T>(res: Response): Promise<T> {
+  if (res.status === 401) throw new Error('401: нужен ключ владельца — нажми КЛЮЧ в шапке')
   if (!res.ok) throw new Error(`${res.status} ${res.statusText}`)
   return (await res.json()) as T
 }
@@ -68,18 +85,19 @@ export const api = {
   enqueue: (item: Record<string, unknown>) =>
     fetch('/api/queue', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: authHeaders({ 'Content-Type': 'application/json' }),
       body: JSON.stringify(item),
     }).then(json<QueueItem>),
-  dequeue: (id: string) => fetch(`/api/queue/${id}`, { method: 'DELETE' }).then(json<{ ok: boolean }>),
+  dequeue: (id: string) =>
+    fetch(`/api/queue/${id}`, { method: 'DELETE', headers: authHeaders() }).then(json<{ ok: boolean }>),
   publish: () =>
-    fetch('/api/publish', { method: 'POST' }).then(
+    fetch('/api/publish', { method: 'POST', headers: authHeaders() }).then(
       json<{ count: number; results: Array<{ id: string; ok: boolean; message?: string; url?: string }> }>,
     ),
   chat: (prompt: string) =>
     fetch('/api/chat', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: authHeaders({ 'Content-Type': 'application/json' }),
       body: JSON.stringify({ prompt }),
     }).then(json<ChatResult>),
 }
