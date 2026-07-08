@@ -26,3 +26,6 @@ Thumbs.db
 # logs
 *.log
 logs/
+
+# netlify local state
+.netlify/
