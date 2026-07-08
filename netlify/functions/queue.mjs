@@ -23,7 +23,10 @@ const authorized = (req) => {
 export default async (req) => {
   const url = new URL(req.url)
 
-  if (req.method === 'GET') return Response.json(await readQueue())
+  if (req.method === 'GET') {
+    // очередь — живое состояние: никакого кэша ни в браузере, ни на CDN
+    return Response.json(await readQueue(), { headers: { 'Cache-Control': 'no-store' } })
+  }
 
   if (!authorized(req)) {
     return Response.json({ error: 'нужен ключ владельца (X-Zavod-Key)' }, { status: 401 })

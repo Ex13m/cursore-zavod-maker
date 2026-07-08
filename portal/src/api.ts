@@ -81,7 +81,7 @@ export const api = {
   index: () => fetch('/data/index.json').then(json<{ drops: string[]; latest?: string }>),
   drop: (date: string) => fetch(`/data/drops/${date}.json`).then(json<Drop>),
   trends: () => fetch('/data/trends.json').then(json<Trends>),
-  queue: () => fetch('/api/queue').then(json<QueueItem[]>),
+  queue: () => fetch('/api/queue', { cache: 'no-store' }).then(json<QueueItem[]>),
   enqueue: (item: Record<string, unknown>) =>
     fetch('/api/queue', {
       method: 'POST',

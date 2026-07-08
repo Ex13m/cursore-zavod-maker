@@ -94,27 +94,62 @@ function setActive(id: string | null): void {
 }
 
 // ------------------------------------------------------------- queue ops ---
-async function approve(item: DropItem, price: number, productId: string): Promise<void> {
-  await api.enqueue({
-    id: item.id,
-    name: item.name,
-    description: item.description,
-    tags: item.tags,
-    accent: item.accent,
-    background: item.background,
-    effects: item.effects,
-    price,
-    productId,
-    coverDataUrl: renderCover(item),
-  })
-  state.queue = await api.queue()
-  render()
+// Все мутации очереди идут строго по одной (цепочка промисов): параллельные
+// клики по галочке/цене не гоняются друг с другом за состояние.
+let opChain: Promise<unknown> = Promise.resolve()
+function serial<T>(fn: () => Promise<T>): Promise<T> {
+  const next = opChain.then(fn, fn)
+  opChain = next.catch((err) => console.error('[queue]', err))
+  return next
 }
 
-async function unapprove(id: string): Promise<void> {
-  await api.dequeue(id)
-  state.queue = await api.queue()
-  render()
+/** Точечное обновление: штамп на карточке + счётчики отгрузки, без render(). */
+function patchCard(itemId: string): void {
+  const card = document.querySelector<HTMLElement>(`.unit[data-id="${itemId}"]`)
+  if (card) {
+    card.querySelector('.stamp')?.remove()
+    const queued = state.queue.find((q) => q.id === itemId)
+    if (rejected.has(itemId)) card.append(el('span', { class: 'stamp stamp--alarm' }, ['БРАК']))
+    else if (queued?.status === 'published') card.append(el('span', { class: 'stamp' }, ['ОТГРУЖЕНО']))
+    else if (queued) card.append(el('span', { class: 'stamp stamp--queued' }, ['В ОЧЕРЕДИ']))
+  }
+  const queuedCount = state.queue.filter((q) => q.status === 'queued' || q.status === 'error').length
+  document.querySelectorAll<HTMLButtonElement>('.btn--go[data-count]').forEach((b) => {
+    b.textContent = `▶ ОТГРУЗИТЬ (${queuedCount})`
+    b.disabled = queuedCount === 0
+  })
+}
+
+function approve(item: DropItem, price: number, productId: string): Promise<void> {
+  return serial(async () => {
+    const saved = await api.enqueue({
+      id: item.id,
+      name: item.name,
+      description: item.description,
+      tags: item.tags,
+      accent: item.accent,
+      background: item.background,
+      effects: item.effects,
+      price,
+      productId,
+      coverDataUrl: renderCover(item),
+    })
+    // состояние — из ответа сервера, без гонки повторного GET
+    const idx = state.queue.findIndex((q) => q.id === saved.id)
+    if (idx === -1) state.queue.push(saved)
+    else state.queue[idx] = saved
+    patchCard(item.id)
+  })
+}
+
+function unapprove(id: string): Promise<void> {
+  return serial(async () => {
+    await api.dequeue(id)
+    state.queue = state.queue.filter((q) => q.id !== id)
+    patchCard(id)
+    // на экране ПРОДАЖИ строка должна исчезнуть — там перерисовка уместна
+    if (state.view === 'sales') render()
+  })
 }
 
 // -------------------------------------------------------------- unit card ---
@@ -145,8 +180,8 @@ function unitCard(item: DropItem): HTMLElement {
   const rej = el('button', { class: `btn${isRejected ? '' : ' btn--warn'}` }, [isRejected ? 'ВЕРНУТЬ' : 'БРАК'])
   rej.addEventListener('click', async () => {
     toggleRejected(item.id)
-    if (rejected.has(item.id) && queued) await unapprove(item.id)
-    else render()
+    if (rejected.has(item.id) && state.queue.some((q) => q.id === item.id)) await unapprove(item.id)
+    render() // карточка меняет вид целиком (серость, блок галочки) — тут перерисовка уместна
   })
 
   const controls: HTMLElement[] = [test]
@@ -272,7 +307,7 @@ function viewConveyor(): HTMLElement {
 
 function publishButton(): HTMLElement {
   const queued = state.queue.filter((q) => q.status === 'queued' || q.status === 'error').length
-  const btn = el('button', { class: 'btn btn--go' }, [`▶ ОТГРУЗИТЬ (${queued})`]) as HTMLButtonElement
+  const btn = el('button', { class: 'btn btn--go', 'data-count': '1' }, [`▶ ОТГРУЗИТЬ (${queued})`]) as HTMLButtonElement
   btn.disabled = queued === 0
   btn.addEventListener('click', async () => {
     btn.disabled = true
@@ -309,8 +344,12 @@ function viewChat(): HTMLElement {
       const row = el('div', { class: 'unit__row', style: 'margin-top:8px' })
       const test = el('button', { class: 'btn btn--test', 'data-id': m.item.id }, ['ТЕСТ'])
       test.addEventListener('click', () => setActive(m.item!.id))
-      const add = el('button', { class: 'btn btn--warn' }, ['В ОЧЕРЕДЬ'])
-      add.addEventListener('click', () => approve(m.item!, m.item!.suggestedPrice, ''))
+      const add = el('button', { class: 'btn btn--warn' }, ['В ОЧЕРЕДЬ']) as HTMLButtonElement
+      add.addEventListener('click', async () => {
+        add.disabled = true
+        await approve(m.item!, m.item!.suggestedPrice, '')
+        add.textContent = 'В ОЧЕРЕДИ ✓'
+      })
       row.append(test, add)
       box.append(row)
     }
