@@ -33,6 +33,8 @@ export const STYLES = [
   { tag: 'rocket',    weight: 6 },
   { tag: 'fishing',   weight: 5 },
   { tag: 'organism',  weight: 6 },
+  // курируемый арт-пак (Higgsfield-спрайты)
+  { tag: 'sprite',    weight: 7 },
 ]
 
 export const NAME_ADJ = ['Neon', 'Hyper', 'Soft', 'Lunar', 'Atomic', 'Velvet', 'Chrome', 'Pixel', 'Cosmic', 'Retro', 'Brutal', 'Liquid', 'Solar', 'Frost', 'Turbo', 'Ghost', 'Plasma', 'Mono', 'Vivid', 'Hollow']

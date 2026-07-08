@@ -1,6 +1,20 @@
 import { pick, round } from './lib/seed.js'
 import { EMOJI } from './trendbank.js'
 
+/**
+ * Курируемый спрайт-пак (сгенерирован Higgsfield, фон срезан, лежит в
+ * portal/public/sprites/ и раздаётся порталом). Абсолютные URL — чтобы
+ * проданные конфиги работали на любом сайте.
+ */
+const SPRITE_BASE = process.env.SPRITE_BASE_URL || 'https://cursorezavodmaker.netlify.app/sprites'
+export const SPRITES = [
+  { file: 'dragon.png',    title: 'Dragon Breath',  accent: '#00e5ff', trail: '#ff2bd0', spin: 0,  pulse: 0.06, size: 52, desc: 'A fierce neon dragon rides your pointer, magenta sparks streaming behind.' },
+  { file: 'phoenix.png',   title: 'Phoenix Dive',   accent: '#ff9e00', trail: '#ffd400', spin: 0,  pulse: 0.08, size: 52, desc: 'A blazing phoenix dives with your cursor, shedding golden embers.' },
+  { file: 'skull.png',     title: 'Voltage Skull',  accent: '#39ff14', glow: '#39ff14',  spin: 0,  pulse: 0.1,  size: 48, desc: 'An electric skull with acid-green eyes pulsing over a toxic glow.' },
+  { file: 'butterfly.png', title: 'Iris Butterfly', accent: '#ff9ff3', glow: '#9b5bff',  spin: 0,  pulse: 0.12, size: 50, desc: 'An iridescent butterfly flutters at your fingertip inside a violet halo.' },
+  { file: 'ufo.png',       title: 'Abduction UFO',  accent: '#3bdcff', glow: '#ffd400',  spin: 0,  pulse: 0.07, size: 54, desc: 'A retro flying saucer hovers under the pointer, tractor beam warmed up.' },
+]
+
 /** Emoji → inline SVG data URL, usable as ImageCursor src. */
 export function emojiToDataUrl(emoji) {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"><text x="32" y="50" font-size="52" text-anchor="middle">${emoji}</text></svg>`
@@ -136,4 +150,27 @@ export const ARCHETYPES = [
       desc: 'A pulsating abstract organism that convulses in noisy 3D bursts, cycling colours.',
     }),
   },
+  // ---- курируемый спрайт-пак Higgsfield: каждый спрайт — своя идея ----
+  ...SPRITES.map((s) => ({
+    style: 'sprite',
+    build: (rng) => {
+      const effects = []
+      if (s.glow) effects.push({ type: 'glow', options: { size: round(180 + rng() * 80, 10), color: s.glow, opacity: 0.35 } })
+      if (s.trail) effects.push({ type: 'trail', options: { color: s.trail, size: 6, life: round(0.45 + rng() * 0.2, 0.05) } })
+      effects.push({
+        type: 'image',
+        options: { src: `${SPRITE_BASE}/${s.file}`, size: s.size, spin: s.spin, pulse: s.pulse, halfLife: 0.04 },
+      })
+      return {
+        effects,
+        tags: ['sprite', 'art', 'premium', s.file.replace('.png', '')],
+        desc: s.desc,
+        name: s.title,
+        accent: s.accent,
+        background: '#0a0b14',
+        dark: true,
+        price: 12,
+      }
+    },
+  })),
 ]

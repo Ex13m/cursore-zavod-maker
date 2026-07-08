@@ -1,6 +1,6 @@
 {
   "date": "2026-07-08",
-  "generatedAt": "2026-07-08T20:01:20.340Z",
+  "generatedAt": "2026-07-08T21:01:00.702Z",
   "seed": "2026-07-08",
   "trendsNotes": [
     "no live signals — built-in bank with daily rotation",
@@ -9,69 +9,52 @@
   "items": [
     {
       "id": "drop-2026-07-08-0",
-      "name": "Hollow Flux",
-      "description": "A soft trailing halo over a bright core. Built for dark heroes.",
+      "name": "Pixel Wisp",
+      "description": "You are the gunner: turrets fire from off-screen at your crosshair.",
       "tags": [
-        "glow",
-        "premium",
+        "scene",
+        "gunner",
+        "game",
         "dopamine"
       ],
       "accent": "#ff4d6d",
       "background": "#fff3f8",
       "dark": false,
-      "suggestedPrice": 10,
+      "suggestedPrice": 8,
       "effects": [
         {
-          "type": "glow",
+          "type": "turret",
           "options": {
-            "size": 280,
             "color": "#ff4d6d",
-            "opacity": 0.55
-          }
-        },
-        {
-          "type": "dot",
-          "options": {
-            "size": 10,
-            "color": "#ffffff"
+            "fireRate": 6,
+            "sound": false
           }
         }
       ],
-      "alarms": [
-        "contrast: top layer luma 1.00 ≈ bg 0.97"
-      ]
+      "alarms": []
     },
     {
       "id": "drop-2026-07-08-1",
-      "name": "Liquid Drift",
-      "description": "A fat hard dot inside a thick square ring. Raw and loud.",
+      "name": "Retro Vortex",
+      "description": "A spinning ✸ cursor with a lively pulse.",
       "tags": [
-        "brutalism",
-        "bold",
-        "agency",
+        "image",
+        "animated",
+        "emoji",
         "hmi-signal"
       ],
       "accent": "#2ecc71",
       "background": "#1a1d21",
       "dark": true,
-      "suggestedPrice": 9,
+      "suggestedPrice": 8,
       "effects": [
         {
-          "type": "ring",
+          "type": "image",
           "options": {
-            "size": 48,
-            "thickness": 4,
-            "hoverRadius": 0,
-            "color": "#2ecc71"
-          }
-        },
-        {
-          "type": "dot",
-          "options": {
-            "size": 13,
-            "blendMode": "difference",
-            "radius": "0%",
-            "color": "#f39c12"
+            "src": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%3E%3Ctext%20x%3D%2232%22%20y%3D%2250%22%20font-size%3D%2252%22%20text-anchor%3D%22middle%22%3E%E2%9C%B8%3C%2Ftext%3E%3C%2Fsvg%3E",
+            "size": 42,
+            "spin": 80,
+            "pulse": 0.1
           }
         }
       ],
@@ -79,25 +62,35 @@
     },
     {
       "id": "drop-2026-07-08-2",
-      "name": "Plasma Trace",
-      "description": "You are the gunner: turrets fire from off-screen at your crosshair.",
+      "name": "Abduction UFO",
+      "description": "A retro flying saucer hovers under the pointer, tractor beam warmed up.",
       "tags": [
-        "scene",
-        "gunner",
-        "game",
-        "aurora"
+        "sprite",
+        "art",
+        "premium",
+        "ufo"
       ],
-      "accent": "#5b8cff",
+      "accent": "#3bdcff",
       "background": "#0a0b14",
       "dark": true,
-      "suggestedPrice": 6,
+      "suggestedPrice": 12,
       "effects": [
         {
-          "type": "turret",
+          "type": "glow",
           "options": {
-            "color": "#5b8cff",
-            "fireRate": 7,
-            "sound": false
+            "size": 230,
+            "color": "#ffd400",
+            "opacity": 0.35
+          }
+        },
+        {
+          "type": "image",
+          "options": {
+            "src": "https://cursorezavodmaker.netlify.app/sprites/ufo.png",
+            "size": 54,
+            "spin": 0,
+            "pulse": 0.07,
+            "halfLife": 0.04
           }
         }
       ],
@@ -105,50 +98,24 @@
     },
     {
       "id": "drop-2026-07-08-3",
-      "name": "Hollow Glitch",
-      "description": "A rocket chases your pointer — and lands beside it when you stop.",
+      "name": "Pixel Pulse",
+      "description": "A soft trailing halo over a bright core. Built for dark heroes.",
       "tags": [
-        "scene",
-        "rocket",
-        "chase",
+        "glow",
+        "premium",
         "y2k-neon"
       ],
       "accent": "#ff3b81",
       "background": "#0d0221",
       "dark": true,
-      "suggestedPrice": 6,
-      "effects": [
-        {
-          "type": "rocket",
-          "options": {
-            "flameColor": "#ff3b81",
-            "accel": 2800,
-            "sound": false
-          }
-        }
-      ],
-      "alarms": []
-    },
-    {
-      "id": "drop-2026-07-08-4",
-      "name": "Solar Vortex",
-      "description": "A soft trailing halo over a bright core. Built for dark heroes.",
-      "tags": [
-        "glow",
-        "premium",
-        "aurora"
-      ],
-      "accent": "#5b8cff",
-      "background": "#0a0b14",
-      "dark": true,
-      "suggestedPrice": 8,
+      "suggestedPrice": 9,
       "effects": [
         {
           "type": "glow",
           "options": {
-            "size": 300,
-            "color": "#5b8cff",
-            "opacity": 0.35000000000000003
+            "size": 350,
+            "color": "#ff3b81",
+            "opacity": 0.45
           }
         },
         {
@@ -162,27 +129,61 @@
       "alarms": []
     },
     {
+      "id": "drop-2026-07-08-4",
+      "name": "Retro Spark",
+      "description": "A clean single dot tuned to this palette. Fast, quiet, universal.",
+      "tags": [
+        "minimal",
+        "dot",
+        "aurora"
+      ],
+      "accent": "#5b8cff",
+      "background": "#0a0b14",
+      "dark": true,
+      "suggestedPrice": 8,
+      "effects": [
+        {
+          "type": "dot",
+          "options": {
+            "size": 11,
+            "color": "#5b8cff",
+            "blendMode": "normal"
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
       "id": "drop-2026-07-08-5",
       "name": "Solar Orbit",
-      "description": "Your pointer is a wobbler lure — a school of fish hunts it.",
+      "description": "A fat hard dot inside a thick square ring. Raw and loud.",
       "tags": [
-        "scene",
-        "fishing",
-        "fun",
+        "brutalism",
+        "bold",
+        "agency",
         "mono-ink"
       ],
       "accent": "#111111",
       "background": "#ededea",
       "dark": false,
-      "suggestedPrice": 8,
+      "suggestedPrice": 10,
       "effects": [
         {
-          "type": "lure",
+          "type": "ring",
           "options": {
-            "fishColor": "#111111",
-            "lureColor": "#444444",
-            "fishCount": 2,
-            "sound": false
+            "size": 49,
+            "thickness": 4,
+            "hoverRadius": 0,
+            "color": "#111111"
+          }
+        },
+        {
+          "type": "dot",
+          "options": {
+            "size": 12,
+            "blendMode": "difference",
+            "radius": "0%",
+            "color": "#444444"
           }
         }
       ],
@@ -190,25 +191,35 @@
     },
     {
       "id": "drop-2026-07-08-6",
-      "name": "Velvet Wisp",
-      "description": "A rocket chases your pointer — and lands beside it when you stop.",
+      "name": "Dragon Breath",
+      "description": "A fierce neon dragon rides your pointer, magenta sparks streaming behind.",
       "tags": [
-        "scene",
-        "rocket",
-        "chase",
-        "dopamine"
+        "sprite",
+        "art",
+        "premium",
+        "dragon"
       ],
-      "accent": "#ff4d6d",
-      "background": "#fff3f8",
-      "dark": false,
-      "suggestedPrice": 6,
+      "accent": "#00e5ff",
+      "background": "#0a0b14",
+      "dark": true,
+      "suggestedPrice": 12,
       "effects": [
         {
-          "type": "rocket",
+          "type": "trail",
           "options": {
-            "flameColor": "#ff4d6d",
-            "accel": 2500,
-            "sound": false
+            "color": "#ff2bd0",
+            "size": 6,
+            "life": 0.6000000000000001
+          }
+        },
+        {
+          "type": "image",
+          "options": {
+            "src": "https://cursorezavodmaker.netlify.app/sprites/dragon.png",
+            "size": 52,
+            "spin": 0,
+            "pulse": 0.06,
+            "halfLife": 0.04
           }
         }
       ],
@@ -217,14 +228,83 @@
     {
       "id": "drop-2026-07-08-7",
       "name": "Brutal Trace",
-      "description": "Glow plus particles plus a bright core. The maximalist showpiece.",
+      "description": "An additive particle stream that flares behind the pointer.",
       "tags": [
-        "glow",
         "trail",
-        "maximal",
+        "particles",
+        "neon",
         "aurora"
       ],
       "accent": "#5b8cff",
+      "background": "#0a0b14",
+      "dark": true,
+      "suggestedPrice": 10,
+      "effects": [
+        {
+          "type": "trail",
+          "options": {
+            "color": "#5b8cff",
+            "size": 8,
+            "life": 0.45
+          }
+        },
+        {
+          "type": "dot",
+          "options": {
+            "size": 8,
+            "color": "#ffffff"
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-08-8",
+      "name": "Phoenix Dive",
+      "description": "A blazing phoenix dives with your cursor, shedding golden embers.",
+      "tags": [
+        "sprite",
+        "art",
+        "premium",
+        "phoenix"
+      ],
+      "accent": "#ff9e00",
+      "background": "#0a0b14",
+      "dark": true,
+      "suggestedPrice": 12,
+      "effects": [
+        {
+          "type": "trail",
+          "options": {
+            "color": "#ffd400",
+            "size": 6,
+            "life": 0.45
+          }
+        },
+        {
+          "type": "image",
+          "options": {
+            "src": "https://cursorezavodmaker.netlify.app/sprites/phoenix.png",
+            "size": 52,
+            "spin": 0,
+            "pulse": 0.08,
+            "halfLife": 0.04
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-08-9",
+      "name": "Voltage Skull",
+      "description": "An electric skull with acid-green eyes pulsing over a toxic glow.",
+      "tags": [
+        "sprite",
+        "art",
+        "premium",
+        "skull"
+      ],
+      "accent": "#39ff14",
       "background": "#0a0b14",
       "dark": true,
       "suggestedPrice": 12,
@@ -232,15 +312,164 @@
         {
           "type": "glow",
           "options": {
-            "size": 230,
-            "color": "#9b5bff",
+            "size": 200,
+            "color": "#39ff14",
+            "opacity": 0.35
+          }
+        },
+        {
+          "type": "image",
+          "options": {
+            "src": "https://cursorezavodmaker.netlify.app/sprites/skull.png",
+            "size": 48,
+            "spin": 0,
+            "pulse": 0.1,
+            "halfLife": 0.04
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-08-10",
+      "name": "Vivid Orbit",
+      "description": "Your pointer is a wobbler lure — a school of fish hunts it.",
+      "tags": [
+        "scene",
+        "fishing",
+        "fun",
+        "aurora"
+      ],
+      "accent": "#5b8cff",
+      "background": "#0a0b14",
+      "dark": true,
+      "suggestedPrice": 6,
+      "effects": [
+        {
+          "type": "lure",
+          "options": {
+            "fishColor": "#5b8cff",
+            "lureColor": "#9b5bff",
+            "fishCount": 4,
+            "sound": false
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-08-11",
+      "name": "Lunar Dash",
+      "description": "A lagging ring that wraps buttons, chasing a tight inner dot.",
+      "tags": [
+        "ring",
+        "magnetic",
+        "porcelain"
+      ],
+      "accent": "#2b6cb0",
+      "background": "#f7f4ef",
+      "dark": false,
+      "suggestedPrice": 10,
+      "effects": [
+        {
+          "type": "ring",
+          "options": {
+            "size": 35,
+            "thickness": 1,
+            "color": "#2b6cb0",
+            "halfLife": 0.08,
+            "hoverPadding": 13
+          }
+        },
+        {
+          "type": "dot",
+          "options": {
+            "size": 9,
+            "color": "#c05621"
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-08-12",
+      "name": "Atomic Drift",
+      "description": "A gooey blob that squashes and stretches with your speed.",
+      "tags": [
+        "blob",
+        "squash",
+        "fun",
+        "aurora"
+      ],
+      "accent": "#5b8cff",
+      "background": "#0a0b14",
+      "dark": true,
+      "suggestedPrice": 6,
+      "effects": [
+        {
+          "type": "blob",
+          "options": {
+            "size": 21,
+            "color": "#5b8cff",
+            "blendMode": "normal"
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-08-13",
+      "name": "Hollow Bloom",
+      "description": "A rocket chases your pointer — and lands beside it when you stop.",
+      "tags": [
+        "scene",
+        "rocket",
+        "chase",
+        "aurora"
+      ],
+      "accent": "#5b8cff",
+      "background": "#0a0b14",
+      "dark": true,
+      "suggestedPrice": 7,
+      "effects": [
+        {
+          "type": "rocket",
+          "options": {
+            "flameColor": "#5b8cff",
+            "accel": 3300,
+            "sound": false
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-08-14",
+      "name": "Lunar Quartz",
+      "description": "Glow plus particles plus a bright core. The maximalist showpiece.",
+      "tags": [
+        "glow",
+        "trail",
+        "maximal",
+        "acid-forest"
+      ],
+      "accent": "#39ff14",
+      "background": "#0b130d",
+      "dark": true,
+      "suggestedPrice": 11,
+      "effects": [
+        {
+          "type": "glow",
+          "options": {
+            "size": 240,
+            "color": "#00ffa3",
             "opacity": 0.4
           }
         },
         {
           "type": "trail",
           "options": {
-            "color": "#5b8cff",
+            "color": "#39ff14",
             "size": 7,
             "life": 0.6
           }
@@ -256,160 +485,8 @@
       "alarms": []
     },
     {
-      "id": "drop-2026-07-08-8",
-      "name": "Neon Quartz",
-      "description": "A lagging ring that wraps buttons, chasing a tight inner dot.",
-      "tags": [
-        "ring",
-        "magnetic",
-        "chrome"
-      ],
-      "accent": "#c0c0c0",
-      "background": "#08010f",
-      "dark": true,
-      "suggestedPrice": 9,
-      "effects": [
-        {
-          "type": "ring",
-          "options": {
-            "size": 33,
-            "thickness": 3,
-            "color": "#c0c0c0",
-            "halfLife": 0.07,
-            "hoverPadding": 13
-          }
-        },
-        {
-          "type": "dot",
-          "options": {
-            "size": 5,
-            "color": "#7a2bff"
-          }
-        }
-      ],
-      "alarms": []
-    },
-    {
-      "id": "drop-2026-07-08-9",
-      "name": "Soft Flux",
-      "description": "A soft trailing halo over a bright core. Built for dark heroes.",
-      "tags": [
-        "glow",
-        "premium",
-        "y2k-neon"
-      ],
-      "accent": "#ff3b81",
-      "background": "#0d0221",
-      "dark": true,
-      "suggestedPrice": 10,
-      "effects": [
-        {
-          "type": "glow",
-          "options": {
-            "size": 330,
-            "color": "#ff3b81",
-            "opacity": 0.30000000000000004
-          }
-        },
-        {
-          "type": "dot",
-          "options": {
-            "size": 8,
-            "color": "#ffffff"
-          }
-        }
-      ],
-      "alarms": []
-    },
-    {
-      "id": "drop-2026-07-08-10",
-      "name": "Velvet Spark",
-      "description": "You are the gunner: turrets fire from off-screen at your crosshair.",
-      "tags": [
-        "scene",
-        "gunner",
-        "game",
-        "aurora"
-      ],
-      "accent": "#5b8cff",
-      "background": "#0a0b14",
-      "dark": true,
-      "suggestedPrice": 8,
-      "effects": [
-        {
-          "type": "turret",
-          "options": {
-            "color": "#5b8cff",
-            "fireRate": 10,
-            "sound": false
-          }
-        }
-      ],
-      "alarms": []
-    },
-    {
-      "id": "drop-2026-07-08-11",
-      "name": "Turbo Drift",
-      "description": "A soft trailing halo over a bright core. Built for dark heroes.",
-      "tags": [
-        "glow",
-        "premium",
-        "porcelain"
-      ],
-      "accent": "#2b6cb0",
-      "background": "#f7f4ef",
-      "dark": false,
-      "suggestedPrice": 10,
-      "effects": [
-        {
-          "type": "glow",
-          "options": {
-            "size": 240,
-            "color": "#2b6cb0",
-            "opacity": 0.35000000000000003
-          }
-        },
-        {
-          "type": "dot",
-          "options": {
-            "size": 10,
-            "color": "#ffffff"
-          }
-        }
-      ],
-      "alarms": [
-        "contrast: top layer luma 1.00 ≈ bg 0.96"
-      ]
-    },
-    {
-      "id": "drop-2026-07-08-12",
-      "name": "Lunar Comet",
-      "description": "You are the gunner: turrets fire from off-screen at your crosshair.",
-      "tags": [
-        "scene",
-        "gunner",
-        "game",
-        "aurora"
-      ],
-      "accent": "#5b8cff",
-      "background": "#0a0b14",
-      "dark": true,
-      "suggestedPrice": 6,
-      "effects": [
-        {
-          "type": "turret",
-          "options": {
-            "color": "#5b8cff",
-            "fireRate": 6,
-            "sound": false
-          }
-        }
-      ],
-      "alarms": []
-    },
-    {
-      "id": "drop-2026-07-08-13",
-      "name": "Vivid Dash",
+      "id": "drop-2026-07-08-15",
+      "name": "Hyper Wisp",
       "description": "A pulsating abstract organism that convulses in noisy 3D bursts, cycling colours.",
       "tags": [
         "scene",
@@ -426,71 +503,9 @@
         {
           "type": "noiseblob",
           "options": {
-            "size": 34,
+            "size": 33,
             "colorPeriod": 2.5,
-            "burstEvery": 3.2,
-            "sound": false
-          }
-        }
-      ],
-      "alarms": []
-    },
-    {
-      "id": "drop-2026-07-08-14",
-      "name": "Brutal Dash",
-      "description": "A lagging ring that wraps buttons, chasing a tight inner dot.",
-      "tags": [
-        "ring",
-        "magnetic",
-        "acid-forest"
-      ],
-      "accent": "#39ff14",
-      "background": "#0b130d",
-      "dark": true,
-      "suggestedPrice": 9,
-      "effects": [
-        {
-          "type": "ring",
-          "options": {
-            "size": 43,
-            "thickness": 2,
-            "color": "#39ff14",
-            "halfLife": 0.13,
-            "hoverPadding": 11
-          }
-        },
-        {
-          "type": "dot",
-          "options": {
-            "size": 6,
-            "color": "#00ffa3"
-          }
-        }
-      ],
-      "alarms": []
-    },
-    {
-      "id": "drop-2026-07-08-15",
-      "name": "Mono Nova",
-      "description": "A pulsating abstract organism that convulses in noisy 3D bursts, cycling colours.",
-      "tags": [
-        "scene",
-        "organism",
-        "abstract",
-        "3d",
-        "aurora"
-      ],
-      "accent": "#5b8cff",
-      "background": "#0a0b14",
-      "dark": true,
-      "suggestedPrice": 6,
-      "effects": [
-        {
-          "type": "noiseblob",
-          "options": {
-            "size": 25,
-            "colorPeriod": 3.4000000000000004,
-            "burstEvery": 2.7,
+            "burstEvery": 4.1000000000000005,
             "sound": false
           }
         }
@@ -499,25 +514,35 @@
     },
     {
       "id": "drop-2026-07-08-16",
-      "name": "Velvet Orbit",
-      "description": "You are the gunner: turrets fire from off-screen at your crosshair.",
+      "name": "Iris Butterfly",
+      "description": "An iridescent butterfly flutters at your fingertip inside a violet halo.",
       "tags": [
-        "scene",
-        "gunner",
-        "game",
-        "aurora"
+        "sprite",
+        "art",
+        "premium",
+        "butterfly"
       ],
-      "accent": "#5b8cff",
+      "accent": "#ff9ff3",
       "background": "#0a0b14",
       "dark": true,
-      "suggestedPrice": 8,
+      "suggestedPrice": 12,
       "effects": [
         {
-          "type": "turret",
+          "type": "glow",
           "options": {
-            "color": "#5b8cff",
-            "fireRate": 8,
-            "sound": false
+            "size": 230,
+            "color": "#9b5bff",
+            "opacity": 0.35
+          }
+        },
+        {
+          "type": "image",
+          "options": {
+            "src": "https://cursorezavodmaker.netlify.app/sprites/butterfly.png",
+            "size": 50,
+            "spin": 0,
+            "pulse": 0.12,
+            "halfLife": 0.04
           }
         }
       ],
@@ -525,35 +550,26 @@
     },
     {
       "id": "drop-2026-07-08-17",
-      "name": "Lunar Quartz",
-      "description": "A fat hard dot inside a thick square ring. Raw and loud.",
+      "name": "Plasma Beam",
+      "description": "Your pointer is a wobbler lure — a school of fish hunts it.",
       "tags": [
-        "brutalism",
-        "bold",
-        "agency",
+        "scene",
+        "fishing",
+        "fun",
         "y2k-neon"
       ],
       "accent": "#ff3b81",
       "background": "#0d0221",
       "dark": true,
-      "suggestedPrice": 10,
+      "suggestedPrice": 6,
       "effects": [
         {
-          "type": "ring",
+          "type": "lure",
           "options": {
-            "size": 48,
-            "thickness": 4,
-            "hoverRadius": 0,
-            "color": "#ff3b81"
-          }
-        },
-        {
-          "type": "dot",
-          "options": {
-            "size": 15,
-            "blendMode": "difference",
-            "radius": "0%",
-            "color": "#39ff14"
+            "fishColor": "#ff3b81",
+            "lureColor": "#39ff14",
+            "fishCount": 3,
+            "sound": false
           }
         }
       ],
@@ -561,27 +577,34 @@
     },
     {
       "id": "drop-2026-07-08-18",
-      "name": "Frost Wisp",
-      "description": "A pulsating abstract organism that convulses in noisy 3D bursts, cycling colours.",
+      "name": "Mono Echo",
+      "description": "A spinning ✷ cursor with a lively pulse.",
       "tags": [
-        "scene",
-        "organism",
-        "abstract",
-        "3d",
+        "image",
+        "animated",
+        "emoji",
         "aurora"
       ],
       "accent": "#5b8cff",
       "background": "#0a0b14",
       "dark": true,
-      "suggestedPrice": 7,
+      "suggestedPrice": 10,
       "effects": [
         {
-          "type": "noiseblob",
+          "type": "trail",
           "options": {
-            "size": 30,
-            "colorPeriod": 2.6,
-            "burstEvery": 3,
-            "sound": false
+            "color": "#5b8cff",
+            "size": 5,
+            "life": 0.5
+          }
+        },
+        {
+          "type": "image",
+          "options": {
+            "src": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%3E%3Ctext%20x%3D%2232%22%20y%3D%2250%22%20font-size%3D%2252%22%20text-anchor%3D%22middle%22%3E%E2%9C%B7%3C%2Ftext%3E%3C%2Fsvg%3E",
+            "size": 41,
+            "spin": 110,
+            "pulse": 0.04
           }
         }
       ],
@@ -589,35 +612,37 @@
     },
     {
       "id": "drop-2026-07-08-19",
-      "name": "Chrome Wisp",
-      "description": "A pulsating abstract organism that convulses in noisy 3D bursts, cycling colours.",
+      "name": "Soft Bloom",
+      "description": "An additive particle stream that flares behind the pointer.",
       "tags": [
-        "scene",
-        "organism",
-        "abstract",
-        "3d",
+        "trail",
+        "particles",
+        "neon",
         "chrome"
       ],
       "accent": "#c0c0c0",
       "background": "#08010f",
       "dark": true,
-      "suggestedPrice": 7,
+      "suggestedPrice": 10,
       "effects": [
         {
-          "type": "noiseblob",
+          "type": "trail",
           "options": {
-            "size": 21,
-            "colorPeriod": 2.4000000000000004,
-            "burstEvery": 2.8000000000000003,
-            "sound": false
+            "color": "#c0c0c0",
+            "size": 10,
+            "life": 0.4
+          }
+        },
+        {
+          "type": "dot",
+          "options": {
+            "size": 7,
+            "color": "#ffffff"
           }
         }
       ],
       "alarms": []
     }
   ],
-  "alarms": [
-    "drop-2026-07-08-0: contrast: top layer luma 1.00 ≈ bg 0.97",
-    "drop-2026-07-08-11: contrast: top layer luma 1.00 ≈ bg 0.96"
-  ]
+  "alarms": []
 }

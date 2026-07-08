@@ -75,12 +75,22 @@ export function drawPreview(canvas: HTMLCanvasElement, item: DropItem): void {
         break
       }
       case 'image': {
-        ctx.font = '30px serif'
-        ctx.textAlign = 'center'
-        ctx.textBaseline = 'middle'
-        // вытащить эмодзи из svg-dataURL сложно — рисуем универсальную звезду
-        ctx.fillStyle = color
-        ctx.fillText('✦', cx, cy)
+        const src = String(o.src ?? '')
+        if (src) {
+          // реальный спрайт: подгружаем и дорисовываем поверх, когда придёт
+          const img = new Image()
+          img.onload = () => {
+            const s = Math.min(64, Number(o.size ?? 44) + 16)
+            ctx.drawImage(img, cx - s / 2, cy - s / 2, s, s)
+          }
+          img.src = src
+        } else {
+          ctx.font = '30px serif'
+          ctx.textAlign = 'center'
+          ctx.textBaseline = 'middle'
+          ctx.fillStyle = color
+          ctx.fillText('✦', cx, cy)
+        }
         break
       }
       case 'turret': {
