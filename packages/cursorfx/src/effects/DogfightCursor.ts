@@ -101,7 +101,6 @@ export class DogfightCursor extends CanvasEffect {
   private fire(h: Hunter, tx: number, ty: number, aimed: boolean): void {
     const dx = tx - h.x
     const dy = ty - h.y
-    const d = Math.hypot(dx, dy) || 1
     // прицельный выстрел летит точно, обычный — с разбросом (уйдёт за экран)
     const spread = aimed ? 0 : (Math.random() - 0.5) * 0.5
     const a = Math.atan2(dy, dx) + spread
