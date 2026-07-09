@@ -1,0 +1,27 @@
+name: factory-watchdog
+
+# Сторож автопилота: если daily-factory упала (например, GitHub не выдал
+# раннер, как 2026-07-09) — автоматически перезапускает упавшие джобы.
+# Максимум 3 попытки (run_attempt), чтобы не зациклиться на реальном баге.
+
+on:
+  workflow_run:
+    workflows: [daily-factory]
+    types: [completed]
+
+permissions:
+  actions: write
+
+jobs:
+  retry:
+    if: >
+      github.event.workflow_run.conclusion == 'failure' &&
+      github.event.workflow_run.run_attempt < 3
+    runs-on: ubuntu-latest
+    steps:
+      - name: Re-run failed shift (attempt ${{ github.event.workflow_run.run_attempt }} → next)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo "Смена ${{ github.event.workflow_run.id }} упала (попытка ${{ github.event.workflow_run.run_attempt }}) — перезапускаю"
+          gh api -X POST /repos/${{ github.repository }}/actions/runs/${{ github.event.workflow_run.id }}/rerun-failed-jobs
