@@ -6,6 +6,7 @@ import { renderCover } from './cover'
 import { drawPreview } from './preview'
 import { maybeAnnounce } from './announce'
 import { VERSION } from './version'
+import { mountSnow } from './snow'
 
 // ----------------------------------------------------------- rejects (БРАК) ---
 const REJ_KEY = 'zavod.rejected'
@@ -383,6 +384,19 @@ function factoryControls(): HTMLElement {
 function viewBoard(): HTMLElement {
   const root = el('div', { class: 'grid grid--board' })
   const drop = state.drop
+
+  // hero: фото завода, над которым идёт снег
+  const snowCanvas = el('canvas', { class: 'hero__snow' })
+  const hero = el('div', { class: 'hero span12' }, [
+    el('img', { class: 'hero__img', src: '/hero.png', alt: 'CURSOR ZAVOD' }),
+    snowCanvas,
+    el('div', { class: 'hero__caption mono' }, [
+      el('span', { class: 'lamp lamp--run' }),
+      `CURSOR ZAVOD · СМЕНА ${drop?.date ?? '—'} · v${VERSION}`,
+    ]),
+  ])
+  root.append(hero)
+  requestAnimationFrame(() => mountSnow(snowCanvas))
   const alarmsTotal = (drop?.alarms.length ?? 0)
   const queuedCount = state.queue.filter((q) => q.status === 'queued').length
   const publishedCount = state.queue.filter((q) => q.status === 'published').length

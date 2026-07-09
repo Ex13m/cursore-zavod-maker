@@ -1,6 +1,6 @@
 {
   "name": "cursor-zavod",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "private": true,
   "description": "Autonomous animated-cursor factory: trends → production → HMI portal → approval → marketplace.",
   "type": "module",

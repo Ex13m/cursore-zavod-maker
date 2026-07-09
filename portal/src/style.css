@@ -271,6 +271,23 @@ table.hmi th { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-
   100% { transform: translate(var(--dx), var(--dy)) scale(0.2); opacity: 0; }
 }
 
+/* ---------- hero with snowfall ---------- */
+.hero {
+  position: relative;
+  border: 1px solid var(--line);
+  overflow: hidden;
+  max-height: 300px;
+}
+.hero__img { display: block; width: 100%; height: 300px; object-fit: cover; object-position: center 30%; }
+.hero__snow { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.hero__caption {
+  position: absolute; left: 12px; bottom: 10px;
+  background: rgba(26, 29, 33, 0.82);
+  border: 1px solid var(--line);
+  padding: 6px 12px;
+  font-size: 12px; letter-spacing: 0.14em;
+}
+
 /* ---------- trend modal ---------- */
 .gauge--click { cursor: pointer; }
 .gauge--click:hover .gauge__label span:first-child { color: var(--ink); text-decoration: underline; }
