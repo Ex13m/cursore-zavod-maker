@@ -403,16 +403,15 @@ function viewBoard(): HTMLElement {
   requestAnimationFrame(tryPlay)
   document.addEventListener('pointerdown', tryPlay, { once: true })
 
-  // гарантированный запуск: если автоплей не завёлся — большая кнопка поверх
-  const playOverlay = el('button', { class: 'hero__play mono' }, ['▶ ЗАПУСТИТЬ ЗАВОД']) as HTMLButtonElement
-  playOverlay.style.display = 'none'
-  playOverlay.addEventListener('click', () => {
-    void heroVideo.play().then(() => { playOverlay.style.display = 'none' }).catch(() => {})
+  // аккуратная кнопка пуска/паузы — справа сверху видео, под хедером
+  const playBtn = el('button', { class: 'kill mono hero__ctl', title: 'Запустить/остановить завод' }, ['▶']) as HTMLButtonElement
+  const syncPlayBtn = (): void => { playBtn.textContent = heroVideo.paused ? '▶' : '⏸' }
+  playBtn.addEventListener('click', () => {
+    if (heroVideo.paused) void heroVideo.play().catch(() => {})
+    else heroVideo.pause()
   })
-  heroVideo.addEventListener('playing', () => { playOverlay.style.display = 'none' })
-  setTimeout(() => {
-    if (heroVideo.paused) playOverlay.style.display = 'block'
-  }, 1500)
+  heroVideo.addEventListener('playing', syncPlayBtn)
+  heroVideo.addEventListener('pause', syncPlayBtn)
   const heroSnd = el('button', { class: 'kill mono hero__snd', title: 'Звук фабрики' }, ['🔇']) as HTMLButtonElement
   heroSnd.addEventListener('click', () => {
     heroVideo.muted = !heroVideo.muted
@@ -421,7 +420,7 @@ function viewBoard(): HTMLElement {
   })
   const hero = el('div', { class: 'hero span12' }, [
     heroVideo,
-    playOverlay,
+    playBtn,
     el('div', { class: 'hero__caption mono' }, [
       el('span', { class: 'lamp lamp--run' }),
       `CURSOR ZAVOD · СМЕНА ${drop?.date ?? '—'} · v${VERSION}`,

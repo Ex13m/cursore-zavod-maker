@@ -289,13 +289,12 @@ table.hmi th { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-
   position: absolute; right: 12px; bottom: 10px;
   background: rgba(26, 29, 33, 0.82); font-size: 14px; padding: 5px 10px;
 }
-.hero__play {
-  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-  background: rgba(26, 29, 33, 0.9); color: var(--run);
-  border: 2px solid var(--run); padding: 14px 26px;
-  font-size: 16px; letter-spacing: 0.14em; cursor: pointer;
+.hero__ctl {
+  position: absolute; right: 12px; top: 10px;
+  background: rgba(26, 29, 33, 0.82); color: var(--run);
+  font-size: 14px; padding: 5px 11px;
 }
-.hero__play:hover { background: var(--run); color: #0d1116; }
+.hero__ctl:hover { border-color: var(--run); }
 .hero__caption {
   position: absolute; left: 12px; bottom: 10px;
   background: rgba(26, 29, 33, 0.82);
