@@ -18,6 +18,14 @@ export interface LureCursorOptions {
 interface Fish { x: number; y: number; vx: number; vy: number; phase: number; size: number; orbit: number }
 interface Bubble { x: number; y: number; age: number; life: number; r: number }
 
+/** Осветлить/затемнить hex-цвет (factor >1 светлее, <1 темнее). */
+function shade(hex: string, factor: number): string {
+  const h = hex.replace('#', '')
+  if (h.length < 6) return hex
+  const c = (i: number) => Math.max(0, Math.min(255, Math.round(parseInt(h.slice(i, i + 2), 16) * factor)))
+  return `rgb(${c(0)} ${c(2)} ${c(4)})`
+}
+
 /**
  * Fishing cursor: the pointer is a wobbler lure; a small school of fish chases
  * it, wiggling. When the lure sits still the fish circle it warily; a jerk of
@@ -101,23 +109,58 @@ export class LureCursor extends CanvasEffect {
       ctx.translate(f.x, f.y)
       ctx.rotate(ang)
       ctx.scale(f.size, f.size)
+
+      // мягкое подводное свечение вокруг рыбы
+      ctx.shadowColor = o.fishColor
+      ctx.shadowBlur = 10
+
+      // tail: полупрозрачный веер, машет
       ctx.fillStyle = o.fishColor
-      // body
+      ctx.globalAlpha = 0.7
       ctx.beginPath()
-      ctx.ellipse(0, 0, 14, 6, 0, 0, Math.PI * 2)
+      ctx.moveTo(-11, 0)
+      ctx.quadraticCurveTo(-19, -8 + wig * 12, -23, -5 + wig * 11)
+      ctx.quadraticCurveTo(-18, 0 + wig * 6, -23, 6 + wig * 11)
+      ctx.quadraticCurveTo(-19, 8 + wig * 12, -11, 0)
       ctx.fill()
-      // tail wiggles
+      ctx.globalAlpha = 1
+
+      // body: градиент спинка→брюшко (свет сверху)
+      const body = ctx.createLinearGradient(0, -6, 0, 6)
+      body.addColorStop(0, shade(o.fishColor, 1.35))
+      body.addColorStop(0.55, o.fishColor)
+      body.addColorStop(1, shade(o.fishColor, 0.55))
+      ctx.fillStyle = body
       ctx.beginPath()
-      ctx.moveTo(-12, 0)
-      ctx.lineTo(-22, -6 + wig * 10)
-      ctx.lineTo(-22, 6 + wig * 10)
-      ctx.closePath()
+      ctx.moveTo(14, 0)
+      ctx.quadraticCurveTo(9, -6.5, -2, -5.5)
+      ctx.quadraticCurveTo(-10, -4, -12, 0)
+      ctx.quadraticCurveTo(-10, 4, -2, 5.5)
+      ctx.quadraticCurveTo(9, 6.5, 14, 0)
       ctx.fill()
-      // eye
+      ctx.shadowBlur = 0
+
+      // спинной и грудной плавники
+      ctx.fillStyle = shade(o.fishColor, 1.2)
+      ctx.globalAlpha = 0.8
+      ctx.beginPath(); ctx.moveTo(1, -5.2); ctx.quadraticCurveTo(-2, -10 + wig * 3, -6, -5); ctx.closePath(); ctx.fill()
+      ctx.beginPath(); ctx.moveTo(2, 3); ctx.quadraticCurveTo(-1, 8 + wig * 4, -4, 4.4); ctx.closePath(); ctx.fill()
+      ctx.globalAlpha = 1
+
+      // жаберная дуга + чешуйный блик
+      ctx.strokeStyle = 'rgba(13,17,22,0.35)'
+      ctx.lineWidth = 0.9
+      ctx.beginPath(); ctx.arc(5.5, 0, 4.6, -1.1, 1.1); ctx.stroke()
+      ctx.strokeStyle = 'rgba(255,255,255,0.5)'
+      ctx.beginPath(); ctx.moveTo(9, -2.6); ctx.quadraticCurveTo(2, -4.2, -5, -3); ctx.stroke()
+
+      // глаз с бликом
+      ctx.fillStyle = '#eef4f8'
+      ctx.beginPath(); ctx.arc(9, -1.6, 2.2, 0, Math.PI * 2); ctx.fill()
       ctx.fillStyle = '#0d1116'
-      ctx.beginPath()
-      ctx.arc(8, -1.5, 1.8, 0, Math.PI * 2)
-      ctx.fill()
+      ctx.beginPath(); ctx.arc(9.5, -1.5, 1.3, 0, Math.PI * 2); ctx.fill()
+      ctx.fillStyle = '#ffffff'
+      ctx.beginPath(); ctx.arc(10, -2, 0.55, 0, Math.PI * 2); ctx.fill()
       ctx.restore()
     }
 
@@ -135,33 +178,66 @@ export class LureCursor extends CanvasEffect {
     }
     ctx.globalAlpha = 1
 
-    // --- the wobbler lure at the pointer ---
+    // --- the wobbler lure at the pointer (глянцевый, с лопастью и бликом) ---
     const tilt = Math.sin(this.wobble) * (idle ? 0.15 : 0.5)
     ctx.save()
     ctx.translate(px, py)
     ctx.rotate(tilt)
-    // line up to the surface
-    ctx.strokeStyle = 'rgba(154,163,173,0.5)'
+    // леска с лёгким провисом
+    ctx.strokeStyle = 'rgba(200,214,224,0.45)'
     ctx.lineWidth = 1
     ctx.beginPath()
-    ctx.moveTo(0, -8)
-    ctx.lineTo(6, -60)
+    ctx.moveTo(0, -10)
+    ctx.quadraticCurveTo(4, -34, 7, -62)
     ctx.stroke()
-    // body
-    ctx.fillStyle = o.lureColor
+    // вертлюжок
+    ctx.fillStyle = '#9aa7b3'
+    ctx.beginPath(); ctx.arc(0, -10, 1.6, 0, Math.PI * 2); ctx.fill()
+
+    // тело: объёмный градиент + мягкое свечение
+    ctx.shadowColor = o.lureColor
+    ctx.shadowBlur = 8
+    const lureBody = ctx.createLinearGradient(-6, 0, 6, 0)
+    lureBody.addColorStop(0, shade(o.lureColor, 0.6))
+    lureBody.addColorStop(0.45, o.lureColor)
+    lureBody.addColorStop(1, shade(o.lureColor, 1.35))
+    ctx.fillStyle = lureBody
     ctx.beginPath()
     ctx.ellipse(0, 0, 6, 11, 0, 0, Math.PI * 2)
     ctx.fill()
-    ctx.fillStyle = '#ffffff'
+    ctx.shadowBlur = 0
+    // белое брюшко с перламутром
+    const belly = ctx.createLinearGradient(0, -9, 0, 2)
+    belly.addColorStop(0, '#ffffff')
+    belly.addColorStop(1, '#cfe6ef')
+    ctx.fillStyle = belly
     ctx.beginPath()
-    ctx.ellipse(0, -4, 4.5, 5, 0, 0, Math.PI * 2)
+    ctx.ellipse(0.5, -4, 4.2, 5.2, 0.15, 0, Math.PI * 2)
     ctx.fill()
-    // hook
-    ctx.strokeStyle = '#8a93a0'
-    ctx.lineWidth = 1.6
+    // глянцевый блик
+    ctx.fillStyle = 'rgba(255,255,255,0.8)'
     ctx.beginPath()
-    ctx.arc(0, 15, 4, -0.3, Math.PI * 1.1)
-    ctx.stroke()
+    ctx.ellipse(-2.4, -5.5, 1.1, 3, -0.35, 0, Math.PI * 2)
+    ctx.fill()
+    // глаз приманки
+    ctx.fillStyle = '#ffd400'
+    ctx.beginPath(); ctx.arc(2.6, -6, 1.5, 0, Math.PI * 2); ctx.fill()
+    ctx.fillStyle = '#0d1116'
+    ctx.beginPath(); ctx.arc(2.9, -6, 0.8, 0, Math.PI * 2); ctx.fill()
+    // лопасть-заглубитель
+    ctx.fillStyle = 'rgba(190,220,235,0.55)'
+    ctx.beginPath()
+    ctx.ellipse(0, 11.5, 3.2, 5, 0, 0, Math.PI * 2)
+    ctx.fill()
+    // тройник
+    ctx.strokeStyle = '#aeb9c4'
+    ctx.lineWidth = 1.4
+    ctx.lineCap = 'round'
+    for (const rot of [-0.5, 0.35, 1.2]) {
+      ctx.beginPath()
+      ctx.arc(Math.sin(rot) * 2, 16 + Math.cos(rot), 3.6, rot - 0.2, rot + Math.PI * 0.85)
+      ctx.stroke()
+    }
     ctx.restore()
   }
 

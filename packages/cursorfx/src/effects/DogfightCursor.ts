@@ -72,28 +72,76 @@ export class DogfightCursor extends CanvasEffect {
     }))
   }
 
+  /** Осветлить/затемнить hex. */
+  private shade(hex: string, f: number): string {
+    const h = hex.replace('#', '')
+    if (h.length < 6) return hex
+    const c = (i: number) => Math.max(0, Math.min(255, Math.round(parseInt(h.slice(i, i + 2), 16) * f)))
+    return `rgb(${c(0)} ${c(2)} ${c(4)})`
+  }
+
   private ship(ctx: CanvasRenderingContext2D, x: number, y: number, a: number, color: string, scale = 1, alpha = 1): void {
     ctx.save()
     ctx.translate(x, y)
     ctx.rotate(a + Math.PI / 2)
     ctx.scale(scale, scale)
     ctx.globalAlpha = alpha
-    ctx.fillStyle = color
+
+    // выхлоп двигателя (аддитивный, под корпусом)
+    ctx.globalCompositeOperation = 'lighter'
+    const exhaust = ctx.createRadialGradient(0, 11, 0.5, 0, 13, 9 + Math.random() * 4)
+    exhaust.addColorStop(0, '#ffffff')
+    exhaust.addColorStop(0.4, '#7ecbff')
+    exhaust.addColorStop(1, 'transparent')
+    ctx.fillStyle = exhaust
     ctx.beginPath()
-    ctx.moveTo(0, -14)       // nose
-    ctx.lineTo(9, 8)
-    ctx.lineTo(4, 5)
-    ctx.lineTo(0, 10)
-    ctx.lineTo(-4, 5)
-    ctx.lineTo(-9, 8)
+    ctx.ellipse(0, 12, 3, 8 + Math.random() * 3, 0, 0, Math.PI * 2)
+    ctx.fill()
+    ctx.globalCompositeOperation = 'source-over'
+
+    // корпус: неоновая обводка + градиент металла в цвет эскадрильи
+    ctx.shadowColor = color
+    ctx.shadowBlur = 12
+    const hull = ctx.createLinearGradient(-9, 0, 9, 0)
+    hull.addColorStop(0, this.shade(color, 0.45))
+    hull.addColorStop(0.5, this.shade(color, 1.25))
+    hull.addColorStop(1, this.shade(color, 0.45))
+    ctx.fillStyle = hull
+    ctx.beginPath()
+    ctx.moveTo(0, -15)
+    ctx.quadraticCurveTo(2.6, -7, 9.5, 7.5)   // правое крыло
+    ctx.lineTo(4.2, 5)
+    ctx.quadraticCurveTo(2, 8.5, 0, 10.5)     // хвост
+    ctx.quadraticCurveTo(-2, 8.5, -4.2, 5)
+    ctx.lineTo(-9.5, 7.5)                     // левое крыло
+    ctx.quadraticCurveTo(-2.6, -7, 0, -15)
     ctx.closePath()
     ctx.fill()
-    // engine flare
-    ctx.fillStyle = '#ffffff'
-    ctx.globalAlpha = alpha * (0.5 + Math.random() * 0.5)
+    ctx.shadowBlur = 0
+
+    // центральный гребень + кромки крыльев
+    ctx.strokeStyle = 'rgba(255,255,255,0.55)'
+    ctx.lineWidth = 0.9
+    ctx.beginPath(); ctx.moveTo(0, -14); ctx.lineTo(0, 9); ctx.stroke()
+    ctx.strokeStyle = this.shade(color, 1.6)
+    ctx.beginPath(); ctx.moveTo(1.8, -8); ctx.lineTo(9.5, 7.5); ctx.moveTo(-1.8, -8); ctx.lineTo(-9.5, 7.5); ctx.stroke()
+
+    // кабина: стекло с бликом
+    const glass = ctx.createRadialGradient(-0.8, -6.5, 0.3, 0, -5.5, 3)
+    glass.addColorStop(0, '#ffffff')
+    glass.addColorStop(0.5, '#9adcf0')
+    glass.addColorStop(1, '#123a52')
+    ctx.fillStyle = glass
     ctx.beginPath()
-    ctx.ellipse(0, 11, 2.2, 4 + Math.random() * 3, 0, 0, Math.PI * 2)
+    ctx.ellipse(0, -6, 1.9, 3.4, 0, 0, Math.PI * 2)
     ctx.fill()
+
+    // сигнальные огни на крыльях
+    ctx.fillStyle = '#ffffff'
+    ctx.globalAlpha = alpha * (0.4 + 0.6 * Math.round(Math.random()))
+    ctx.beginPath(); ctx.arc(9, 7, 0.9, 0, Math.PI * 2); ctx.fill()
+    ctx.beginPath(); ctx.arc(-9, 7, 0.9, 0, Math.PI * 2); ctx.fill()
+
     ctx.restore()
     ctx.globalAlpha = 1
   }

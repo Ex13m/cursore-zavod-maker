@@ -148,29 +148,108 @@ export class RocketCursor extends CanvasEffect {
       ctx.stroke()
     }
 
-    // --- rocket body ---
+    // --- rocket body (polished: metal gradient, glints, layered exhaust) ---
     ctx.save()
     ctx.translate(this.x, this.y)
     ctx.rotate(this.angle + Math.PI / 2)
-    ctx.fillStyle = o.color
+
+    // exhaust bloom right at the nozzle (under the hull)
+    if (thrust > 0.05) {
+      const flameLen = 16 + 18 * thrust + Math.random() * 6
+      const bloom = ctx.createRadialGradient(0, 14, 1, 0, 16, flameLen)
+      bloom.addColorStop(0, '#ffffff')
+      bloom.addColorStop(0.25, o.flameColor)
+      bloom.addColorStop(1, 'transparent')
+      ctx.globalCompositeOperation = 'lighter'
+      ctx.fillStyle = bloom
+      ctx.beginPath()
+      ctx.moveTo(-4.5, 10)
+      ctx.quadraticCurveTo(0, 14 + flameLen, 4.5, 10)
+      ctx.closePath()
+      ctx.fill()
+      // inner white core
+      ctx.fillStyle = 'rgba(255,255,255,0.85)'
+      ctx.beginPath()
+      ctx.moveTo(-2, 10)
+      ctx.quadraticCurveTo(0, 12 + flameLen * 0.45, 2, 10)
+      ctx.closePath()
+      ctx.fill()
+      ctx.globalCompositeOperation = 'source-over'
+    }
+
+    // fins behind hull: gradient, swept
+    const finGrad = ctx.createLinearGradient(0, 2, 0, 15)
+    finGrad.addColorStop(0, o.flameColor)
+    finGrad.addColorStop(1, '#7a3502')
+    ctx.fillStyle = finGrad
+    ctx.beginPath(); ctx.moveTo(6.5, 2); ctx.quadraticCurveTo(15, 8, 13.5, 15); ctx.lineTo(6.5, 11); ctx.closePath(); ctx.fill()
+    ctx.beginPath(); ctx.moveTo(-6.5, 2); ctx.quadraticCurveTo(-15, 8, -13.5, 15); ctx.lineTo(-6.5, 11); ctx.closePath(); ctx.fill()
+
+    // hull: brushed metal (light source top-left), soft ambient glow
+    ctx.shadowColor = o.flameColor
+    ctx.shadowBlur = thrust > 0.05 ? 14 : 6
+    const hull = ctx.createLinearGradient(-8, 0, 8, 0)
+    hull.addColorStop(0, '#8d99a6')
+    hull.addColorStop(0.35, '#f4f7fa')
+    hull.addColorStop(0.55, '#cfd8e0')
+    hull.addColorStop(1, '#6d7884')
+    ctx.fillStyle = hull
     ctx.beginPath()
-    ctx.moveTo(0, -18) // nose
-    ctx.quadraticCurveTo(9, -6, 7, 10)
+    ctx.moveTo(0, -19)
+    ctx.bezierCurveTo(7.5, -12, 8.2, -2, 7, 10)
     ctx.lineTo(-7, 10)
-    ctx.quadraticCurveTo(-9, -6, 0, -18)
+    ctx.bezierCurveTo(-8.2, -2, -7.5, -12, 0, -19)
     ctx.fill()
-    ctx.fillStyle = o.flameColor
-    // fins
-    ctx.beginPath(); ctx.moveTo(7, 4); ctx.lineTo(14, 14); ctx.lineTo(7, 12); ctx.fill()
-    ctx.beginPath(); ctx.moveTo(-7, 4); ctx.lineTo(-14, 14); ctx.lineTo(-7, 12); ctx.fill()
-    // window
-    ctx.fillStyle = '#3498db'
-    ctx.beginPath(); ctx.arc(0, -4, 3.4, 0, Math.PI * 2); ctx.fill()
-    // legs when landing
+    ctx.shadowBlur = 0
+
+    // nose cone tint + specular streak
+    const nose = ctx.createLinearGradient(0, -19, 0, -8)
+    nose.addColorStop(0, o.flameColor)
+    nose.addColorStop(1, 'rgba(255,158,0,0)')
+    ctx.fillStyle = nose
+    ctx.beginPath()
+    ctx.moveTo(0, -19)
+    ctx.bezierCurveTo(6, -13.5, 6.8, -9, 6.4, -7)
+    ctx.lineTo(-6.4, -7)
+    ctx.bezierCurveTo(-6.8, -9, -6, -13.5, 0, -19)
+    ctx.fill()
+    ctx.strokeStyle = 'rgba(255,255,255,0.75)'
+    ctx.lineWidth = 1.2
+    ctx.beginPath()
+    ctx.moveTo(-3.2, -14)
+    ctx.quadraticCurveTo(-4.6, -6, -4.2, 4)
+    ctx.stroke()
+
+    // panel seam + nozzle collar
+    ctx.strokeStyle = 'rgba(40,48,56,0.5)'
+    ctx.lineWidth = 0.8
+    ctx.beginPath(); ctx.moveTo(-6.6, 2); ctx.lineTo(6.6, 2); ctx.stroke()
+    const collar = ctx.createLinearGradient(-5, 0, 5, 0)
+    collar.addColorStop(0, '#39424c')
+    collar.addColorStop(0.5, '#9aa7b3')
+    collar.addColorStop(1, '#2c343c')
+    ctx.fillStyle = collar
+    ctx.fillRect(-5, 9, 10, 3.4)
+
+    // cockpit: glass sphere with sky reflection and glint
+    const glass = ctx.createRadialGradient(-1.2, -6.2, 0.4, 0, -5, 4.2)
+    glass.addColorStop(0, '#eaf7ff')
+    glass.addColorStop(0.45, '#5ec1f0')
+    glass.addColorStop(1, '#14547e')
+    ctx.fillStyle = glass
+    ctx.beginPath(); ctx.arc(0, -5, 3.8, 0, Math.PI * 2); ctx.fill()
+    ctx.strokeStyle = 'rgba(255,255,255,0.65)'
+    ctx.lineWidth = 0.9
+    ctx.beginPath(); ctx.arc(0, -5, 3.8, -2.4, -0.9); ctx.stroke()
+
+    // legs when landing: hinged struts with feet
     if (this.mode !== 'chase') {
       ctx.strokeStyle = '#8a93a0'
-      ctx.lineWidth = 2
-      ctx.beginPath(); ctx.moveTo(6, 10); ctx.lineTo(11, 17); ctx.moveTo(-6, 10); ctx.lineTo(-11, 17); ctx.stroke()
+      ctx.lineWidth = 2.2
+      ctx.lineCap = 'round'
+      ctx.beginPath(); ctx.moveTo(5.5, 9); ctx.lineTo(11, 17); ctx.moveTo(-5.5, 9); ctx.lineTo(-11, 17); ctx.stroke()
+      ctx.strokeStyle = '#5c6670'
+      ctx.beginPath(); ctx.moveTo(8.6, 17.6); ctx.lineTo(13.4, 17.6); ctx.moveTo(-8.6, 17.6); ctx.lineTo(-13.4, 17.6); ctx.stroke()
     }
     ctx.restore()
 

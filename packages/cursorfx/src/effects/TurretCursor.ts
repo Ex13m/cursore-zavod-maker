@@ -86,24 +86,68 @@ export class TurretCursor extends CanvasEffect {
         this.audio.burst({ duration: 0.09, gain: 0.07, lowpass: 2200 })
       }
 
-      // barrel
+      // barrel: metal gradient, muzzle brake, twin rails
       const len = 58 - this.recoil[i]!
       ctx.save()
       ctx.translate(t.x, t.y)
       ctx.rotate(angle)
-      ctx.fillStyle = o.barrelColor
+      const metal = ctx.createLinearGradient(0, -6, 0, 6)
+      metal.addColorStop(0, '#cfd8e0')
+      metal.addColorStop(0.35, o.barrelColor)
+      metal.addColorStop(1, '#39424c')
+      ctx.fillStyle = metal
       ctx.fillRect(0, -5, len, 10)
-      ctx.fillStyle = '#5c6670'
+      // рёбра охлаждения
+      ctx.fillStyle = 'rgba(20,26,32,0.45)'
+      for (let r = 10; r < len - 12; r += 9) ctx.fillRect(r, -5, 2, 10)
+      // дульный тормоз
+      ctx.fillStyle = '#2c343c'
+      ctx.fillRect(len - 8, -6.5, 8, 13)
+      ctx.fillStyle = '#9aa7b3'
+      ctx.fillRect(len - 6.5, -6.5, 1.6, 13)
+      // башня: купол с бликом и тёмным ободом
+      const dome = ctx.createRadialGradient(-4, -5, 2, 0, 0, 17)
+      dome.addColorStop(0, '#aeb9c4')
+      dome.addColorStop(0.55, '#5c6670')
+      dome.addColorStop(1, '#232a31')
+      ctx.fillStyle = dome
       ctx.beginPath()
       ctx.arc(0, 0, 16, 0, Math.PI * 2)
       ctx.fill()
-      if (this.flash[i]! > 0) {
-        ctx.globalAlpha = this.flash[i]!
-        ctx.fillStyle = o.color
+      ctx.strokeStyle = 'rgba(13,17,22,0.6)'
+      ctx.lineWidth = 2
+      ctx.stroke()
+      // заклёпки
+      ctx.fillStyle = '#1c2228'
+      for (let rv = 0; rv < 6; rv++) {
+        const ra = (rv / 6) * Math.PI * 2 + 0.4
         ctx.beginPath()
-        ctx.arc(len + 6, 0, 9 + Math.random() * 4, 0, Math.PI * 2)
+        ctx.arc(Math.cos(ra) * 11, Math.sin(ra) * 11, 1.1, 0, Math.PI * 2)
+        ctx.fill()
+      }
+      // вспышка: звезда с аддитивным свечением
+      if (this.flash[i]! > 0) {
+        const fl = this.flash[i]!
+        ctx.globalCompositeOperation = 'lighter'
+        ctx.globalAlpha = fl
+        const fx = len + 7
+        const grad = ctx.createRadialGradient(fx, 0, 1, fx, 0, 16)
+        grad.addColorStop(0, '#ffffff')
+        grad.addColorStop(0.35, o.color)
+        grad.addColorStop(1, 'transparent')
+        ctx.fillStyle = grad
+        ctx.beginPath()
+        for (let s = 0; s < 8; s++) {
+          const sa = (s / 8) * Math.PI * 2 + Math.random() * 0.3
+          const sr = s % 2 ? 6 : 15 + Math.random() * 4
+          const sx = fx + Math.cos(sa) * sr
+          const sy = Math.sin(sa) * sr
+          s === 0 ? ctx.moveTo(sx, sy) : ctx.lineTo(sx, sy)
+        }
+        ctx.closePath()
         ctx.fill()
         ctx.globalAlpha = 1
+        ctx.globalCompositeOperation = 'source-over'
       }
       ctx.restore()
     }

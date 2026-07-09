@@ -1,6 +1,6 @@
 {
   "name": "cursorfx",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Animated custom cursor library — composable, serializable effects. Zero dependencies, optional React bindings.",
   "type": "module",
   "license": "MIT",
