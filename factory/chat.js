@@ -191,15 +191,20 @@ async function anthropicParse(prompt) {
 export async function promptToCursor(prompt) {
   let result
   let spentUsage = null // токены потрачены, даже если спека уйдёт в фолбэк
+  let aiFailure = null
   if (process.env.ANTHROPIC_API_KEY) {
     try {
       result = await anthropicParse(prompt)
       spentUsage = result.usage ?? null
     } catch (err) {
+      aiFailure = err.message
       console.warn(`[chat] anthropic failed (${err.message}) — falling back to heuristic`)
     }
   }
-  if (!result) result = heuristicParse(prompt)
+  if (!result) {
+    result = heuristicParse(prompt)
+    if (aiFailure) result.notes = [`AI-инженер недоступен: ${aiFailure}`]
+  }
   result.item.alarms = inspect(result.item)
   // A broken AI spec falls back to the heuristic instead of shipping alarms.
   if (result.engine === 'anthropic' && result.item.alarms.length > 0) {
