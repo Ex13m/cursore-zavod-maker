@@ -6,7 +6,6 @@ import { renderCover } from './cover'
 import { drawPreview } from './preview'
 import { maybeAnnounce } from './announce'
 import { VERSION } from './version'
-import { mountSnow } from './snow'
 
 // ----------------------------------------------------------- rejects (БРАК) ---
 const REJ_KEY = 'zavod.rejected'
@@ -385,23 +384,27 @@ function viewBoard(): HTMLElement {
   const root = el('div', { class: 'grid grid--board' })
   const drop = state.drop
 
-  // hero: живое видео завода (Higgsfield img2video), снег поверх
-  const snowCanvas = el('canvas', { class: 'hero__snow' })
+  // hero: живое видео завода (Higgsfield img2video) с гулом фабрики по клику
   const heroVideo = el('video', { class: 'hero__img', poster: '/hero.png', src: '/hero.mp4' }) as HTMLVideoElement
-  heroVideo.muted = true
+  heroVideo.muted = true // автоплей со звуком браузеры блокируют — звук по тумблеру
   heroVideo.autoplay = true
   heroVideo.loop = true
   heroVideo.playsInline = true
+  const heroSnd = el('button', { class: 'kill mono hero__snd', title: 'Звук фабрики' }, ['🔇']) as HTMLButtonElement
+  heroSnd.addEventListener('click', () => {
+    heroVideo.muted = !heroVideo.muted
+    heroSnd.textContent = heroVideo.muted ? '🔇' : '🔊'
+    if (!heroVideo.muted) void heroVideo.play()
+  })
   const hero = el('div', { class: 'hero span12' }, [
     heroVideo,
-    snowCanvas,
     el('div', { class: 'hero__caption mono' }, [
       el('span', { class: 'lamp lamp--run' }),
       `CURSOR ZAVOD · СМЕНА ${drop?.date ?? '—'} · v${VERSION}`,
     ]),
+    heroSnd,
   ])
   root.append(hero)
-  requestAnimationFrame(() => mountSnow(snowCanvas))
   const alarmsTotal = (drop?.alarms.length ?? 0)
   const queuedCount = state.queue.filter((q) => q.status === 'queued').length
   const publishedCount = state.queue.filter((q) => q.status === 'published').length
