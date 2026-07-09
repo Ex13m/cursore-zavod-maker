@@ -384,12 +384,24 @@ function viewBoard(): HTMLElement {
   const root = el('div', { class: 'grid grid--board' })
   const drop = state.drop
 
-  // hero: живое видео завода (Higgsfield img2video) с гулом фабрики по клику
-  const heroVideo = el('video', { class: 'hero__img', poster: '/hero.png', src: '/hero.mp4' }) as HTMLVideoElement
-  heroVideo.muted = true // автоплей со звуком браузеры блокируют — звук по тумблеру
-  heroVideo.autoplay = true
-  heroVideo.loop = true
-  heroVideo.playsInline = true
+  // hero: живое видео завода (сторибород nano_banana_2 → Seedance 2)
+  // ВАЖНО: muted/autoplay как АТРИБУТЫ (политика автоплея Chrome смотрит на них),
+  // плюс явный play() тремя путями — иначе вместо видео залипает постер.
+  const heroVideo = el('video', {
+    class: 'hero__img',
+    poster: '/hero.png',
+    src: '/hero.mp4',
+    muted: '',
+    autoplay: '',
+    loop: '',
+    playsinline: '',
+    preload: 'auto',
+  }) as HTMLVideoElement
+  heroVideo.muted = true // и свойством тоже — атрибут после создания не всегда синхронизирует property
+  const tryPlay = (): void => { void heroVideo.play().catch(() => { /* повторим по клику */ }) }
+  heroVideo.addEventListener('loadeddata', tryPlay, { once: true })
+  requestAnimationFrame(tryPlay)
+  document.addEventListener('pointerdown', tryPlay, { once: true })
   const heroSnd = el('button', { class: 'kill mono hero__snd', title: 'Звук фабрики' }, ['🔇']) as HTMLButtonElement
   heroSnd.addEventListener('click', () => {
     heroVideo.muted = !heroVideo.muted
