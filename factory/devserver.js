@@ -5,6 +5,7 @@ import { DATA_DIR, readJson } from './lib/paths.js'
 import { readQueue, upsertQueueItem, removeQueueItem, publishQueue } from './publish.js'
 import { promptToCursor } from './chat.js'
 import { imagegenAvailable, generateCursorSprite, extractDrawRequest } from './imagegen.js'
+import { addUsage } from './lib/usage.js'
 
 /**
  * Local dev API — mirrors the Netlify Functions endpoints so the portal works
@@ -54,6 +55,12 @@ const server = createServer(async (req, res) => {
         replicate: imagegenAvailable(),
         resend: Boolean(process.env.RESEND_API_KEY),
       })
+    }
+
+    // dev пишет расход в файл (/data/usage.json) — runtime-часть тут нулевая,
+    // чтобы портал (файл + runtime) не посчитал дважды
+    if (path === '/api/usage' && req.method === 'GET') {
+      return json(res, 200, { anthropic: { requests: 0, inputTokens: 0, outputTokens: 0 }, replicate: { images: 0 }, updatedAt: null })
     }
 
     if (path === '/api/queue' && req.method === 'GET') return json(res, 200, readQueue())
@@ -118,10 +125,12 @@ const server = createServer(async (req, res) => {
           result.item.effects = result.item.effects.filter((e) => e.type !== 'image')
           result.item.effects.push({ type: 'image', options: { src: sprite.url, size: 44, spin: 0, pulse: 0.08 } })
           result.sprite = sprite
+          addUsage({ replicate: { images: 1 } })
         } catch (err) {
           result.notes = [...(result.notes ?? []), `replicate degraded: ${err.message}`]
         }
       }
+      if (result.usage) addUsage(result.usage)
       return json(res, 200, result)
     }
 

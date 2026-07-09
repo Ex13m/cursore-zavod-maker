@@ -1,7 +1,7 @@
 import { createCursor } from 'cursorfx'
 import type { CursorEngine } from 'cursorfx'
 import { api, adminKey } from './api'
-import type { Drop, DropItem, Health, QueueItem, Trends, TrendPalette } from './api'
+import type { Drop, DropItem, Health, QueueItem, Trends, TrendPalette, Usage } from './api'
 import { renderCover } from './cover'
 import { drawPreview } from './preview'
 import { maybeAnnounce } from './announce'
@@ -43,7 +43,36 @@ const state = {
   queue: [] as QueueItem[],
   warehouseDate: null as string | null,
   chatLog: [] as Array<{ who: 'user' | 'zavod'; text: string; item?: DropItem }>,
+  usage: null as Usage | null,
 }
+
+// Тарифы для оценки стоимости (USD): Haiku 4.5 $1/M вход, $5/M выход;
+// flux-schnell ≈ $0.003 за картинку. Это оценка, не счёт-фактура.
+const PRICE = { inPerM: 1, outPerM: 5, perImage: 0.003 }
+function usageCost(u: Usage): number {
+  return (
+    (u.anthropic.inputTokens / 1e6) * PRICE.inPerM +
+    (u.anthropic.outputTokens / 1e6) * PRICE.outPerM +
+    u.replicate.images * PRICE.perImage
+  )
+}
+function sumUsage(a: Usage, b: Usage): Usage {
+  return {
+    anthropic: {
+      requests: a.anthropic.requests + b.anthropic.requests,
+      inputTokens: a.anthropic.inputTokens + b.anthropic.inputTokens,
+      outputTokens: a.anthropic.outputTokens + b.anthropic.outputTokens,
+    },
+    replicate: { images: a.replicate.images + b.replicate.images },
+    updatedAt: b.updatedAt ?? a.updatedAt,
+  }
+}
+const EMPTY_USAGE: Usage = {
+  anthropic: { requests: 0, inputTokens: 0, outputTokens: 0 },
+  replicate: { images: 0 },
+  updatedAt: null,
+}
+const fmtTok = (n: number) => (n >= 1e6 ? `${(n / 1e6).toFixed(2)}M` : n >= 1e3 ? `${(n / 1e3).toFixed(1)}k` : String(n))
 
 // ------------------------------------------------------------- dom utils ---
 const $ = <T extends HTMLElement>(sel: string): T => document.querySelector(sel) as T
@@ -404,6 +433,25 @@ function viewBoard(): HTMLElement {
   alarms.append(el('div', { class: 'alarms' }, [list]))
   root.append(alarms)
 
+  // счётчик реально израсходованных AI-токенов
+  const u = state.usage ?? EMPTY_USAGE
+  const usagePanel = el('div', { class: 'panel span12' }, [
+    el('h3', { class: 'panel__title' }, [
+      'РАСХОД AI · РЕАЛЬНЫЕ ТОКЕНЫ',
+      el('span', { class: 'mono dim', style: 'font-size:10px' }, [
+        u.updatedAt ? `обновлено ${new Date(u.updatedAt).toLocaleString()}` : 'расхода ещё не было',
+      ]),
+    ]),
+    el('div', { class: 'readout' }, [
+      readout(String(u.anthropic.requests), 'ЗАПРОСОВ К CLAUDE', 'info'),
+      readout(fmtTok(u.anthropic.inputTokens), 'ТОКЕНОВ ВХОД', 'info'),
+      readout(fmtTok(u.anthropic.outputTokens), 'ТОКЕНОВ ВЫХОД', 'queued'),
+      readout(String(u.replicate.images), 'AI-КАРТИНОК', 'info'),
+      readout(`$${usageCost(u).toFixed(3)}`, '≈ СТОИМОСТЬ', usageCost(u) > 1 ? 'alarm' : 'run'),
+    ]),
+  ])
+  root.append(usagePanel)
+
   root.append(factoryControls())
 
   return root
@@ -656,6 +704,14 @@ async function boot(): Promise<void> {
 
   try { state.trends = await api.trends() } catch { /* optional */ }
   try { state.queue = await api.queue() } catch { /* api offline */ }
+  // расход = runtime (Blobs, прод-чат) + фабрика (файл из CI); каждая часть опциональна
+  try {
+    const [rt, fab] = await Promise.all([
+      api.usageRuntime().catch(() => EMPTY_USAGE),
+      api.usageFactory().catch(() => EMPTY_USAGE),
+    ])
+    state.usage = sumUsage(fab, rt)
+  } catch { /* без счётчика жить можно */ }
 
   const ver = document.querySelector('#version')
   if (ver) ver.textContent = `v${VERSION}`

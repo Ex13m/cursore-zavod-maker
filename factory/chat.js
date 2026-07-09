@@ -165,6 +165,13 @@ async function anthropicParse(prompt) {
   const rng = rngFor(`chat:${prompt}`)
   return {
     engine: 'anthropic',
+    usage: {
+      anthropic: {
+        requests: 1,
+        inputTokens: json.usage?.input_tokens ?? 0,
+        outputTokens: json.usage?.output_tokens ?? 0,
+      },
+    },
     item: {
       id: `chat-${Math.floor(rng() * 1e9).toString(36)}`,
       name: spec.name?.slice(0, 40) || 'Custom cursor',
@@ -180,12 +187,14 @@ async function anthropicParse(prompt) {
   }
 }
 
-/** Main entry: prompt → { engine, item } with qa alarms filled in. */
+/** Main entry: prompt → { engine, item, usage? } with qa alarms filled in. */
 export async function promptToCursor(prompt) {
   let result
+  let spentUsage = null // токены потрачены, даже если спека уйдёт в фолбэк
   if (process.env.ANTHROPIC_API_KEY) {
     try {
       result = await anthropicParse(prompt)
+      spentUsage = result.usage ?? null
     } catch (err) {
       console.warn(`[chat] anthropic failed (${err.message}) — falling back to heuristic`)
     }
@@ -198,8 +207,9 @@ export async function promptToCursor(prompt) {
     fallback.item.alarms = inspect(fallback.item)
     if (fallback.item.alarms.length === 0) {
       fallback.notes = ['anthropic spec failed qa — heuristic used']
-      return fallback
+      result = fallback
     }
   }
+  if (spentUsage) result.usage = spentUsage
   return result
 }

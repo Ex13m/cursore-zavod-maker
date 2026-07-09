@@ -7,6 +7,7 @@ import { ARCHETYPES } from './archetypes.js'
 import { buildTrends, readTrends } from './trends.js'
 import { inspectDrop } from './qa.js'
 import { imagegenAvailable, generateCursorSprite } from './imagegen.js'
+import { addUsage } from './lib/usage.js'
 
 /** Темы для ежедневных свежих спрайтов (когда задан REPLICATE_API_TOKEN). */
 const REPLICATE_SUBJECTS = [
@@ -34,6 +35,7 @@ async function enrichWithReplicate(items) {
       img.options = { ...img.options, src: sprite.url }
       item.tags = [...new Set([...item.tags, 'ai-sprite'])]
       item.description = `${item.description} Fresh AI sprite: ${subject}.`
+      addUsage({ replicate: { images: 1 } })
       done++
     } catch (err) {
       item.alarms.push(`replicate degraded: ${err.message}`)

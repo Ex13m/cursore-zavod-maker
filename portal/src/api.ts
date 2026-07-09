@@ -48,6 +48,12 @@ export interface QueueItem extends Partial<DropItem> {
   updatedAt?: string
 }
 
+export interface Usage {
+  anthropic: { requests: number; inputTokens: number; outputTokens: number }
+  replicate: { images: number }
+  updatedAt: string | null
+}
+
 export interface Health {
   ok: boolean
   gumroad: boolean
@@ -90,6 +96,8 @@ export const api = {
   index: () => fetch('/data/index.json').then(json<{ drops: string[]; latest?: string }>),
   drop: (date: string) => fetch(`/data/drops/${date}.json`).then(json<Drop>),
   trends: () => fetch('/data/trends.json').then(json<Trends>),
+  usageRuntime: () => fetch('/api/usage', { cache: 'no-store' }).then(json<Usage>),
+  usageFactory: () => fetch('/data/usage.json', { cache: 'no-store' }).then(json<Usage>),
   queue: () => fetch('/api/queue', { cache: 'no-store' }).then(json<QueueItem[]>),
   enqueue: (item: Record<string, unknown>) =>
     fetch('/api/queue', {
