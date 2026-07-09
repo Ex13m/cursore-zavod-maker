@@ -2,6 +2,10 @@ import { mkdir, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import archiver from 'archiver'
 import { DATA_DIR, ROOT_DIR, readJson, writeJson } from './lib/paths.js'
+import { canPublish, recordPublish, gapSeconds, inspectListing, dailyLimit, publishedToday } from './lib/policy.js'
+
+const todayUTC = () => new Date().toISOString().slice(0, 10)
+const sleep = (sec) => new Promise((r) => setTimeout(r, sec * 1000))
 
 /**
  * publisher — packages an approved cursor and ships it.
@@ -95,7 +99,8 @@ async function gumroadCall(method, path, { form } = {}) {
   const text = await res.text()
   let json
   try { json = JSON.parse(text) } catch { json = { success: false, message: text.slice(0, 200) } }
-  return { ok: res.ok && json.success !== false, json }
+  // сигналы «притормози / забанен» — их ловит publishQueue и останавливает пачку
+  return { ok: res.ok && json.success !== false, status: res.status, rateLimited: res.status === 429, forbidden: res.status === 403, json }
 }
 
 export async function publishItem(item) {
@@ -127,6 +132,10 @@ export async function publishItem(item) {
 
   const check = await gumroadCall('GET', `/products/${productId}`)
   steps.push({ step: 'validate', ok: check.ok })
+  if (check.rateLimited || check.forbidden) {
+    return { ok: false, provider: 'gumroad', steps, rateLimited: check.rateLimited, forbidden: check.forbidden,
+      message: check.rateLimited ? 'Gumroad 429 — притормаживаю, очередь на паузе' : 'Gumroad 403 — доступ/бан, очередь остановлена' }
+  }
   if (!check.ok) return { ok: false, provider: 'gumroad', steps, message: `cannot read product ${productId}` }
 
   try {
@@ -145,26 +154,70 @@ export async function publishItem(item) {
   const ok = steps.every((s) => s.ok)
   return {
     ok, provider: 'gumroad', steps,
+    rateLimited: enable.rateLimited, forbidden: enable.forbidden,
     url: check.json?.product?.short_url ?? `https://app.gumroad.com/products/${productId}`,
     message: ok ? 'Uploaded and published on Gumroad.' : 'Published with warnings — see steps.',
   }
 }
 
-/** Publish everything approved in the queue. */
-export async function publishQueue() {
+/**
+ * Publish approved queue items under the anti-ban policy:
+ * warm-up daily limit, jittered gaps between uploads, listing QA, and hard stop
+ * on rate-limit/forbidden signals (429/403) so we never hammer the marketplace.
+ * `dryRun` (или отсутствие токена) прогоняет всё, кроме реального залива.
+ */
+export async function publishQueue({ dryRun = false } = {}) {
+  const today = todayUTC()
   const queue = readQueue()
   const pending = queue.filter((q) => q.status === 'queued' || q.status === 'error')
   const results = []
-  for (const item of pending) {
+  let banStop = false
+
+  for (let i = 0; i < pending.length; i++) {
+    const item = pending[i]
+
+    // 1) лимит суток + разогрев
+    const gate = canPublish(today)
+    if (!gate.allowed) {
+      results.push({ id: item.id, ok: false, throttled: true, message: gate.reason })
+      continue // остальные ждут завтра
+    }
+
+    // 2) QA листинга (стоп-слова, теги, цена)
+    const issues = inspectListing(item)
+    if (issues.length) {
+      upsertQueueItem({ ...item, status: 'error', error: `модерация: ${issues.join('; ')}` })
+      results.push({ id: item.id, ok: false, message: `модерация: ${issues.join('; ')}` })
+      continue
+    }
+
+    // 3) пауза между заливами (кроме первого в пачке)
+    if (i > 0 && !dryRun) await sleep(gapSeconds(i))
+
     upsertQueueItem({ ...item, status: 'publishing' })
     try {
-      const result = await publishItem(item)
+      const result = dryRun ? { ok: true, provider: 'dry-run', steps: [], message: 'dry-run' } : await publishItem(item)
+      // 4) сигнал бана — стоп всей очереди
+      if (result.rateLimited || result.forbidden) {
+        banStop = true
+        upsertQueueItem({ ...item, status: 'error', error: result.message })
+        results.push({ id: item.id, ...result })
+        break
+      }
       upsertQueueItem({ ...item, status: result.ok ? 'published' : 'error', result, error: result.ok ? null : result.message })
+      if (result.ok && !dryRun) recordPublish(today)
       results.push({ id: item.id, ...result })
     } catch (err) {
       upsertQueueItem({ ...item, status: 'error', error: String(err) })
       results.push({ id: item.id, ok: false, message: String(err) })
     }
   }
-  return { count: results.length, results }
+
+  return {
+    count: results.length,
+    published: results.filter((r) => r.ok).length,
+    banStop,
+    policy: { limit: dailyLimit(today), used: publishedToday(today) },
+    results,
+  }
 }

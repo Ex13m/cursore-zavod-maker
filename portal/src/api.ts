@@ -96,6 +96,9 @@ export const api = {
   index: () => fetch('/data/index.json').then(json<{ drops: string[]; latest?: string }>),
   drop: (date: string) => fetch(`/data/drops/${date}.json`).then(json<Drop>),
   trends: () => fetch('/data/trends.json').then(json<Trends>),
+  policy: () => fetch('/api/policy', { cache: 'no-store' }).then(
+    json<{ today: string; limit: number; used: number; gate: { allowed: boolean; reason?: string }; policy: { dailyMax: number; warmupDays: number; minGapSec: number; maxGapSec: number } }>,
+  ),
   usageRuntime: () => fetch('/api/usage', { cache: 'no-store' }).then(json<Usage>),
   usageFactory: () => fetch('/data/usage.json', { cache: 'no-store' }).then(json<Usage>),
   queue: () => fetch('/api/queue', { cache: 'no-store' }).then(json<QueueItem[]>),

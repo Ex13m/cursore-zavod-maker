@@ -59,6 +59,12 @@ const server = createServer(async (req, res) => {
 
     // dev пишет расход в файл (/data/usage.json) — runtime-часть тут нулевая,
     // чтобы портал (файл + runtime) не посчитал дважды
+    if (path === '/api/policy' && req.method === 'GET') {
+      const { canPublish, dailyLimit, publishedToday, POLICY } = await import('./lib/policy.js')
+      const today = new Date().toISOString().slice(0, 10)
+      return json(res, 200, { today, limit: dailyLimit(today), used: publishedToday(today), gate: canPublish(today), policy: POLICY })
+    }
+
     if (path === '/api/usage' && req.method === 'GET') {
       return json(res, 200, { anthropic: { requests: 0, inputTokens: 0, outputTokens: 0 }, replicate: { images: 0 }, updatedAt: null })
     }

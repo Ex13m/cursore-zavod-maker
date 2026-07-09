@@ -44,6 +44,7 @@ const state = {
   warehouseDate: null as string | null,
   chatLog: [] as Array<{ who: 'user' | 'zavod'; text: string; item?: DropItem }>,
   usage: null as Usage | null,
+  policy: null as { today: string; limit: number; used: number; gate: { allowed: boolean; reason?: string }; policy: { dailyMax: number; warmupDays: number; minGapSec: number; maxGapSec: number } } | null,
 }
 
 // Тарифы для оценки стоимости (USD): Haiku 4.5 $1/M вход, $5/M выход;
@@ -497,6 +498,31 @@ function viewBoard(): HTMLElement {
   ])
   root.append(usagePanel)
 
+  // антибан-политика отгрузки
+  const p = state.policy
+  if (p) {
+    const left = Math.max(0, p.limit - p.used)
+    const warm = p.today && p.limit < p.policy.dailyMax
+    root.append(
+      el('div', { class: 'panel span12' }, [
+        el('h3', { class: 'panel__title' }, [
+          'АНТИБАН · ПОЛИТИКА ОТГРУЗКИ',
+          el('span', { class: 'mono dim', style: 'font-size:10px' }, [warm ? 'режим разогрева аккаунта' : 'полный режим']),
+        ]),
+        el('div', { class: 'readout' }, [
+          readout(`${p.used}/${p.limit}`, 'ОТГРУЖЕНО СЕГОДНЯ', p.used >= p.limit ? 'queued' : 'run'),
+          readout(String(left), 'ОСТАЛОСЬ ЛИМИТА', left > 0 ? 'run' : 'alarm'),
+          readout(`${p.policy.minGapSec}–${p.policy.maxGapSec}с`, 'ПАУЗА МЕЖДУ ЗАЛИВАМИ', 'info'),
+          readout(`${p.policy.dailyMax}/${p.policy.warmupDays}д`, 'ПОТОЛОК / РАЗОГРЕВ', 'info'),
+        ]),
+        el('div', { class: 'hint', style: 'margin-top:8px' }, [
+          'Заливы дросселируются, аккаунт разогревается плавно, при сигнале 429/403 очередь встаёт на паузу. ' +
+          'Стоп-слова, теги и цена проверяются перед отправкой. Это защищает от бана за спам-поведение.',
+        ]),
+      ]),
+    )
+  }
+
   root.append(factoryControls())
 
   return root
@@ -757,6 +783,7 @@ async function boot(): Promise<void> {
     ])
     state.usage = sumUsage(fab, rt)
   } catch { /* без счётчика жить можно */ }
+  try { state.policy = await api.policy() } catch { /* политика опциональна */ }
 
   const ver = document.querySelector('#version')
   if (ver) ver.textContent = `v${VERSION}`
