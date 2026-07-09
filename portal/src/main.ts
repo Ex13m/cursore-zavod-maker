@@ -385,10 +385,15 @@ function viewBoard(): HTMLElement {
   const root = el('div', { class: 'grid grid--board' })
   const drop = state.drop
 
-  // hero: фото завода, над которым идёт снег
+  // hero: живое видео завода (Higgsfield img2video), снег поверх
   const snowCanvas = el('canvas', { class: 'hero__snow' })
+  const heroVideo = el('video', { class: 'hero__img', poster: '/hero.png', src: '/hero.mp4' }) as HTMLVideoElement
+  heroVideo.muted = true
+  heroVideo.autoplay = true
+  heroVideo.loop = true
+  heroVideo.playsInline = true
   const hero = el('div', { class: 'hero span12' }, [
-    el('img', { class: 'hero__img', src: '/hero.png', alt: 'CURSOR ZAVOD' }),
+    heroVideo,
     snowCanvas,
     el('div', { class: 'hero__caption mono' }, [
       el('span', { class: 'lamp lamp--run' }),
