@@ -18,6 +18,12 @@
 
 * { box-sizing: border-box; }
 
+html {
+  /* место под полосу прокрутки всегда зарезервировано — иначе при переключении
+     экранов разной высоты скроллбар мигает и весь макет ездит вбок */
+  scrollbar-gutter: stable;
+}
+
 html, body {
   margin: 0;
   background: var(--bg);
@@ -283,6 +289,13 @@ table.hmi th { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-
   position: absolute; right: 12px; bottom: 10px;
   background: rgba(26, 29, 33, 0.82); font-size: 14px; padding: 5px 10px;
 }
+.hero__play {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  background: rgba(26, 29, 33, 0.9); color: var(--run);
+  border: 2px solid var(--run); padding: 14px 26px;
+  font-size: 16px; letter-spacing: 0.14em; cursor: pointer;
+}
+.hero__play:hover { background: var(--run); color: #0d1116; }
 .hero__caption {
   position: absolute; left: 12px; bottom: 10px;
   background: rgba(26, 29, 33, 0.82);

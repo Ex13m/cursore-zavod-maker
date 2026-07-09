@@ -402,6 +402,17 @@ function viewBoard(): HTMLElement {
   heroVideo.addEventListener('loadeddata', tryPlay, { once: true })
   requestAnimationFrame(tryPlay)
   document.addEventListener('pointerdown', tryPlay, { once: true })
+
+  // гарантированный запуск: если автоплей не завёлся — большая кнопка поверх
+  const playOverlay = el('button', { class: 'hero__play mono' }, ['▶ ЗАПУСТИТЬ ЗАВОД']) as HTMLButtonElement
+  playOverlay.style.display = 'none'
+  playOverlay.addEventListener('click', () => {
+    void heroVideo.play().then(() => { playOverlay.style.display = 'none' }).catch(() => {})
+  })
+  heroVideo.addEventListener('playing', () => { playOverlay.style.display = 'none' })
+  setTimeout(() => {
+    if (heroVideo.paused) playOverlay.style.display = 'block'
+  }, 1500)
   const heroSnd = el('button', { class: 'kill mono hero__snd', title: 'Звук фабрики' }, ['🔇']) as HTMLButtonElement
   heroSnd.addEventListener('click', () => {
     heroVideo.muted = !heroVideo.muted
@@ -410,6 +421,7 @@ function viewBoard(): HTMLElement {
   })
   const hero = el('div', { class: 'hero span12' }, [
     heroVideo,
+    playOverlay,
     el('div', { class: 'hero__caption mono' }, [
       el('span', { class: 'lamp lamp--run' }),
       `CURSOR ZAVOD · СМЕНА ${drop?.date ?? '—'} · v${VERSION}`,
