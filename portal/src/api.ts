@@ -48,6 +48,18 @@ export interface QueueItem extends Partial<DropItem> {
   updatedAt?: string
 }
 
+export interface GalleryPhoto {
+  src: string
+  caption?: string
+}
+export interface Album {
+  id: string
+  title: string
+  note?: string
+  cover: string
+  photos: GalleryPhoto[]
+}
+
 export interface Usage {
   anthropic: { requests: number; inputTokens: number; outputTokens: number }
   replicate: { images: number }
@@ -96,6 +108,7 @@ export const api = {
   index: () => fetch('/data/index.json').then(json<{ drops: string[]; latest?: string }>),
   drop: (date: string) => fetch(`/data/drops/${date}.json`).then(json<Drop>),
   trends: () => fetch('/data/trends.json').then(json<Trends>),
+  gallery: () => fetch('/gallery.json').then(json<{ albums: Album[] }>),
   policy: () => fetch('/api/policy', { cache: 'no-store' }).then(
     json<{ today: string; limit: number; used: number; gate: { allowed: boolean; reason?: string }; policy: { dailyMax: number; warmupDays: number; minGapSec: number; maxGapSec: number } }>,
   ),

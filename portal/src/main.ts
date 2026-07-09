@@ -1,7 +1,7 @@
 import { createCursor } from 'cursorfx'
 import type { CursorEngine } from 'cursorfx'
 import { api, adminKey } from './api'
-import type { Drop, DropItem, Health, QueueItem, Trends, TrendPalette, Usage } from './api'
+import type { Album, Drop, DropItem, Health, QueueItem, Trends, TrendPalette, Usage } from './api'
 import { renderCover } from './cover'
 import { drawPreview } from './preview'
 import { maybeAnnounce } from './announce'
@@ -29,7 +29,7 @@ function toggleSound(item: DropItem): void {
 }
 
 // ----------------------------------------------------------------- state ---
-type View = 'board' | 'conveyor' | 'chat' | 'warehouse' | 'sales'
+type View = 'board' | 'conveyor' | 'chat' | 'warehouse' | 'sales' | 'gallery'
 
 const state = {
   view: 'board' as View,
@@ -45,6 +45,8 @@ const state = {
   chatLog: [] as Array<{ who: 'user' | 'zavod'; text: string; item?: DropItem }>,
   usage: null as Usage | null,
   policy: null as { today: string; limit: number; used: number; gate: { allowed: boolean; reason?: string }; policy: { dailyMax: number; warmupDays: number; minGapSec: number; maxGapSec: number } } | null,
+  albums: [] as Album[],
+  openAlbum: null as string | null,
 }
 
 // Тарифы для оценки стоимости (USD): Haiku 4.5 $1/M вход, $5/M выход;
@@ -704,6 +706,115 @@ function viewSales(): HTMLElement {
   return root
 }
 
+// --------------------------------------------------------- view: gallery ---
+function openLightbox(album: Album, startIndex: number): void {
+  let idx = startIndex
+  const overlay = el('div', { class: 'lb' })
+  const img = el('img', { class: 'lb__img' }) as HTMLImageElement
+  const caption = el('div', { class: 'lb__cap mono' })
+  const counter = el('div', { class: 'lb__count mono' })
+
+  const show = (): void => {
+    const photo = album.photos[idx]!
+    img.src = photo.src
+    caption.textContent = photo.caption ?? ''
+    counter.textContent = `${idx + 1} / ${album.photos.length}`
+  }
+  const go = (delta: number): void => {
+    idx = (idx + delta + album.photos.length) % album.photos.length
+    show()
+  }
+  const close = (): void => {
+    overlay.remove()
+    document.removeEventListener('keydown', onKey)
+  }
+  const onKey = (e: KeyboardEvent): void => {
+    if (e.key === 'Escape') close()
+    else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') go(1)
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') go(-1)
+  }
+
+  // листание колесом мыши
+  let wheelLock = 0
+  overlay.addEventListener(
+    'wheel',
+    (e) => {
+      e.preventDefault()
+      const now = e.timeStamp
+      if (now - wheelLock < 220) return // не пролистывать пачкой
+      wheelLock = now
+      go(e.deltaY > 0 ? 1 : -1)
+    },
+    { passive: false },
+  )
+  overlay.addEventListener('mousedown', (e) => { if (e.target === overlay) close() })
+
+  const closeBtn = el('button', { class: 'lb__x', title: 'Закрыть (Esc)' }, ['✕'])
+  closeBtn.addEventListener('click', close)
+  const prev = el('button', { class: 'lb__nav lb__nav--prev', title: 'Назад' }, ['‹'])
+  prev.addEventListener('click', () => go(-1))
+  const next = el('button', { class: 'lb__nav lb__nav--next', title: 'Вперёд' }, ['›'])
+  next.addEventListener('click', () => go(1))
+
+  overlay.append(img, caption, counter, prev, next, closeBtn)
+  document.body.append(overlay)
+  document.addEventListener('keydown', onKey)
+  show()
+}
+
+function viewGallery(): HTMLElement {
+  const root = el('div', {})
+  if (state.albums.length === 0) {
+    root.append(el('div', { class: 'empty' }, ['Альбомов пока нет.']))
+    return root
+  }
+
+  const album = state.albums.find((a) => a.id === state.openAlbum)
+  if (!album) {
+    // сетка обложек альбомов
+    root.append(el('div', { class: 'panel', style: 'margin-bottom:14px' }, [
+      el('h3', { class: 'panel__title' }, ['ФОТОАЛЬБОМ · ВЫБЕРИ АЛЬБОМ']),
+    ]))
+    const grid = el('div', { class: 'albums' })
+    for (const a of state.albums) {
+      const card = el('button', { class: 'album' })
+      const cover = el('img', { class: 'album__cover', src: a.cover, loading: 'lazy' })
+      card.append(
+        cover,
+        el('div', { class: 'album__meta' }, [
+          el('b', {}, [a.title]),
+          el('span', { class: 'mono faint' }, [` ${a.photos.length} фото`]),
+          ...(a.note ? [el('div', { class: 'album__note' }, [a.note])] : []),
+        ]),
+      )
+      card.addEventListener('click', () => { state.openAlbum = a.id; render() })
+      grid.append(card)
+    }
+    root.append(grid)
+    return root
+  }
+
+  // раскрытый альбом — все фото
+  const head = el('div', { class: 'panel', style: 'margin-bottom:14px' }, [
+    el('h3', { class: 'panel__title' }, [`АЛЬБОМ · ${album.title}`]),
+  ])
+  const back = el('button', { class: 'btn' }, ['‹ К АЛЬБОМАМ'])
+  back.addEventListener('click', () => { state.openAlbum = null; render() })
+  head.append(back)
+  root.append(head)
+
+  const photos = el('div', { class: 'photos' })
+  album.photos.forEach((p, i) => {
+    const cell = el('button', { class: 'photo' })
+    cell.append(el('img', { class: 'photo__img', src: p.src, loading: 'lazy' }))
+    if (p.caption) cell.append(el('div', { class: 'photo__cap mono' }, [p.caption]))
+    cell.addEventListener('click', () => openLightbox(album, i))
+    photos.append(cell)
+  })
+  root.append(photos)
+  return root
+}
+
 // ------------------------------------------------------------------ render ---
 const VIEWS: Record<View, () => HTMLElement> = {
   board: viewBoard,
@@ -711,6 +822,7 @@ const VIEWS: Record<View, () => HTMLElement> = {
   chat: viewChat,
   warehouse: viewWarehouse,
   sales: viewSales,
+  gallery: viewGallery,
 }
 
 function render(): void {
@@ -784,6 +896,7 @@ async function boot(): Promise<void> {
     state.usage = sumUsage(fab, rt)
   } catch { /* без счётчика жить можно */ }
   try { state.policy = await api.policy() } catch { /* политика опциональна */ }
+  try { state.albums = (await api.gallery()).albums } catch { /* галерея опциональна */ }
 
   const ver = document.querySelector('#version')
   if (ver) ver.textContent = `v${VERSION}`

@@ -329,6 +329,66 @@ table.hmi th { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-
 .modal__exmeta { flex: 1; font-size: 12px; }
 .modal__exmeta b { display: block; }
 
+/* ---------- gallery ---------- */
+.albums { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+.album {
+  background: var(--panel); border: 1px solid var(--line); padding: 0;
+  cursor: pointer; text-align: left; color: var(--ink); overflow: hidden;
+  transition: border-color 0.1s;
+}
+.album:hover { border-color: var(--info); }
+.album__cover { width: 100%; height: 150px; object-fit: cover; display: block; border-bottom: 1px solid var(--line); }
+.album__meta { padding: 10px 12px; }
+.album__meta b { font-size: 15px; }
+.album__note { font-size: 11px; color: var(--dim); margin-top: 4px; }
+
+.photos { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+.photo {
+  background: var(--panel); border: 1px solid var(--line); padding: 0;
+  cursor: zoom-in; overflow: hidden; color: var(--ink);
+}
+.photo:hover { border-color: var(--info); }
+.photo__img { width: 100%; height: 150px; object-fit: cover; display: block; }
+.photo__cap { padding: 6px 8px; font-size: 11px; color: var(--dim); border-top: 1px solid var(--line); }
+
+/* ---------- lightbox ---------- */
+.lb {
+  position: fixed; inset: 0; z-index: 120;
+  background: rgba(5, 6, 8, 0.94);
+  display: flex; align-items: center; justify-content: center;
+  cursor: zoom-out;
+}
+.lb__img {
+  max-width: 96vw; max-height: 92vh;
+  object-fit: contain; cursor: default;
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.8);
+}
+.lb__cap {
+  position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%);
+  background: rgba(26, 29, 33, 0.85); border: 1px solid var(--line);
+  padding: 6px 14px; font-size: 12px; color: var(--ink); letter-spacing: 0.1em;
+}
+.lb__count {
+  position: fixed; left: 18px; top: 16px;
+  font-size: 12px; color: var(--dim); letter-spacing: 0.14em;
+}
+.lb__x {
+  position: fixed; right: 18px; top: 14px;
+  background: rgba(26, 29, 33, 0.85); color: var(--ink);
+  border: 1px solid var(--line); font-size: 18px; line-height: 1;
+  width: 40px; height: 40px; cursor: pointer;
+}
+.lb__x:hover { border-color: var(--alarm); color: var(--alarm); }
+.lb__nav {
+  position: fixed; top: 50%; transform: translateY(-50%);
+  background: rgba(26, 29, 33, 0.7); color: var(--ink);
+  border: 1px solid var(--line); font-size: 30px; line-height: 1;
+  width: 46px; height: 70px; cursor: pointer;
+}
+.lb__nav:hover { border-color: var(--info); color: var(--info); }
+.lb__nav--prev { left: 14px; }
+.lb__nav--next { right: 14px; }
+
 /* ---------- footer ---------- */
 .hmi-foot {
   position: fixed; bottom: 0; left: 0; right: 0;

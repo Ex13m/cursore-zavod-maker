@@ -1,0 +1,28 @@
+{
+  "albums": [
+    {
+      "id": "line",
+      "title": "СБОРОЧНАЯ ЛИНИЯ",
+      "note": "Резкие референс-кадры роботизированного цеха (nano_banana)",
+      "cover": "/gallery/line/01-tunnel.png",
+      "photos": [
+        { "src": "/gallery/line/01-tunnel.png", "caption": "Тоннель манипуляторов" },
+        { "src": "/gallery/line/02-welding.png", "caption": "Лазерная сварка, макро" },
+        { "src": "/gallery/line/03-overhead.png", "caption": "Вид сверху на конвейер" },
+        { "src": "/gallery/line/04-side.png", "caption": "Боковой трекинг линии" },
+        { "src": "/gallery/line/05-arm.png", "caption": "Захват детали сверху" },
+        { "src": "/gallery/line/06-qc.png", "caption": "Голо-сканер ОТК" }
+      ]
+    },
+    {
+      "id": "concept",
+      "title": "КОНЦЕПТ-АРТ ЗАВОДА",
+      "note": "Постеры завода из спецификации (Higgsfield)",
+      "cover": "/gallery/concept/01-hero.png",
+      "photos": [
+        { "src": "/gallery/concept/01-hero.png", "caption": "Пульт CURSOR ZAVOD" },
+        { "src": "/gallery/concept/02-line.png", "caption": "Производственная линия курсоров" }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 /** Единый номер версии портала/завода. Меняется вместе с CHANGELOG.md. */
-export const VERSION = '1.8.0'
+export const VERSION = '1.9.0'
 
 /** Строки анонса — вылетают «из взрывов» при первом открытии новой версии. */
 export const RELEASE_NOTES: string[] = [
