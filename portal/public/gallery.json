@@ -15,6 +15,16 @@
       ]
     },
     {
+      "id": "anime90",
+      "title": "АНИМЕ · 90-е",
+      "note": "Производственная линия в стиле раннего аниме 1990-х (cel-shading, зерно плёнки)",
+      "cover": "/gallery/anime/02-line-21x9.png",
+      "photos": [
+        { "src": "/gallery/anime/02-line-21x9.png", "caption": "Линия, ультраширокий 21:9 (баннер)" },
+        { "src": "/gallery/anime/01-line-16x9.png", "caption": "Линия, 16:9" }
+      ]
+    },
+    {
       "id": "concept",
       "title": "КОНЦЕПТ-АРТ ЗАВОДА",
       "note": "Постеры завода из спецификации (Higgsfield)",
