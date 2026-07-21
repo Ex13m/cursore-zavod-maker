@@ -1,0 +1,612 @@
+{
+  "date": "2026-07-21",
+  "generatedAt": "2026-07-21T09:28:43.814Z",
+  "seed": "2026-07-21",
+  "trendsNotes": [
+    "no live signals — built-in bank with daily rotation",
+    "today favors: y2k-neon, dopamine, aurora"
+  ],
+  "items": [
+    {
+      "id": "drop-2026-07-21-0",
+      "name": "Chrome Haze",
+      "description": "A clean single dot tuned to this palette. Fast, quiet, universal.",
+      "tags": [
+        "minimal",
+        "dot",
+        "brutalist"
+      ],
+      "accent": "#111111",
+      "background": "#f5f5f0",
+      "dark": false,
+      "suggestedPrice": 8,
+      "effects": [
+        {
+          "type": "dot",
+          "options": {
+            "size": 15,
+            "color": "#111111",
+            "blendMode": "difference"
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-21-1",
+      "name": "Cosmic Nova",
+      "description": "Your pointer is a wobbler lure — a school of fish hunts it.",
+      "tags": [
+        "scene",
+        "fishing",
+        "fun",
+        "mono-ink"
+      ],
+      "accent": "#111111",
+      "background": "#ededea",
+      "dark": false,
+      "suggestedPrice": 7,
+      "effects": [
+        {
+          "type": "lure",
+          "options": {
+            "fishColor": "#111111",
+            "lureColor": "#444444",
+            "fishCount": 3,
+            "sound": false
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-21-2",
+      "name": "Neon Spark",
+      "description": "An additive particle stream that flares behind the pointer.",
+      "tags": [
+        "trail",
+        "particles",
+        "neon",
+        "dopamine"
+      ],
+      "accent": "#ff4d6d",
+      "background": "#fff3f8",
+      "dark": false,
+      "suggestedPrice": 10,
+      "effects": [
+        {
+          "type": "trail",
+          "options": {
+            "color": "#ff4d6d",
+            "size": 7,
+            "life": 0.75
+          }
+        },
+        {
+          "type": "dot",
+          "options": {
+            "size": 10,
+            "color": "#ffffff"
+          }
+        }
+      ],
+      "alarms": [
+        "contrast: top layer luma 1.00 ≈ bg 0.97"
+      ]
+    },
+    {
+      "id": "drop-2026-07-21-3",
+      "name": "Plasma Glitch",
+      "description": "A luminous silk ribbon flows behind the pointer and settles like fabric when you stop.",
+      "tags": [
+        "scene",
+        "ribbon",
+        "trail",
+        "silk",
+        "aurora"
+      ],
+      "accent": "#5b8cff",
+      "background": "#0a0b14",
+      "dark": true,
+      "suggestedPrice": 9,
+      "effects": [
+        {
+          "type": "ribbon",
+          "options": {
+            "hue": -1,
+            "width": 22
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-21-4",
+      "name": "Soft Bloom",
+      "description": "You fly the fugitive fighter; a squadron hunts you, lasers flying off-screen. Freeze — you are shot down; move — respawn and run.",
+      "tags": [
+        "scene",
+        "dogfight",
+        "space",
+        "game",
+        "dopamine"
+      ],
+      "accent": "#ff4d6d",
+      "background": "#05060a",
+      "dark": true,
+      "suggestedPrice": 14,
+      "effects": [
+        {
+          "type": "dogfight",
+          "options": {
+            "shipColor": "#ff4d6d",
+            "hunterColor": "#ff9e00",
+            "hunters": 4,
+            "sound": false
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-21-5",
+      "name": "Cosmic Beam",
+      "description": "A gooey blob that squashes and stretches with your speed.",
+      "tags": [
+        "blob",
+        "squash",
+        "fun",
+        "brutalist"
+      ],
+      "accent": "#111111",
+      "background": "#f5f5f0",
+      "dark": false,
+      "suggestedPrice": 7,
+      "effects": [
+        {
+          "type": "blob",
+          "options": {
+            "size": 19,
+            "color": "#111111",
+            "blendMode": "difference"
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-21-6",
+      "name": "Turbo Nova",
+      "description": "A spinning ⚡ cursor with a lively pulse.",
+      "tags": [
+        "image",
+        "animated",
+        "emoji",
+        "chrome"
+      ],
+      "accent": "#c0c0c0",
+      "background": "#08010f",
+      "dark": true,
+      "suggestedPrice": 10,
+      "effects": [
+        {
+          "type": "trail",
+          "options": {
+            "color": "#c0c0c0",
+            "size": 5,
+            "life": 0.5
+          }
+        },
+        {
+          "type": "image",
+          "options": {
+            "src": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%3E%3Ctext%20x%3D%2232%22%20y%3D%2250%22%20font-size%3D%2252%22%20text-anchor%3D%22middle%22%3E%E2%9A%A1%3C%2Ftext%3E%3C%2Fsvg%3E",
+            "size": 38,
+            "spin": 190,
+            "pulse": 0.1
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-21-7",
+      "name": "Velvet Wisp",
+      "description": "You are the gunner: turrets fire from off-screen at your crosshair.",
+      "tags": [
+        "scene",
+        "gunner",
+        "game",
+        "acid-forest"
+      ],
+      "accent": "#39ff14",
+      "background": "#0b130d",
+      "dark": true,
+      "suggestedPrice": 6,
+      "effects": [
+        {
+          "type": "turret",
+          "options": {
+            "color": "#39ff14",
+            "fireRate": 6,
+            "sound": false
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-21-8",
+      "name": "Retro Halo",
+      "description": "A storm lives in the pointer: branching bolts crackle as you move, a click discharges a full strike.",
+      "tags": [
+        "scene",
+        "storm",
+        "electric",
+        "neon",
+        "brutalist"
+      ],
+      "accent": "#111111",
+      "background": "#0a0b14",
+      "dark": true,
+      "suggestedPrice": 12,
+      "effects": [
+        {
+          "type": "lightning",
+          "options": {
+            "color": "#111111",
+            "rate": 8,
+            "sound": false
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-21-9",
+      "name": "Lunar Dash",
+      "description": "A living swarm of fireflies wanders around the pointer, blinking — dash and they scatter in fright.",
+      "tags": [
+        "scene",
+        "fireflies",
+        "swarm",
+        "alive",
+        "sunset"
+      ],
+      "accent": "#ff6b6b",
+      "background": "#0b130d",
+      "dark": true,
+      "suggestedPrice": 11,
+      "effects": [
+        {
+          "type": "firefly",
+          "options": {
+            "color": "#ff6b6b",
+            "count": 13
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-21-10",
+      "name": "Velvet Quartz",
+      "description": "The page becomes fabric: the grid bends in waves around your movement, a click drops a stone.",
+      "tags": [
+        "scene",
+        "spacetime",
+        "grid",
+        "physics",
+        "dopamine"
+      ],
+      "accent": "#ff4d6d",
+      "background": "#05060a",
+      "dark": true,
+      "suggestedPrice": 13,
+      "effects": [
+        {
+          "type": "ripple",
+          "options": {
+            "crestColor": "#ff4d6d",
+            "spacing": 46,
+            "amplitude": 15
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-21-11",
+      "name": "Hyper Drift",
+      "description": "Starfield warp: your pointer is the vanishing point — move fast to jump to light speed.",
+      "tags": [
+        "scene",
+        "hyperspace",
+        "space",
+        "warp",
+        "chrome"
+      ],
+      "accent": "#c0c0c0",
+      "background": "#05060a",
+      "dark": true,
+      "suggestedPrice": 12,
+      "effects": [
+        {
+          "type": "warp",
+          "options": {
+            "accent": "#c0c0c0",
+            "starCount": 160
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-21-12",
+      "name": "Liquid Echo",
+      "description": "A black hole devours the page: particles spiral from every corner into your pointer.",
+      "tags": [
+        "scene",
+        "blackhole",
+        "space",
+        "gravity",
+        "dopamine"
+      ],
+      "accent": "#ff4d6d",
+      "background": "#05060a",
+      "dark": true,
+      "suggestedPrice": 13,
+      "effects": [
+        {
+          "type": "vortex",
+          "options": {
+            "color": "#ff4d6d",
+            "glowColor": "#ff9e00",
+            "particleCount": 130,
+            "sound": false
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-21-13",
+      "name": "Hollow Ember",
+      "description": "A pulsating abstract organism that convulses in noisy 3D bursts, cycling colours.",
+      "tags": [
+        "scene",
+        "organism",
+        "abstract",
+        "3d",
+        "sunset"
+      ],
+      "accent": "#ff6b6b",
+      "background": "#1a0b2e",
+      "dark": true,
+      "suggestedPrice": 7,
+      "effects": [
+        {
+          "type": "noiseblob",
+          "options": {
+            "size": 32,
+            "colorPeriod": 2.4000000000000004,
+            "burstEvery": 3.5,
+            "sound": false
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-21-14",
+      "name": "Atomic Glitch",
+      "description": "A fat hard dot inside a thick square ring. Raw and loud.",
+      "tags": [
+        "brutalism",
+        "bold",
+        "agency",
+        "chrome"
+      ],
+      "accent": "#c0c0c0",
+      "background": "#08010f",
+      "dark": true,
+      "suggestedPrice": 8,
+      "effects": [
+        {
+          "type": "ring",
+          "options": {
+            "size": 41,
+            "thickness": 4,
+            "hoverRadius": 0,
+            "color": "#c0c0c0"
+          }
+        },
+        {
+          "type": "dot",
+          "options": {
+            "size": 12,
+            "blendMode": "difference",
+            "radius": "0%",
+            "color": "#7a2bff"
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-21-15",
+      "name": "Pixel Prism",
+      "description": "Glow plus particles plus a bright core. The maximalist showpiece.",
+      "tags": [
+        "glow",
+        "trail",
+        "maximal",
+        "aurora"
+      ],
+      "accent": "#5b8cff",
+      "background": "#0a0b14",
+      "dark": true,
+      "suggestedPrice": 12,
+      "effects": [
+        {
+          "type": "glow",
+          "options": {
+            "size": 320,
+            "color": "#9b5bff",
+            "opacity": 0.4
+          }
+        },
+        {
+          "type": "trail",
+          "options": {
+            "color": "#5b8cff",
+            "size": 7,
+            "life": 0.6
+          }
+        },
+        {
+          "type": "dot",
+          "options": {
+            "size": 7,
+            "color": "#ffffff"
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-21-16",
+      "name": "Cosmic Drift",
+      "description": "A lagging ring that wraps buttons, chasing a tight inner dot.",
+      "tags": [
+        "ring",
+        "magnetic",
+        "aurora"
+      ],
+      "accent": "#5b8cff",
+      "background": "#0a0b14",
+      "dark": true,
+      "suggestedPrice": 8,
+      "effects": [
+        {
+          "type": "ring",
+          "options": {
+            "size": 48,
+            "thickness": 4,
+            "color": "#5b8cff",
+            "halfLife": 0.06,
+            "hoverPadding": 13
+          }
+        },
+        {
+          "type": "dot",
+          "options": {
+            "size": 9,
+            "color": "#9b5bff"
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-21-17",
+      "name": "Lunar Echo",
+      "description": "A soft trailing halo over a bright core. Built for dark heroes.",
+      "tags": [
+        "glow",
+        "premium",
+        "mono-ink"
+      ],
+      "accent": "#111111",
+      "background": "#ededea",
+      "dark": false,
+      "suggestedPrice": 10,
+      "effects": [
+        {
+          "type": "glow",
+          "options": {
+            "size": 300,
+            "color": "#111111",
+            "opacity": 0.55
+          }
+        },
+        {
+          "type": "dot",
+          "options": {
+            "size": 9,
+            "color": "#ffffff"
+          }
+        }
+      ],
+      "alarms": [
+        "contrast: top layer luma 1.00 ≈ bg 0.93"
+      ]
+    },
+    {
+      "id": "drop-2026-07-21-18",
+      "name": "Mono Echo",
+      "description": "A rocket chases your pointer — and lands beside it when you stop.",
+      "tags": [
+        "scene",
+        "rocket",
+        "chase",
+        "hmi-signal"
+      ],
+      "accent": "#2ecc71",
+      "background": "#1a1d21",
+      "dark": true,
+      "suggestedPrice": 7,
+      "effects": [
+        {
+          "type": "rocket",
+          "options": {
+            "flameColor": "#2ecc71",
+            "accel": 2300,
+            "sound": false
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-21-19",
+      "name": "Pixel Halo",
+      "description": "A fat hard dot inside a thick square ring. Raw and loud.",
+      "tags": [
+        "brutalism",
+        "bold",
+        "agency",
+        "sunset"
+      ],
+      "accent": "#ff6b6b",
+      "background": "#1a0b2e",
+      "dark": true,
+      "suggestedPrice": 10,
+      "effects": [
+        {
+          "type": "ring",
+          "options": {
+            "size": 45,
+            "thickness": 4,
+            "hoverRadius": 0,
+            "color": "#ff6b6b"
+          }
+        },
+        {
+          "type": "dot",
+          "options": {
+            "size": 15,
+            "blendMode": "difference",
+            "radius": "0%",
+            "color": "#feca57"
+          }
+        }
+      ],
+      "alarms": []
+    }
+  ],
+  "alarms": [
+    "drop-2026-07-21-2: contrast: top layer luma 1.00 ≈ bg 0.97",
+    "drop-2026-07-21-17: contrast: top layer luma 1.00 ≈ bg 0.93"
+  ]
+}
