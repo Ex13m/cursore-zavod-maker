@@ -1,0 +1,593 @@
+{
+  "date": "2026-07-25",
+  "generatedAt": "2026-07-25T09:01:36.219Z",
+  "seed": "2026-07-25",
+  "trendsNotes": [
+    "no live signals — built-in bank with daily rotation",
+    "today favors: aurora, brutalist, y2k-neon"
+  ],
+  "items": [
+    {
+      "id": "drop-2026-07-25-0",
+      "name": "Brutal Pulse",
+      "description": "A soft trailing halo over a bright core. Built for dark heroes.",
+      "tags": [
+        "glow",
+        "premium",
+        "brutalist"
+      ],
+      "accent": "#111111",
+      "background": "#f5f5f0",
+      "dark": false,
+      "suggestedPrice": 8,
+      "effects": [
+        {
+          "type": "glow",
+          "options": {
+            "size": 270,
+            "color": "#111111",
+            "opacity": 0.30000000000000004
+          }
+        },
+        {
+          "type": "dot",
+          "options": {
+            "size": 6,
+            "color": "#ffffff"
+          }
+        }
+      ],
+      "alarms": [
+        "contrast: top layer luma 1.00 ≈ bg 0.96"
+      ]
+    },
+    {
+      "id": "drop-2026-07-25-1",
+      "name": "Retro Quartz",
+      "description": "Your pointer is a wobbler lure — a school of fish hunts it.",
+      "tags": [
+        "scene",
+        "fishing",
+        "fun",
+        "mono-ink"
+      ],
+      "accent": "#111111",
+      "background": "#ededea",
+      "dark": false,
+      "suggestedPrice": 8,
+      "effects": [
+        {
+          "type": "lure",
+          "options": {
+            "fishColor": "#111111",
+            "lureColor": "#444444",
+            "fishCount": 4,
+            "sound": false
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-25-2",
+      "name": "Hollow Wisp",
+      "description": "A clean single dot tuned to this palette. Fast, quiet, universal.",
+      "tags": [
+        "minimal",
+        "dot",
+        "y2k-neon"
+      ],
+      "accent": "#ff3b81",
+      "background": "#0d0221",
+      "dark": true,
+      "suggestedPrice": 8,
+      "effects": [
+        {
+          "type": "dot",
+          "options": {
+            "size": 20,
+            "color": "#ff3b81",
+            "blendMode": "normal"
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-25-3",
+      "name": "Liquid Bloom",
+      "description": "The page becomes fabric: the grid bends in waves around your movement, a click drops a stone.",
+      "tags": [
+        "scene",
+        "spacetime",
+        "grid",
+        "physics",
+        "hmi-signal"
+      ],
+      "accent": "#2ecc71",
+      "background": "#05060a",
+      "dark": true,
+      "suggestedPrice": 13,
+      "effects": [
+        {
+          "type": "ripple",
+          "options": {
+            "crestColor": "#2ecc71",
+            "spacing": 40,
+            "amplitude": 14
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-25-4",
+      "name": "Frost Comet",
+      "description": "Glow plus particles plus a bright core. The maximalist showpiece.",
+      "tags": [
+        "glow",
+        "trail",
+        "maximal",
+        "chrome"
+      ],
+      "accent": "#c0c0c0",
+      "background": "#08010f",
+      "dark": true,
+      "suggestedPrice": 11,
+      "effects": [
+        {
+          "type": "glow",
+          "options": {
+            "size": 240,
+            "color": "#7a2bff",
+            "opacity": 0.4
+          }
+        },
+        {
+          "type": "trail",
+          "options": {
+            "color": "#c0c0c0",
+            "size": 7,
+            "life": 0.6
+          }
+        },
+        {
+          "type": "dot",
+          "options": {
+            "size": 7,
+            "color": "#ffffff"
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-25-5",
+      "name": "Turbo Flux",
+      "description": "A rocket chases your pointer — and lands beside it when you stop.",
+      "tags": [
+        "scene",
+        "rocket",
+        "chase",
+        "porcelain"
+      ],
+      "accent": "#2b6cb0",
+      "background": "#f7f4ef",
+      "dark": false,
+      "suggestedPrice": 7,
+      "effects": [
+        {
+          "type": "rocket",
+          "options": {
+            "flameColor": "#2b6cb0",
+            "accel": 2400,
+            "sound": false
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-25-6",
+      "name": "Plasma Drift",
+      "description": "A luminous silk ribbon flows behind the pointer and settles like fabric when you stop.",
+      "tags": [
+        "scene",
+        "ribbon",
+        "trail",
+        "silk",
+        "porcelain"
+      ],
+      "accent": "#2b6cb0",
+      "background": "#0a0b14",
+      "dark": true,
+      "suggestedPrice": 9,
+      "effects": [
+        {
+          "type": "ribbon",
+          "options": {
+            "hue": -1,
+            "width": 16
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-25-7",
+      "name": "Atomic Flux",
+      "description": "A lagging ring that wraps buttons, chasing a tight inner dot.",
+      "tags": [
+        "ring",
+        "magnetic",
+        "aurora"
+      ],
+      "accent": "#5b8cff",
+      "background": "#0a0b14",
+      "dark": true,
+      "suggestedPrice": 10,
+      "effects": [
+        {
+          "type": "ring",
+          "options": {
+            "size": 49,
+            "thickness": 2,
+            "color": "#5b8cff",
+            "halfLife": 0.11,
+            "hoverPadding": 7
+          }
+        },
+        {
+          "type": "dot",
+          "options": {
+            "size": 6,
+            "color": "#9b5bff"
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-25-8",
+      "name": "Chrome Trace",
+      "description": "A storm lives in the pointer: branching bolts crackle as you move, a click discharges a full strike.",
+      "tags": [
+        "scene",
+        "storm",
+        "electric",
+        "neon",
+        "brutalist"
+      ],
+      "accent": "#111111",
+      "background": "#0a0b14",
+      "dark": true,
+      "suggestedPrice": 12,
+      "effects": [
+        {
+          "type": "lightning",
+          "options": {
+            "color": "#111111",
+            "rate": 5,
+            "sound": false
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-25-9",
+      "name": "Atomic Pulse",
+      "description": "A gooey blob that squashes and stretches with your speed.",
+      "tags": [
+        "blob",
+        "squash",
+        "fun",
+        "y2k-neon"
+      ],
+      "accent": "#ff3b81",
+      "background": "#0d0221",
+      "dark": true,
+      "suggestedPrice": 6,
+      "effects": [
+        {
+          "type": "blob",
+          "options": {
+            "size": 16,
+            "color": "#ff3b81",
+            "blendMode": "normal"
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-25-10",
+      "name": "Brutal Echo",
+      "description": "A living swarm of fireflies wanders around the pointer, blinking — dash and they scatter in fright.",
+      "tags": [
+        "scene",
+        "fireflies",
+        "swarm",
+        "alive",
+        "dopamine"
+      ],
+      "accent": "#ff4d6d",
+      "background": "#0b130d",
+      "dark": true,
+      "suggestedPrice": 11,
+      "effects": [
+        {
+          "type": "firefly",
+          "options": {
+            "color": "#ff4d6d",
+            "count": 13
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-25-11",
+      "name": "Solar Ember",
+      "description": "A pulsating abstract organism that convulses in noisy 3D bursts, cycling colours.",
+      "tags": [
+        "scene",
+        "organism",
+        "abstract",
+        "3d",
+        "dopamine"
+      ],
+      "accent": "#ff4d6d",
+      "background": "#fff3f8",
+      "dark": false,
+      "suggestedPrice": 8,
+      "effects": [
+        {
+          "type": "noiseblob",
+          "options": {
+            "size": 25,
+            "colorPeriod": 3.2,
+            "burstEvery": 3.7,
+            "sound": false
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-25-12",
+      "name": "Frost Drift",
+      "description": "Starfield warp: your pointer is the vanishing point — move fast to jump to light speed.",
+      "tags": [
+        "scene",
+        "hyperspace",
+        "space",
+        "warp",
+        "y2k-neon"
+      ],
+      "accent": "#ff3b81",
+      "background": "#05060a",
+      "dark": true,
+      "suggestedPrice": 12,
+      "effects": [
+        {
+          "type": "warp",
+          "options": {
+            "accent": "#ff3b81",
+            "starCount": 140
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-25-13",
+      "name": "Brutal Prism",
+      "description": "A black hole devours the page: particles spiral from every corner into your pointer.",
+      "tags": [
+        "scene",
+        "blackhole",
+        "space",
+        "gravity",
+        "dopamine"
+      ],
+      "accent": "#ff4d6d",
+      "background": "#05060a",
+      "dark": true,
+      "suggestedPrice": 13,
+      "effects": [
+        {
+          "type": "vortex",
+          "options": {
+            "color": "#ff4d6d",
+            "glowColor": "#ff9e00",
+            "particleCount": 150,
+            "sound": false
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-25-14",
+      "name": "Atomic Glitch",
+      "description": "You fly the fugitive fighter; a squadron hunts you, lasers flying off-screen. Freeze — you are shot down; move — respawn and run.",
+      "tags": [
+        "scene",
+        "dogfight",
+        "space",
+        "game",
+        "aurora"
+      ],
+      "accent": "#5b8cff",
+      "background": "#05060a",
+      "dark": true,
+      "suggestedPrice": 14,
+      "effects": [
+        {
+          "type": "dogfight",
+          "options": {
+            "shipColor": "#5b8cff",
+            "hunterColor": "#9b5bff",
+            "hunters": 3,
+            "sound": false
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-25-15",
+      "name": "Brutal Dash",
+      "description": "A fat hard dot inside a thick square ring. Raw and loud.",
+      "tags": [
+        "brutalism",
+        "bold",
+        "agency",
+        "acid-forest"
+      ],
+      "accent": "#39ff14",
+      "background": "#0b130d",
+      "dark": true,
+      "suggestedPrice": 9,
+      "effects": [
+        {
+          "type": "ring",
+          "options": {
+            "size": 43,
+            "thickness": 4,
+            "hoverRadius": 0,
+            "color": "#39ff14"
+          }
+        },
+        {
+          "type": "dot",
+          "options": {
+            "size": 15,
+            "blendMode": "difference",
+            "radius": "0%",
+            "color": "#00ffa3"
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-25-16",
+      "name": "Hyper Wisp",
+      "description": "An additive particle stream that flares behind the pointer.",
+      "tags": [
+        "trail",
+        "particles",
+        "neon",
+        "acid-forest"
+      ],
+      "accent": "#39ff14",
+      "background": "#0b130d",
+      "dark": true,
+      "suggestedPrice": 8,
+      "effects": [
+        {
+          "type": "trail",
+          "options": {
+            "color": "#39ff14",
+            "size": 8,
+            "life": 0.55
+          }
+        },
+        {
+          "type": "dot",
+          "options": {
+            "size": 10,
+            "color": "#ffffff"
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-25-17",
+      "name": "Hyper Ember",
+      "description": "A spinning ☻ cursor with a lively pulse.",
+      "tags": [
+        "image",
+        "animated",
+        "emoji",
+        "chrome"
+      ],
+      "accent": "#c0c0c0",
+      "background": "#08010f",
+      "dark": true,
+      "suggestedPrice": 6,
+      "effects": [
+        {
+          "type": "image",
+          "options": {
+            "src": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%3E%3Ctext%20x%3D%2232%22%20y%3D%2250%22%20font-size%3D%2252%22%20text-anchor%3D%22middle%22%3E%E2%98%BB%3C%2Ftext%3E%3C%2Fsvg%3E",
+            "size": 39,
+            "spin": 40,
+            "pulse": 0.08
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-25-18",
+      "name": "Frost Orbit",
+      "description": "You are the gunner: turrets fire from off-screen at your crosshair.",
+      "tags": [
+        "scene",
+        "gunner",
+        "game",
+        "y2k-neon"
+      ],
+      "accent": "#ff3b81",
+      "background": "#0d0221",
+      "dark": true,
+      "suggestedPrice": 8,
+      "effects": [
+        {
+          "type": "turret",
+          "options": {
+            "color": "#ff3b81",
+            "fireRate": 8,
+            "sound": false
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-07-25-19",
+      "name": "Turbo Drift",
+      "description": "You fly the fugitive fighter; a squadron hunts you, lasers flying off-screen. Freeze — you are shot down; move — respawn and run.",
+      "tags": [
+        "scene",
+        "dogfight",
+        "space",
+        "game",
+        "sunset"
+      ],
+      "accent": "#ff6b6b",
+      "background": "#05060a",
+      "dark": true,
+      "suggestedPrice": 14,
+      "effects": [
+        {
+          "type": "dogfight",
+          "options": {
+            "shipColor": "#ff6b6b",
+            "hunterColor": "#feca57",
+            "hunters": 2,
+            "sound": false
+          }
+        }
+      ],
+      "alarms": []
+    }
+  ],
+  "alarms": [
+    "drop-2026-07-25-0: contrast: top layer luma 1.00 ≈ bg 0.96"
+  ]
+}
