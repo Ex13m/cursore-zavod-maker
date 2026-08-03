@@ -1,0 +1,595 @@
+{
+  "date": "2026-08-03",
+  "generatedAt": "2026-08-03T10:44:36.294Z",
+  "seed": "2026-08-03",
+  "trendsNotes": [
+    "no live signals — built-in bank with daily rotation",
+    "today favors: aurora, brutalist, y2k-neon"
+  ],
+  "items": [
+    {
+      "id": "drop-2026-08-03-0",
+      "name": "Atomic Drift",
+      "description": "A soft trailing halo over a bright core. Built for dark heroes.",
+      "tags": [
+        "glow",
+        "premium",
+        "aurora"
+      ],
+      "accent": "#5b8cff",
+      "background": "#0a0b14",
+      "dark": true,
+      "suggestedPrice": 8,
+      "effects": [
+        {
+          "type": "glow",
+          "options": {
+            "size": 350,
+            "color": "#5b8cff",
+            "opacity": 0.4
+          }
+        },
+        {
+          "type": "dot",
+          "options": {
+            "size": 7,
+            "color": "#ffffff"
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-03-1",
+      "name": "Plasma Echo",
+      "description": "A storm lives in the pointer: branching bolts crackle as you move, a click discharges a full strike.",
+      "tags": [
+        "scene",
+        "storm",
+        "electric",
+        "neon",
+        "hmi-signal"
+      ],
+      "accent": "#2ecc71",
+      "background": "#0a0b14",
+      "dark": true,
+      "suggestedPrice": 12,
+      "effects": [
+        {
+          "type": "lightning",
+          "options": {
+            "color": "#2ecc71",
+            "rate": 8,
+            "sound": false
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-03-2",
+      "name": "Atomic Flux",
+      "description": "Glow plus particles plus a bright core. The maximalist showpiece.",
+      "tags": [
+        "glow",
+        "trail",
+        "maximal",
+        "sunset"
+      ],
+      "accent": "#ff6b6b",
+      "background": "#1a0b2e",
+      "dark": true,
+      "suggestedPrice": 10,
+      "effects": [
+        {
+          "type": "glow",
+          "options": {
+            "size": 270,
+            "color": "#feca57",
+            "opacity": 0.4
+          }
+        },
+        {
+          "type": "trail",
+          "options": {
+            "color": "#ff6b6b",
+            "size": 9,
+            "life": 0.6
+          }
+        },
+        {
+          "type": "dot",
+          "options": {
+            "size": 7,
+            "color": "#ffffff"
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-03-3",
+      "name": "Retro Pulse",
+      "description": "A pulsating abstract organism that convulses in noisy 3D bursts, cycling colours.",
+      "tags": [
+        "scene",
+        "organism",
+        "abstract",
+        "3d",
+        "mono-ink"
+      ],
+      "accent": "#111111",
+      "background": "#ededea",
+      "dark": false,
+      "suggestedPrice": 6,
+      "effects": [
+        {
+          "type": "noiseblob",
+          "options": {
+            "size": 24,
+            "colorPeriod": 2.4000000000000004,
+            "burstEvery": 3.5,
+            "sound": false
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-03-4",
+      "name": "Hyper Wisp",
+      "description": "A rocket chases your pointer — and lands beside it when you stop.",
+      "tags": [
+        "scene",
+        "rocket",
+        "chase",
+        "aurora"
+      ],
+      "accent": "#5b8cff",
+      "background": "#0a0b14",
+      "dark": true,
+      "suggestedPrice": 7,
+      "effects": [
+        {
+          "type": "rocket",
+          "options": {
+            "flameColor": "#5b8cff",
+            "accel": 3400,
+            "sound": false
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-03-5",
+      "name": "Turbo Glitch",
+      "description": "A black hole devours the page: particles spiral from every corner into your pointer.",
+      "tags": [
+        "scene",
+        "blackhole",
+        "space",
+        "gravity",
+        "aurora"
+      ],
+      "accent": "#5b8cff",
+      "background": "#05060a",
+      "dark": true,
+      "suggestedPrice": 13,
+      "effects": [
+        {
+          "type": "vortex",
+          "options": {
+            "color": "#5b8cff",
+            "glowColor": "#9b5bff",
+            "particleCount": 140,
+            "sound": false
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-03-6",
+      "name": "Neon Dash",
+      "description": "A fat hard dot inside a thick square ring. Raw and loud.",
+      "tags": [
+        "brutalism",
+        "bold",
+        "agency",
+        "hmi-signal"
+      ],
+      "accent": "#2ecc71",
+      "background": "#1a1d21",
+      "dark": true,
+      "suggestedPrice": 8,
+      "effects": [
+        {
+          "type": "ring",
+          "options": {
+            "size": 47,
+            "thickness": 4,
+            "hoverRadius": 0,
+            "color": "#2ecc71"
+          }
+        },
+        {
+          "type": "dot",
+          "options": {
+            "size": 16,
+            "blendMode": "difference",
+            "radius": "0%",
+            "color": "#f39c12"
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-03-7",
+      "name": "Solar Pulse",
+      "description": "An additive particle stream that flares behind the pointer.",
+      "tags": [
+        "trail",
+        "particles",
+        "neon",
+        "y2k-neon"
+      ],
+      "accent": "#ff3b81",
+      "background": "#0d0221",
+      "dark": true,
+      "suggestedPrice": 9,
+      "effects": [
+        {
+          "type": "trail",
+          "options": {
+            "color": "#ff3b81",
+            "size": 7,
+            "life": 0.8500000000000001
+          }
+        },
+        {
+          "type": "dot",
+          "options": {
+            "size": 7,
+            "color": "#ffffff"
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-03-8",
+      "name": "Velvet Dash",
+      "description": "Starfield warp: your pointer is the vanishing point — move fast to jump to light speed.",
+      "tags": [
+        "scene",
+        "hyperspace",
+        "space",
+        "warp",
+        "mono-ink"
+      ],
+      "accent": "#111111",
+      "background": "#05060a",
+      "dark": true,
+      "suggestedPrice": 12,
+      "effects": [
+        {
+          "type": "warp",
+          "options": {
+            "accent": "#111111",
+            "starCount": 140
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-03-9",
+      "name": "Vivid Pulse",
+      "description": "You fly the fugitive fighter; a squadron hunts you, lasers flying off-screen. Freeze — you are shot down; move — respawn and run.",
+      "tags": [
+        "scene",
+        "dogfight",
+        "space",
+        "game",
+        "y2k-neon"
+      ],
+      "accent": "#ff3b81",
+      "background": "#05060a",
+      "dark": true,
+      "suggestedPrice": 14,
+      "effects": [
+        {
+          "type": "dogfight",
+          "options": {
+            "shipColor": "#ff3b81",
+            "hunterColor": "#39ff14",
+            "hunters": 3,
+            "sound": false
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-03-10",
+      "name": "Chrome Nova",
+      "description": "A gooey blob that squashes and stretches with your speed.",
+      "tags": [
+        "blob",
+        "squash",
+        "fun",
+        "y2k-neon"
+      ],
+      "accent": "#ff3b81",
+      "background": "#0d0221",
+      "dark": true,
+      "suggestedPrice": 7,
+      "effects": [
+        {
+          "type": "blob",
+          "options": {
+            "size": 16,
+            "color": "#ff3b81",
+            "blendMode": "normal"
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-03-11",
+      "name": "Cosmic Dash",
+      "description": "A luminous silk ribbon flows behind the pointer and settles like fabric when you stop.",
+      "tags": [
+        "scene",
+        "ribbon",
+        "trail",
+        "silk",
+        "mono-ink"
+      ],
+      "accent": "#111111",
+      "background": "#0a0b14",
+      "dark": true,
+      "suggestedPrice": 9,
+      "effects": [
+        {
+          "type": "ribbon",
+          "options": {
+            "hue": -1,
+            "width": 21
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-03-12",
+      "name": "Hollow Comet",
+      "description": "You are the gunner: turrets fire from off-screen at your crosshair.",
+      "tags": [
+        "scene",
+        "gunner",
+        "game",
+        "mono-ink"
+      ],
+      "accent": "#111111",
+      "background": "#ededea",
+      "dark": false,
+      "suggestedPrice": 7,
+      "effects": [
+        {
+          "type": "turret",
+          "options": {
+            "color": "#111111",
+            "fireRate": 5,
+            "sound": false
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-03-13",
+      "name": "Frost Wisp",
+      "description": "Your pointer is a wobbler lure — a school of fish hunts it.",
+      "tags": [
+        "scene",
+        "fishing",
+        "fun",
+        "acid-forest"
+      ],
+      "accent": "#39ff14",
+      "background": "#0b130d",
+      "dark": true,
+      "suggestedPrice": 6,
+      "effects": [
+        {
+          "type": "lure",
+          "options": {
+            "fishColor": "#39ff14",
+            "lureColor": "#00ffa3",
+            "fishCount": 3,
+            "sound": false
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-03-14",
+      "name": "Retro Drift",
+      "description": "A clean single dot tuned to this palette. Fast, quiet, universal.",
+      "tags": [
+        "minimal",
+        "dot",
+        "sunset"
+      ],
+      "accent": "#ff6b6b",
+      "background": "#1a0b2e",
+      "dark": true,
+      "suggestedPrice": 6,
+      "effects": [
+        {
+          "type": "dot",
+          "options": {
+            "size": 9,
+            "color": "#ff6b6b",
+            "blendMode": "normal"
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-03-15",
+      "name": "Soft Wisp",
+      "description": "A lagging ring that wraps buttons, chasing a tight inner dot.",
+      "tags": [
+        "ring",
+        "magnetic",
+        "dopamine"
+      ],
+      "accent": "#ff4d6d",
+      "background": "#fff3f8",
+      "dark": false,
+      "suggestedPrice": 10,
+      "effects": [
+        {
+          "type": "ring",
+          "options": {
+            "size": 45,
+            "thickness": 4,
+            "color": "#ff4d6d",
+            "halfLife": 0.08,
+            "hoverPadding": 7
+          }
+        },
+        {
+          "type": "dot",
+          "options": {
+            "size": 9,
+            "color": "#ff9e00"
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-03-16",
+      "name": "Pixel Trace",
+      "description": "The page becomes fabric: the grid bends in waves around your movement, a click drops a stone.",
+      "tags": [
+        "scene",
+        "spacetime",
+        "grid",
+        "physics",
+        "mono-ink"
+      ],
+      "accent": "#111111",
+      "background": "#05060a",
+      "dark": true,
+      "suggestedPrice": 13,
+      "effects": [
+        {
+          "type": "ripple",
+          "options": {
+            "crestColor": "#111111",
+            "spacing": 48,
+            "amplitude": 20
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-03-17",
+      "name": "Vivid Comet",
+      "description": "A living swarm of fireflies wanders around the pointer, blinking — dash and they scatter in fright.",
+      "tags": [
+        "scene",
+        "fireflies",
+        "swarm",
+        "alive",
+        "sunset"
+      ],
+      "accent": "#ff6b6b",
+      "background": "#0b130d",
+      "dark": true,
+      "suggestedPrice": 11,
+      "effects": [
+        {
+          "type": "firefly",
+          "options": {
+            "color": "#ff6b6b",
+            "count": 11
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-03-18",
+      "name": "Atomic Beam",
+      "description": "A spinning ✿ cursor with a lively pulse.",
+      "tags": [
+        "image",
+        "animated",
+        "emoji",
+        "aurora"
+      ],
+      "accent": "#5b8cff",
+      "background": "#0a0b14",
+      "dark": true,
+      "suggestedPrice": 9,
+      "effects": [
+        {
+          "type": "trail",
+          "options": {
+            "color": "#5b8cff",
+            "size": 5,
+            "life": 0.5
+          }
+        },
+        {
+          "type": "image",
+          "options": {
+            "src": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%3E%3Ctext%20x%3D%2232%22%20y%3D%2250%22%20font-size%3D%2252%22%20text-anchor%3D%22middle%22%3E%E2%9C%BF%3C%2Ftext%3E%3C%2Fsvg%3E",
+            "size": 35,
+            "spin": 190,
+            "pulse": 0.06
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-03-19",
+      "name": "Solar Glitch",
+      "description": "A rocket chases your pointer — and lands beside it when you stop.",
+      "tags": [
+        "scene",
+        "rocket",
+        "chase",
+        "y2k-neon"
+      ],
+      "accent": "#ff3b81",
+      "background": "#0d0221",
+      "dark": true,
+      "suggestedPrice": 8,
+      "effects": [
+        {
+          "type": "rocket",
+          "options": {
+            "flameColor": "#ff3b81",
+            "accel": 2800,
+            "sound": false
+          }
+        }
+      ],
+      "alarms": []
+    }
+  ],
+  "alarms": []
+}
