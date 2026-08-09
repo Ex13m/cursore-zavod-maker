@@ -1,0 +1,596 @@
+{
+  "date": "2026-08-09",
+  "generatedAt": "2026-08-09T07:54:45.853Z",
+  "seed": "2026-08-09",
+  "trendsNotes": [
+    "no live signals — built-in bank with daily rotation",
+    "today favors: aurora, y2k-neon, dopamine"
+  ],
+  "items": [
+    {
+      "id": "drop-2026-08-09-0",
+      "name": "Mono Halo",
+      "description": "You are the gunner: turrets fire from off-screen at your crosshair.",
+      "tags": [
+        "scene",
+        "gunner",
+        "game",
+        "dopamine"
+      ],
+      "accent": "#ff4d6d",
+      "background": "#fff3f8",
+      "dark": false,
+      "suggestedPrice": 6,
+      "effects": [
+        {
+          "type": "turret",
+          "options": {
+            "color": "#ff4d6d",
+            "fireRate": 9,
+            "sound": false
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-09-1",
+      "name": "Retro Spark",
+      "description": "Glow plus particles plus a bright core. The maximalist showpiece.",
+      "tags": [
+        "glow",
+        "trail",
+        "maximal",
+        "y2k-neon"
+      ],
+      "accent": "#ff3b81",
+      "background": "#0d0221",
+      "dark": true,
+      "suggestedPrice": 12,
+      "effects": [
+        {
+          "type": "glow",
+          "options": {
+            "size": 330,
+            "color": "#39ff14",
+            "opacity": 0.4
+          }
+        },
+        {
+          "type": "trail",
+          "options": {
+            "color": "#ff3b81",
+            "size": 7,
+            "life": 0.6
+          }
+        },
+        {
+          "type": "dot",
+          "options": {
+            "size": 7,
+            "color": "#ffffff"
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-09-2",
+      "name": "Hyper Comet",
+      "description": "A black hole devours the page: particles spiral from every corner into your pointer.",
+      "tags": [
+        "scene",
+        "blackhole",
+        "space",
+        "gravity",
+        "aurora"
+      ],
+      "accent": "#5b8cff",
+      "background": "#05060a",
+      "dark": true,
+      "suggestedPrice": 13,
+      "effects": [
+        {
+          "type": "vortex",
+          "options": {
+            "color": "#5b8cff",
+            "glowColor": "#9b5bff",
+            "particleCount": 140,
+            "sound": false
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-09-3",
+      "name": "Hollow Dash",
+      "description": "A rocket chases your pointer — and lands beside it when you stop.",
+      "tags": [
+        "scene",
+        "rocket",
+        "chase",
+        "mono-ink"
+      ],
+      "accent": "#111111",
+      "background": "#ededea",
+      "dark": false,
+      "suggestedPrice": 6,
+      "effects": [
+        {
+          "type": "rocket",
+          "options": {
+            "flameColor": "#111111",
+            "accel": 3000,
+            "sound": false
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-09-4",
+      "name": "Velvet Pulse",
+      "description": "A soft trailing halo over a bright core. Built for dark heroes.",
+      "tags": [
+        "glow",
+        "premium",
+        "hmi-signal"
+      ],
+      "accent": "#2ecc71",
+      "background": "#1a1d21",
+      "dark": true,
+      "suggestedPrice": 8,
+      "effects": [
+        {
+          "type": "glow",
+          "options": {
+            "size": 290,
+            "color": "#2ecc71",
+            "opacity": 0.55
+          }
+        },
+        {
+          "type": "dot",
+          "options": {
+            "size": 10,
+            "color": "#ffffff"
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-09-5",
+      "name": "Vivid Ember",
+      "description": "You fly the fugitive fighter; a squadron hunts you, lasers flying off-screen. Freeze — you are shot down; move — respawn and run.",
+      "tags": [
+        "scene",
+        "dogfight",
+        "space",
+        "game",
+        "chrome"
+      ],
+      "accent": "#c0c0c0",
+      "background": "#05060a",
+      "dark": true,
+      "suggestedPrice": 14,
+      "effects": [
+        {
+          "type": "dogfight",
+          "options": {
+            "shipColor": "#c0c0c0",
+            "hunterColor": "#7a2bff",
+            "hunters": 4,
+            "sound": false
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-09-6",
+      "name": "Frost Beam",
+      "description": "The page becomes fabric: the grid bends in waves around your movement, a click drops a stone.",
+      "tags": [
+        "scene",
+        "spacetime",
+        "grid",
+        "physics",
+        "hmi-signal"
+      ],
+      "accent": "#2ecc71",
+      "background": "#05060a",
+      "dark": true,
+      "suggestedPrice": 13,
+      "effects": [
+        {
+          "type": "ripple",
+          "options": {
+            "crestColor": "#2ecc71",
+            "spacing": 50,
+            "amplitude": 16
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-09-7",
+      "name": "Velvet Drift",
+      "description": "A pulsating abstract organism that convulses in noisy 3D bursts, cycling colours.",
+      "tags": [
+        "scene",
+        "organism",
+        "abstract",
+        "3d",
+        "dopamine"
+      ],
+      "accent": "#ff4d6d",
+      "background": "#fff3f8",
+      "dark": false,
+      "suggestedPrice": 8,
+      "effects": [
+        {
+          "type": "noiseblob",
+          "options": {
+            "size": 24,
+            "colorPeriod": 2,
+            "burstEvery": 3,
+            "sound": false
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-09-8",
+      "name": "Frost Glitch",
+      "description": "Your pointer is a wobbler lure — a school of fish hunts it.",
+      "tags": [
+        "scene",
+        "fishing",
+        "fun",
+        "dopamine"
+      ],
+      "accent": "#ff4d6d",
+      "background": "#fff3f8",
+      "dark": false,
+      "suggestedPrice": 6,
+      "effects": [
+        {
+          "type": "lure",
+          "options": {
+            "fishColor": "#ff4d6d",
+            "lureColor": "#ff9e00",
+            "fishCount": 3,
+            "sound": false
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-09-9",
+      "name": "Atomic Trace",
+      "description": "A lagging ring that wraps buttons, chasing a tight inner dot.",
+      "tags": [
+        "ring",
+        "magnetic",
+        "porcelain"
+      ],
+      "accent": "#2b6cb0",
+      "background": "#f7f4ef",
+      "dark": false,
+      "suggestedPrice": 8,
+      "effects": [
+        {
+          "type": "ring",
+          "options": {
+            "size": 52,
+            "thickness": 2,
+            "color": "#2b6cb0",
+            "halfLife": 0.12,
+            "hoverPadding": 11
+          }
+        },
+        {
+          "type": "dot",
+          "options": {
+            "size": 8,
+            "color": "#c05621"
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-09-10",
+      "name": "Retro Drift",
+      "description": "A storm lives in the pointer: branching bolts crackle as you move, a click discharges a full strike.",
+      "tags": [
+        "scene",
+        "storm",
+        "electric",
+        "neon",
+        "dopamine"
+      ],
+      "accent": "#ff4d6d",
+      "background": "#0a0b14",
+      "dark": true,
+      "suggestedPrice": 12,
+      "effects": [
+        {
+          "type": "lightning",
+          "options": {
+            "color": "#ff4d6d",
+            "rate": 7,
+            "sound": false
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-09-11",
+      "name": "Brutal Pulse",
+      "description": "A luminous silk ribbon flows behind the pointer and settles like fabric when you stop.",
+      "tags": [
+        "scene",
+        "ribbon",
+        "trail",
+        "silk",
+        "brutalist"
+      ],
+      "accent": "#111111",
+      "background": "#0a0b14",
+      "dark": true,
+      "suggestedPrice": 9,
+      "effects": [
+        {
+          "type": "ribbon",
+          "options": {
+            "hue": 161,
+            "width": 22
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-09-12",
+      "name": "Ghost Orbit",
+      "description": "A living swarm of fireflies wanders around the pointer, blinking — dash and they scatter in fright.",
+      "tags": [
+        "scene",
+        "fireflies",
+        "swarm",
+        "alive",
+        "y2k-neon"
+      ],
+      "accent": "#ff3b81",
+      "background": "#0b130d",
+      "dark": true,
+      "suggestedPrice": 11,
+      "effects": [
+        {
+          "type": "firefly",
+          "options": {
+            "color": "#ff3b81",
+            "count": 16
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-09-13",
+      "name": "Plasma Haze",
+      "description": "A fat hard dot inside a thick square ring. Raw and loud.",
+      "tags": [
+        "brutalism",
+        "bold",
+        "agency",
+        "acid-forest"
+      ],
+      "accent": "#39ff14",
+      "background": "#0b130d",
+      "dark": true,
+      "suggestedPrice": 9,
+      "effects": [
+        {
+          "type": "ring",
+          "options": {
+            "size": 42,
+            "thickness": 4,
+            "hoverRadius": 0,
+            "color": "#39ff14"
+          }
+        },
+        {
+          "type": "dot",
+          "options": {
+            "size": 16,
+            "blendMode": "difference",
+            "radius": "0%",
+            "color": "#00ffa3"
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-09-14",
+      "name": "Vivid Drift",
+      "description": "An additive particle stream that flares behind the pointer.",
+      "tags": [
+        "trail",
+        "particles",
+        "neon",
+        "y2k-neon"
+      ],
+      "accent": "#ff3b81",
+      "background": "#0d0221",
+      "dark": true,
+      "suggestedPrice": 9,
+      "effects": [
+        {
+          "type": "trail",
+          "options": {
+            "color": "#ff3b81",
+            "size": 10,
+            "life": 0.9
+          }
+        },
+        {
+          "type": "dot",
+          "options": {
+            "size": 6,
+            "color": "#ffffff"
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-09-15",
+      "name": "Hollow Orbit",
+      "description": "Starfield warp: your pointer is the vanishing point — move fast to jump to light speed.",
+      "tags": [
+        "scene",
+        "hyperspace",
+        "space",
+        "warp",
+        "brutalist"
+      ],
+      "accent": "#111111",
+      "background": "#05060a",
+      "dark": true,
+      "suggestedPrice": 12,
+      "effects": [
+        {
+          "type": "warp",
+          "options": {
+            "accent": "#111111",
+            "starCount": 160
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-09-16",
+      "name": "Lunar Bloom",
+      "description": "A gooey blob that squashes and stretches with your speed.",
+      "tags": [
+        "blob",
+        "squash",
+        "fun",
+        "dopamine"
+      ],
+      "accent": "#ff4d6d",
+      "background": "#fff3f8",
+      "dark": false,
+      "suggestedPrice": 7,
+      "effects": [
+        {
+          "type": "blob",
+          "options": {
+            "size": 21,
+            "color": "#ff4d6d",
+            "blendMode": "difference"
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-09-17",
+      "name": "Vivid Flux",
+      "description": "A clean single dot tuned to this palette. Fast, quiet, universal.",
+      "tags": [
+        "minimal",
+        "dot",
+        "brutalist"
+      ],
+      "accent": "#111111",
+      "background": "#f5f5f0",
+      "dark": false,
+      "suggestedPrice": 7,
+      "effects": [
+        {
+          "type": "dot",
+          "options": {
+            "size": 13,
+            "color": "#111111",
+            "blendMode": "difference"
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-09-18",
+      "name": "Ghost Flux",
+      "description": "A spinning ✶ cursor with a lively pulse.",
+      "tags": [
+        "image",
+        "animated",
+        "emoji",
+        "acid-forest"
+      ],
+      "accent": "#39ff14",
+      "background": "#0b130d",
+      "dark": true,
+      "suggestedPrice": 9,
+      "effects": [
+        {
+          "type": "trail",
+          "options": {
+            "color": "#39ff14",
+            "size": 5,
+            "life": 0.5
+          }
+        },
+        {
+          "type": "image",
+          "options": {
+            "src": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%3E%3Ctext%20x%3D%2232%22%20y%3D%2250%22%20font-size%3D%2252%22%20text-anchor%3D%22middle%22%3E%E2%9C%B6%3C%2Ftext%3E%3C%2Fsvg%3E",
+            "size": 41,
+            "spin": 180,
+            "pulse": 0.08
+          }
+        }
+      ],
+      "alarms": []
+    },
+    {
+      "id": "drop-2026-08-09-19",
+      "name": "Chrome Echo",
+      "description": "Your pointer is a wobbler lure — a school of fish hunts it.",
+      "tags": [
+        "scene",
+        "fishing",
+        "fun",
+        "brutalist"
+      ],
+      "accent": "#111111",
+      "background": "#f5f5f0",
+      "dark": false,
+      "suggestedPrice": 6,
+      "effects": [
+        {
+          "type": "lure",
+          "options": {
+            "fishColor": "#111111",
+            "lureColor": "#d9ff00",
+            "fishCount": 2,
+            "sound": false
+          }
+        }
+      ],
+      "alarms": []
+    }
+  ],
+  "alarms": []
+}
